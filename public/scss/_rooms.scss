@@ -1,0 +1,91 @@
+$rooms-kind-bg: (
+
+        'a': url('/sources/img/a.png'),
+        'b': url('/sources/img/b.png'),
+        'c': url('/sources/img/c.png'),
+        'd': url('/sources/img/d.png')
+
+);
+
+@function room-kind-bg($key) {
+
+  @return map-get($rooms-kind-bg, $key);
+
+}
+.rooms{
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.rooms__kind{
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-bottom: 5rem;
+  width: 728px;
+  height: 485px;
+  border-top: 15px solid $brand-accent;
+
+  &:hover{
+
+    cursor: pointer;
+
+  }
+
+}
+.rooms__kind-caption{
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: rgba($brand-secondary, 0.8);
+  padding: 1rem 2rem;
+
+}
+.rooms__kind-caption-price{
+
+  color: darken($brand-primary, 20);
+  font-size: 2rem;
+  font-weight: 900;
+
+}
+.rooms__kind-caption-action{
+
+  font-weight: 900;
+
+  &:hover{
+
+    cursor: pointer;
+
+  }
+
+}
+.rooms__kind_a{
+
+  background: room-kind-bg('a');
+
+
+}
+.rooms__kind_b{
+
+  background: room-kind-bg('b');
+
+
+}
+.rooms__kind_c{
+
+  background: room-kind-bg('c');
+
+
+}
+.rooms__kind_d{
+
+  background: room-kind-bg('d');
+
+
+}

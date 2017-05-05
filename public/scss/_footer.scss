@@ -1,0 +1,50 @@
+.footer{
+
+  padding: 2rem 0;
+  background-color: $brand-foreground;
+
+}
+.footer__block-logo{
+
+  display: flex;
+  justify-content: center;
+  height: 50px;
+
+
+}
+.footer__block-contacts{
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-left: 1px solid darken($brand-foreground, 30);
+  border-right: 1px solid darken($brand-foreground, 30);
+
+  .caption{
+
+    color: darken($brand-foreground, 30);
+
+  }
+
+  .phone{
+
+    font-weight: 900;
+    font-size: 1.75rem;
+    color: $brand-backbgound;
+
+  }
+
+}
+.footer__block-navbar{
+
+  height: 100%;
+  display: flex;
+  justify-content: center;
+
+  img{
+
+    width: 50px;
+
+  }
+
+}

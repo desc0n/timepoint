@@ -1,0 +1,80 @@
+.navbar{
+
+  z-index: 1000;
+  padding: 0 1rem;
+  justify-content: center;
+
+}
+
+.navbar-toggleable-md{
+
+  .navbar-collapse{
+
+    width: auto;
+
+  }
+
+
+}
+
+.navbar-brand{
+
+  padding-top: .5rem;
+
+}
+.navbar-nav{
+
+  align-items: center;
+
+}
+.nav-link{
+
+  font-weight: 900;
+
+}
+.nav-link__phone{
+
+  font-size: 1.75rem;
+
+}
+.nav-link__booking{
+  padding: 0.1em 1em;
+  margin-right: 1rem;
+  border-bottom: 5px solid $brand-primary;
+
+}
+
+.nav-item__contacts{
+
+  display: flex;
+  align-items: center;
+
+  img{
+
+    height: 44px;
+    margin-left: 10px;
+
+  }
+}
+.navbar_footer{
+
+  .navbar-nav{
+
+    .nav-link{
+
+      font-weight: 400;
+      color: darken($brand-foreground, 30);
+
+    }
+
+    .nav-link__booking{
+
+      border-bottom: none;
+      padding: 0.5em 1em;
+      margin: 0;
+
+    }
+
+  }
+
+}

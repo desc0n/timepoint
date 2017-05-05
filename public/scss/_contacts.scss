@@ -1,0 +1,30 @@
+.contacts-block{
+
+  padding-top: 1rem;
+  background-color: $brand-foreground;
+
+}
+.contacts-block__caption{
+
+  color: darken($brand-foreground, 30);
+
+}
+.contacts-block__content{
+
+  font-weight: 900;
+  font-size: 1.25rem;
+
+}
+.contacts-block__address{
+
+  font-weight: 900;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 1.5rem;
+
+  img{
+    width: 30px;
+    margin-right: 20px;
+  }
+
+}

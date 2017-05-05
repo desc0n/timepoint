@@ -1,0 +1,63 @@
+.carousel{
+
+  z-index: 999;
+  top: -85px;
+  margin-bottom: 3rem;
+
+}
+.carousel-control-prev,
+.carousel-control-next{
+
+  z-index: 999;
+
+}
+.carousel-indicators{
+
+  background-color: $brand-secondary;
+  margin: 0;
+  bottom: -9.5rem;
+  padding: 2rem 1rem 5.5rem 1rem;
+
+  .active{
+
+    background-color: $brand-primary;
+
+  }
+
+  li{
+
+    max-width: 80px;
+    height: 80px;
+    margin: 0 10px;
+    padding: 5px;
+
+    img{
+
+      height: 70px;
+
+    }
+
+  }
+
+}
+.carousel-caption{
+
+  top: 5rem;
+  text-align: right;
+
+  h1{
+
+    font-weight: 500;
+    font-size: 2.75rem;
+    text-transform: uppercase;
+    text-shadow: $brand-backbgound 1px 1px 0, $brand-backbgound -1px -1px 0,
+    $brand-backbgound -1px 1px 0, $brand-backbgound 1px -1px 0;
+    
+  }
+  img{
+
+    width: 600px;
+
+  }
+
+}

@@ -1,0 +1,22 @@
+$brand-primary: #FC4349;
+$brand-secondary: #E7E8D1;
+$brand-accent: #47C1E8;
+$brand-foreground: #47C1E8;
+$brand-backbgound: #2C3E50;
+$body-bg: $brand-backbgound; //переменная bootstrap
+$navbar-inverse-color: #fff;
+
+$grid-breakpoints: (
+        xs: 0,
+        sm: 576px,
+        md: 768px,
+        lg: 992px,
+        xl: 1270px
+);
+
+$container-max-widths: (
+        sm: 540px,
+        md: 720px,
+        lg: 960px,
+        xl: 1540px
+);

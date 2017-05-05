@@ -1,0 +1,29 @@
+.booking{
+
+  position: relative;
+  z-index: 1000;
+  background-color: $brand-accent;
+  margin-bottom: 5rem;
+  padding: 1rem 3rem;
+  margin-top: -2.25rem;
+
+}
+.booking__caption{
+
+  color: #fff;
+  font-weight: 900;
+  font-size: 3rem;
+
+}
+.booking__selects{
+
+
+}
+
+.booking__action{
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+}

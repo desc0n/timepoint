@@ -5,25 +5,57 @@
   background-color: $brand-accent;
   margin-bottom: 5rem;
   padding: 1rem 3rem;
-  margin-top: -2.25rem;
+  margin-top: -3.25rem;
 
 }
 .booking__caption{
 
+  display: flex;
+  align-items: flex-end;
   color: #fff;
   font-weight: 900;
-  font-size: 3rem;
+  font-size: 1.75rem;
 
 }
+
+@media (min-width: 1280px){
+  .booking__caption {
+
+    align-items: center;
+
+  }
+}
+
 .booking__selects{
 
+
+  display: flex;
+  align-items: center;
+  font-size: 1.25rem;
+
+  label{
+
+    color: darken($brand-foreground, 30);
+
+  }
 
 }
 
 .booking__action{
 
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 1rem;
 
+}
+
+@media (min-width: 1280px){
+  .booking__action {
+
+    margin-top: 0;
+    align-items: center;
+    justify-content: flex-end;
+
+  }
 }

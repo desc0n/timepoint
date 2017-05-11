@@ -6,13 +6,20 @@
 }
 .contacts-block__caption{
 
+  text-align: center;
   color: darken($brand-foreground, 30);
 
 }
 .contacts-block__content{
 
+  text-align: center;
   font-weight: 900;
   font-size: 1.25rem;
+
+  img{
+    width: 20px;
+    margin-right: 10px;
+  }
 
 }
 .contacts-block__address{

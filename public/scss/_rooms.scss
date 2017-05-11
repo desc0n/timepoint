@@ -1,9 +1,9 @@
 $rooms-kind-bg: (
 
-        'a': url('/sources/img/a.png'),
-        'b': url('/sources/img/b.png'),
-        'c': url('/sources/img/c.png'),
-        'd': url('/sources/img/d.png')
+        'a': url('/public/images/a.png'),
+        'b': url('/public/images/b.png'),
+        'c': url('/public/images/c.png'),
+        'd': url('/public/images/d.png')
 
 );
 
@@ -15,9 +15,17 @@ $rooms-kind-bg: (
 .rooms{
 
   display: flex;
+  justify-content: center;
+
+}
+
+.rooms__wrapper{
+
+  display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  max-width: 930px;
 
 }
 
@@ -26,9 +34,10 @@ $rooms-kind-bg: (
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  margin: auto;
   margin-bottom: 5rem;
-  width: 728px;
-  height: 485px;
+  width: 430px;
+  height: 286px;
   border-top: 15px solid $brand-accent;
 
   &:hover{
@@ -68,24 +77,24 @@ $rooms-kind-bg: (
 .rooms__kind_a{
 
   background: room-kind-bg('a');
-
+  background-size: cover;
 
 }
 .rooms__kind_b{
 
   background: room-kind-bg('b');
-
+  background-size: cover;
 
 }
 .rooms__kind_c{
 
   background: room-kind-bg('c');
-
+  background-size: cover;
 
 }
 .rooms__kind_d{
 
   background: room-kind-bg('d');
-
+  background-size: cover;
 
 }

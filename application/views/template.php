@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,10 +82,25 @@
 <div class="container">
     <div class="booking">
         <div class="row">
-            <div class="col-12 col-md-3 booking__caption">Бронирование</div>
-            <div class="col-12 col-md-6 booking__selects"></div>
-            <div class="col-12 col-md-3 booking__action">
-                <button type="button" class="btn btn-primary rooms__kind-caption-action">Показать номера</button>
+            <div class="col-md-12 col-lg-3 booking__caption"><span>Бронирование</span></div>
+            <div class="col-md-12 col-lg-6 booking__selects">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-lg-12 col-xl-3"><label for="arrival">Заезд </label></div>
+                            <div class="col-lg-12 col-xl-9"><input id="arrival" type="date" value="2017-05-10"/></div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-lg-12 col-xl-3"><label for="departureDate">Выезд </label></div>
+                            <div class="col-lg-12 col-xl-9"><input id="departureDate" type="date" value="2017-05-10"/></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-3 booking__action">
+                <button type="button" class="btn btn-primary rooms__kind-caption-action" data-toggle="modal" data-target=".modal-booking">Показать номера</button>
             </div>
         </div>
     </div>
@@ -97,25 +111,25 @@
             <div class="rooms__kind rooms__kind_a">
                 <div class="rooms__kind-caption">
                     <div class="rooms__kind-caption-price">от 2000 руб.</div>
-                    <button type="button" class="btn btn-primary rooms__kind-caption-action">Забронировать</button>
+                    <button type="button" class="btn btn-primary rooms__kind-caption-action" data-toggle="modal" data-target=".modal-booking">Забронировать</button>
                 </div>
             </div>
             <div class="rooms__kind rooms__kind_b">
                 <div class="rooms__kind-caption">
                     <div class="rooms__kind-caption-price">от 3000 руб.</div>
-                    <button type="button" class="btn btn-primary rooms__kind-caption-action">Забронировать</button>
+                    <button type="button" class="btn btn-primary rooms__kind-caption-action" data-toggle="modal" data-target=".modal-booking">Забронировать</button>
                 </div>
             </div>
             <div class="rooms__kind rooms__kind_c">
                 <div class="rooms__kind-caption">
                     <div class="rooms__kind-caption-price">от 4000 руб.</div>
-                    <button type="button" class="btn btn-primary rooms__kind-caption-action">Забронировать</button>
+                    <button type="button" class="btn btn-primary rooms__kind-caption-action" data-toggle="modal" data-target=".modal-booking">Забронировать</button>
                 </div>
             </div>
             <div class="rooms__kind rooms__kind_d">
                 <div class="rooms__kind-caption">
                     <div class="rooms__kind-caption-price">от 5000 руб.</div>
-                    <button type="button" class="btn btn-primary rooms__kind-caption-action">Забронировать</button>
+                    <button type="button" class="btn btn-primary rooms__kind-caption-action" data-toggle="modal" data-target=".modal-booking">Забронировать</button>
                 </div>
             </div>
         </div>
@@ -151,6 +165,36 @@
     </div>
 </div>
 <!-- /.contacts -->
+<div class="map-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="map-controls">
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="map-controls__list">
+                                <li>из аэропорта</li>
+                                <li class="map-controls__list_active">с ж/д вокзала</li>
+                                <li>с автовокзала</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="map-controls__list map-controls__list_sublist">
+                                <li>на такси</li>
+                                <li class="map-controls__list_active">пешком</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="map">
+    </div>
+</div>
+<!-- /.map -->
 <div class="footer">
     <div class="container">
         <div class="row">
@@ -193,6 +237,26 @@
         </div>
     </div>
 </div>
+<!-- modal -->
+<div class="modal fade modal-booking" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Бронирование номера</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Забронировать</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal -->
 <!-- jQuery first, then Tether, then Bootstrap JS. -->
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>

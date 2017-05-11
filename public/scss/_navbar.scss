@@ -1,3 +1,10 @@
+.wrapper{
+
+  background-image: url("/sources/img/c1.png");
+  background-repeat: no-repeat;
+  background-position: 50% -100px;
+  min-height: 450px;
+}
 .navbar{
 
   z-index: 1000;
@@ -21,6 +28,12 @@
 
   padding-top: .5rem;
 
+  img{
+
+    width: 220px;
+
+  }
+
 }
 .navbar-nav{
 
@@ -29,12 +42,18 @@
 }
 .nav-link{
 
-  font-weight: 900;
+  font-weight: 500;
+
+}
+.nav-link__address{
+
+  font-size: 0.9rem;
 
 }
 .nav-link__phone{
 
-  font-size: 1.75rem;
+  font-size: 1.5rem;
+  font-weight: 900;
 
 }
 .nav-link__booking{

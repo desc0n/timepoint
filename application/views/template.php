@@ -88,13 +88,13 @@
                     <div class="col-6">
                         <div class="row">
                             <div class="col-lg-12 col-xl-3"><label for="arrival">Заезд </label></div>
-                            <div class="col-lg-12 col-xl-9"><input id="arrival" type="date" value="2017-05-10"/></div>
+                            <div class="col-lg-12 col-xl-9"><input id="arrival" type="date" value="2017-05-10" class="form-control"/></div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="row">
                             <div class="col-lg-12 col-xl-3"><label for="departureDate">Выезд </label></div>
-                            <div class="col-lg-12 col-xl-9"><input id="departureDate" type="date" value="2017-05-10"/></div>
+                            <div class="col-lg-12 col-xl-9"><input id="departureDate" type="date" value="2017-05-10" class="form-control"/></div>
                         </div>
                     </div>
                 </div>
@@ -240,7 +240,7 @@
 <!-- modal -->
 <div class="modal fade modal-booking" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content modal-booking">
             <div class="modal-header">
                 <h5 class="modal-title">Бронирование номера</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -248,7 +248,80 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p></p>
+                <div id="carousel" class="carousel slide" data-ride="carousel">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="carousel-inner" role="listbox">
+                                <div class="carousel-item  active">
+                                    <img class="d-block"
+                                         alt=""
+                                         src="/public/images/rooms/room1__1.jpg"
+                                         style="height: 500px">
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="d-block"
+                                         alt=""
+                                         src="/public/images/rooms/room1__2.jpg"
+                                         style="height: 500px">
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="d-block"
+                                         alt=""
+                                         src="/public/images/rooms/room1__3.jpg"
+                                         style="height: 500px">
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="modal-booking__desc col-12 col-md-6">
+                            <h2>Удобства в номере</h2>
+                            <ul>
+                                <li>Двуспальная кровать</li>
+                                <li>Удобное рабочее место</li>
+                                <li>Кондиционер</li>
+                                <li>Бесплатный Wi-Fi</li>
+                                <li>Телевизор</li>
+                                <li>Холодильник</li>
+                                <li>Фен</li>
+                                <li>Телевизор</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="Select">Количество гостей</label>
+                                    <select class="form-control" id="Select">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="modalArrival">Заезд </label>
+                                    <input id="modalArrival" type="date" value="2017-05-10" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="modalDepartureDate">Выезд </label>
+                                    <input id="modalDepartureDate" type="date" value="2017-05-10" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary">Забронировать</button>

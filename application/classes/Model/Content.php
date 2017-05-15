@@ -15,9 +15,10 @@ class Model_Content extends Kohana_Model
         return $this->contactTypes;
     }
 
-    public function getBaseTemplate()
+    public function getBaseTemplate($slug)
     {
         return View::factory('template')
+            ->set('content', Arr::get($this->findPageBySlug($slug), 'content'))
             ->set('googlePlusNetwork', $this->getSocialNetworks('google+'))
             ->set('twitterNetwork', $this->getSocialNetworks('twitter'))
             ->set('facebookNetwork', $this->getSocialNetworks('facebook'))
@@ -27,17 +28,28 @@ class Model_Content extends Kohana_Model
     /**
      * @param string $slug
      * 
-     * @return false|array
+     * @return string
      */
     public function findPageBySlug($slug = '')
     {
-        return DB::select()
-            ->from('content__page')
-            ->where('slug', '=', $slug)
-            ->limit(1)
-            ->execute()
-            ->current()
-        ;
+        /** @var $roomModel Model_Room */
+        $roomModel = Model::factory('Room');
+
+        switch ($slug) {
+            case 'main':
+                return [
+                    'content' => View::factory('main')
+                        ->set('rooms', $roomModel->findAll())
+                ];
+            default:
+                return DB::select()
+                    ->from('content__page')
+                    ->where('slug', '=', $slug)
+                    ->limit(1)
+                    ->execute()
+                    ->current()
+                ;
+        }
     }
 
     /**

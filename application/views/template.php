@@ -17,7 +17,9 @@
                     aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="/"><img src="/public/images/logo.svg" alt="VladPoint"></a>
+            <a class="navbar-brand" href="/">
+                <img src="/public/images/logo.svg" alt="VladPoint">
+            </a>
 
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav mr-auto">
@@ -106,34 +108,7 @@
     </div>
 </div>
 <div class="container">
-    <div class="rooms">
-        <div class="rooms__wrapper">
-            <div class="rooms__kind rooms__kind_a">
-                <div class="rooms__kind-caption">
-                    <div class="rooms__kind-caption-price">от 2000 руб.</div>
-                    <button type="button" class="btn btn-primary rooms__kind-caption-action" data-toggle="modal" data-target=".modal-booking">Забронировать</button>
-                </div>
-            </div>
-            <div class="rooms__kind rooms__kind_b">
-                <div class="rooms__kind-caption">
-                    <div class="rooms__kind-caption-price">от 3000 руб.</div>
-                    <button type="button" class="btn btn-primary rooms__kind-caption-action" data-toggle="modal" data-target=".modal-booking">Забронировать</button>
-                </div>
-            </div>
-            <div class="rooms__kind rooms__kind_c">
-                <div class="rooms__kind-caption">
-                    <div class="rooms__kind-caption-price">от 4000 руб.</div>
-                    <button type="button" class="btn btn-primary rooms__kind-caption-action" data-toggle="modal" data-target=".modal-booking">Забронировать</button>
-                </div>
-            </div>
-            <div class="rooms__kind rooms__kind_d">
-                <div class="rooms__kind-caption">
-                    <div class="rooms__kind-caption-price">от 5000 руб.</div>
-                    <button type="button" class="btn btn-primary rooms__kind-caption-action" data-toggle="modal" data-target=".modal-booking">Забронировать</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?=$content;?>
 </div>
 <!-- /.rooms -->
 <div class="contacts-block">

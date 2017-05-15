@@ -8,6 +8,10 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/public/css/styles.css" >
 </head>
+<?php
+/** @var Model_Content $contentModel */
+$contentModel = Model::factory('Content');
+?>
 <body>
 <div class="wrapper">
     <div class="container">
@@ -59,9 +63,12 @@
                     <li class="nav-item nav-item__contacts hidden-lg-down">
                         <img src="/public/images/point.png" alt="Адрес">
                         <div class="nav-link">
-                            <div class="nav-link__address">г. Владивосток, ул. Посьетская, 14
-                            </div>
-                            <div class="nav-link__phone">8 800 235 35 72</div>
+                            <?foreach ($contentModel->getContacts(['address']) as $contact){?>
+                                <div class="nav-link__address"><?=$contact['value'];?></div>
+                            <?}?>
+                            <?foreach ($contentModel->getContacts(['phone']) as $contact){?>
+                                <div class="nav-link__phone"><?=$contact['value'];?></div>
+                            <?}?>
                         </div>
                     </li>
                 </ul>
@@ -123,18 +130,20 @@
                 <div class="contacts-block__caption">
                     Телефон бронирования
                 </div>
-                <div class="contacts-block__content">
-                    8 800 235 35 72
-                </div>
+                <?foreach ($contentModel->getContacts(['phone']) as $contact){?>
+                    <div class="contacts-block__content"><?=$contact['value'];?></div>
+                <?}?>
             </div>
             <div class="col-6">
                 <div class="contacts-block__caption">
                     Адрес
                 </div>
-                <div class="contacts-block__content">
-                    <img src="/public/images/point.png" alt="Адрес">
-                    г. Владивосток, ул. Посьетская, 14
-                </div>
+                <?foreach ($contentModel->getContacts(['address']) as $contact){?>
+                    <div class="contacts-block__content">
+                        <img src="/public/images/point.png" alt="Адрес">
+                        <?=$contact['value'];?>
+                    </div>
+                <?}?>
             </div>
         </div>
     </div>

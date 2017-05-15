@@ -38,6 +38,7 @@ $rooms-kind-bg: (
   width: 430px;
   height: 286px;
   border-top: 15px solid $brand-accent;
+  background-size: cover!important;
 
   &:hover{
 
@@ -71,29 +72,5 @@ $rooms-kind-bg: (
     cursor: pointer;
 
   }
-
-}
-.rooms__kind_a{
-
-  background: room-kind-bg('a');
-  background-size: cover;
-
-}
-.rooms__kind_b{
-
-  background: room-kind-bg('b');
-  background-size: cover;
-
-}
-.rooms__kind_c{
-
-  background: room-kind-bg('c');
-  background-size: cover;
-
-}
-.rooms__kind_d{
-
-  background: room-kind-bg('d');
-  background-size: cover;
 
 }

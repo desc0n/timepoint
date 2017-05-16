@@ -1,9 +1,9 @@
 <div class="col-sm-12">
-    <h3>Добавление проекта</h3>
+    <h3>Редактирование номера</h3>
     <div class="row">
         <div class="col-md-12">
             <h3>Изображение</h3>
-            <?foreach($portfolioItemImgs as $img){?>
+            <?foreach($roomImgs as $img){?>
                 <div class="col-lg-3" id="portfolioItemImg<?=$img['id'];?>">
                     <a href="#" class="thumbnail" onclick="redactPortfolioItemImg(<?=$img['id'];?>, '<?=$img['src'];?>', <?=(int)$img['main'];?>);">
                         <img src="/public/img/thumb/<?=$img['src'];?>" class="<?=((bool)$img['main'] ? 'main-item-img' : '');?>">
@@ -23,25 +23,17 @@
             <form method="post">
                 <div class="row form-group">
                     <div class="col-md-6">
-                        <div class="text-muted col-md-12">Категория:</div>
+                        <div class="text-muted col-md-12">Название номера:</div>
                         <div class="col-md-12">
-                            <?=Form::select('category_id', $categories, Arr::get($portfolioItem, 'category_id'), ['class' => 'form-control']);?>
-                        </div>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-md-6">
-                        <div class="text-muted col-md-12">Название проекта:</div>
-                        <div class="col-md-12">
-                            <input type="text" class="form-control"  name="title" placeholder="Название проекта" value="<?=Arr::get($portfolioItem, 'title');?>">
+                            <input type="text" class="form-control"  name="title" placeholder="Название номера" value="<?=Arr::get($room, 'title');?>">
                         </div>
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col-md-12">
-                        <div class="text-muted col-sm-12">Описание:</div>
+                        <div class="text-muted col-sm-12">Удобства:</div>
                         <div class="col-sm-12">
-                            <textarea class="form-control ckeditor"  name="description" placeholder="Описание" rows="10"><?=Arr::get($portfolioItem, 'description');?></textarea>
+
                         </div>
                     </div>
                 </div>
@@ -86,7 +78,7 @@
 
             </div>
             <div class="modal-footer">
-                <span><input type="checkbox" id="setMainItemPage" value="<?=Arr::get($portfolioItem, 'id');?>"> Сделать главной</span>
+                <span><input type="checkbox" id="setMainItemPage" value="<?=Arr::get($room, 'id');?>"> Сделать главной</span>
                 <button class="btn btn-danger" onclick="removePortfolioItemImg();">Удалить изображение</button>
             </div>
         </div>

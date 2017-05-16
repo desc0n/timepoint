@@ -46,22 +46,13 @@
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
                     <li>
-                        <a href="/cpanel/portfolio_items_list"><i class="fa fa-list fa-fw"></i> Портфолио</a>
+                        <a href="/cpanel/rooms_list"><i class="fa fa-list fa-fw"></i> Список номеров</a>
                     </li>
                     <li>
-                        <a href="/cpanel/add_portfolio_item"><i class="fa fa-file fa-fw"></i> Добавить проект</a>
+                        <a href="/cpanel/add_room"><i class="fa fa-file fa-fw"></i> Добавить номер</a>
                     </li>
                     <li>
                         <a href="/cpanel/contacts"><i class="fa fa-phone fa-fw"></i> Редактировать контакты</a>
-                    </li>
-                    <li>
-                        <a href="/cpanel/redact_page/activity"><i class="fa fa-pencil-square-o fa-fw"></i> Редактировать деятельность</a>
-                    </li>
-                    <li>
-                        <a href="/cpanel/services"><i class="fa fa-cogs fa-fw"></i> Редактировать услуги</a>
-                    </li>
-                    <li>
-                        <a href="/cpanel/social_networks"><i class="fa fa-share-alt fa-fw"></i> Редактировать соцсети</a>
                     </li>
                 </ul>
             </div>

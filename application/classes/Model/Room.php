@@ -57,4 +57,52 @@ class Model_Room extends Kohana_Model
             ->as_array()
             ;
     }
+
+    /**
+     * @param array $filesGlobal
+     * @param int $itemId
+     */
+    public function loadRoomImg($filesGlobal, $itemId)
+    {
+        $filesData = [];
+
+        foreach ($filesGlobal['imgname']['name'] as $key => $data) {
+            $filesData[$key]['name'] = $filesGlobal['imgname']['name'][$key];
+            $filesData[$key]['type'] = $filesGlobal['imgname']['type'][$key];
+            $filesData[$key]['tmp_name'] = $filesGlobal['imgname']['tmp_name'][$key];
+            $filesData[$key]['error'] = $filesGlobal['imgname']['error'][$key];
+            $filesData[$key]['size'] = $filesGlobal['imgname']['size'][$key];
+        }
+
+        foreach ($filesData as $files) {
+            $res = DB::insert('rooms__imgs', ['room_id'])
+                ->values([$itemId])
+                ->execute();
+
+            $new_id = $res[0];
+
+            $imageName = preg_replace("/[^0-9a-z.]+/i", "0", Arr::get($files,'name',''));
+            $file_name = 'public/img/original/' . $new_id . '_' . $imageName;
+
+            if (copy($files['tmp_name'], $file_name))	{
+                $thumb_file_name = 'public/img/thumb/' . $new_id . '_' . $imageName;
+
+                if (copy($files['tmp_name'], $thumb_file_name))	{
+                    $thumb_image = Image::factory($thumb_file_name);
+                    $thumb_image
+                        ->resize(500, NULL)
+                        ->save($thumb_file_name,100)
+                    ;
+
+                    DB::update('rooms__imgs')
+                        ->set([
+                            'src' => $new_id . '_' . $imageName
+                        ])
+                        ->where('id', '=', $new_id)
+                        ->execute()
+                    ;
+                }
+            }
+        }
+    }
 }

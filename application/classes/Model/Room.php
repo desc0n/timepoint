@@ -133,4 +133,59 @@ class Model_Room extends Kohana_Model
             ->execute()
         ;
     }
+
+    /**
+     * @return array
+     */
+    public function getConveniences()
+    {
+        $query = DB::select()
+            ->from('conveniences')
+        ;
+
+        return $query->execute()->as_array();
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return bool
+     */
+    public function addConvenience($value)
+    {
+        DB::insert('conveniences', ['value'])
+            ->values([$value])
+            ->execute()
+        ;
+
+        return true;
+    }
+
+    /**
+     * @param array $params
+     */
+    public function updateConveniences($params)
+    {
+        $ids = Arr::get($params, 'ids', []);
+        $values = Arr::get($params, 'values', []);
+
+        foreach ($ids as $key => $id) {
+            DB::update('conveniences')
+                ->set(['value' => $values[$key]])
+                ->where('id', '=', $id)
+                ->execute()
+            ;
+        }
+    }
+
+    /**
+     * @param int $id
+     */
+    public function removeConvenience($id)
+    {
+        DB::delete('conveniences')
+            ->where('id', '=', $id)
+            ->execute()
+        ;
+    }
 }

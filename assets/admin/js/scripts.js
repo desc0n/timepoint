@@ -45,6 +45,13 @@ function removeContact(id)
             $('#contactRow' + id).remove();
         });
 }
+function removeConvenience(id)
+{
+    $.ajax({url: '/ajax/remove_convenience', type: 'POST', data: {id: id}, async: true})
+        .done(function () {
+            $('#convenienceRow' + id).remove();
+        });
+}
 function setMainRoomImg(roomId, value) {
     var imgId = $('#redactImgModal .modal-body img').data('id');
 

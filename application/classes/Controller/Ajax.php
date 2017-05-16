@@ -18,6 +18,16 @@ class Controller_Ajax extends Controller
         $this->response->body(json_encode(['result' =>'success']));
     }
 
+    public function action_remove_convenience()
+    {
+        /** @var $roomModel Model_Room */
+        $roomModel = Model::factory('Room');
+
+        $roomModel->removeConvenience((int)$this->request->post('id'));
+
+        $this->response->body(json_encode(['result' =>'success']));
+    }
+
     public function action_remove_room_img()
     {
         /** @var $roomModel Model_Room */

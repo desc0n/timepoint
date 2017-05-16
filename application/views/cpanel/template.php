@@ -54,6 +54,9 @@
                     <li>
                         <a href="/cpanel/contacts"><i class="fa fa-phone fa-fw"></i> Редактировать контакты</a>
                     </li>
+                    <li>
+                        <a href="/cpanel/conveniences_list"><i class="fa fa-star fa-fw"></i> Список удобств</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->

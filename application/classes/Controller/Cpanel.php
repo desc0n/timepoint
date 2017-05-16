@@ -303,4 +303,27 @@ class Controller_Cpanel extends Controller
         ;
         $this->response->body($template);
     }
+
+    public function action_conveniences_list()
+    {
+        /** @var $roomModel Model_Room */
+        $roomModel = Model::factory('Room');
+
+        $template = $this->getBaseTemplate();
+
+        if ((int)$this->request->post('addConvenience') === 1) {
+            $roomModel->addConvenience($this->request->post('value'));
+            HTTP::redirect($this->request->referrer());
+        }
+
+        if ((int)$this->request->post('updateConveniences') === 1) {
+            $roomModel->updateConveniences($this->request->post());
+            HTTP::redirect($this->request->referrer());
+        }
+
+        $template->content = View::factory('cpanel/convenience')
+            ->set('conveniences', $roomModel->getConveniences())
+        ;
+        $this->response->body($template);
+    }
 }

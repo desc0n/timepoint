@@ -2,9 +2,27 @@
 
   background-image: url('/public/images/c1.png');
   background-repeat: no-repeat;
-  background-position: 50% -100px;
+  background-position: 80% -100px;
   min-height: 450px;
+
 }
+
+@media (min-width: 520px) {
+  .wrapper {
+
+    background-position-x: 78%;
+
+  }
+}
+
+@media (min-width: 1280px) {
+  .wrapper {
+
+    background-position-x: 50%;
+
+  }
+}
+
 .navbar{
 
   z-index: 1000;

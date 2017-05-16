@@ -9,12 +9,44 @@
     font-family: 'Open Sans', Roboto, "Helvetica Neue", Arial, sans-serif;
     color: $white;
     font-weight: 500;
-    font-size: 1.75rem;
+    font-size: 1.44rem;
     text-transform: uppercase;
     text-shadow: $brand-backbgound 1px 1px 0, $brand-backbgound -1px -1px 0,
     $brand-backbgound -1px 1px 0, $brand-backbgound 1px -1px 0;
     text-align: center;
 
+  }
+
+  @media (min-width: 450px) {
+    h1 {
+
+      font-size: 1.6rem;
+
+    }
+  }
+
+  @media (min-width: 450px) {
+    h1 {
+
+      font-size: 1.6rem;
+
+    }
+  }
+
+  @media (min-width: 500px) {
+    h1 {
+
+      font-size: 1.7rem;
+
+    }
+  }
+
+  @media (min-width: 520px) {
+    h1 {
+
+      font-size: 1.8rem;
+
+    }
   }
 
   img{

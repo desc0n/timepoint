@@ -60,9 +60,9 @@ class Model_Room extends Kohana_Model
 
     /**
      * @param array $filesGlobal
-     * @param int $itemId
+     * @param int $roomId
      */
-    public function loadRoomImg($filesGlobal, $itemId)
+    public function loadRoomImg($filesGlobal, $roomId)
     {
         $filesData = [];
 
@@ -76,7 +76,7 @@ class Model_Room extends Kohana_Model
 
         foreach ($filesData as $files) {
             $res = DB::insert('rooms__imgs', ['room_id'])
-                ->values([$itemId])
+                ->values([$roomId])
                 ->execute();
 
             $new_id = $res[0];
@@ -104,5 +104,33 @@ class Model_Room extends Kohana_Model
                 }
             }
         }
+    }
+
+    /**
+     * @param int $id
+     */
+    public function removeImg($id)
+    {
+        DB::delete('rooms__imgs')->where('id', '=', $id)->execute();
+    }
+
+    /**
+     * @param int $imgId
+     * @param int $roomId
+     * @param int $value
+     */
+    public function setMainRoomImg($imgId, $roomId, $value)
+    {
+        DB::update('rooms__imgs')
+            ->set(['main' => 0])
+            ->where('room_id', '=', $roomId)
+            ->execute()
+        ;
+
+        DB::update('rooms__imgs')
+            ->set(['main' => $value])
+            ->where('id', '=', $imgId)
+            ->execute()
+        ;
     }
 }

@@ -1,12 +1,12 @@
 $(document).ready(function() {
-    $('#setMainItemPage').on('click', function () {
-        setMainItemImg($(this).val(), + $(this).prop('checked'));
+    $('#setMainRoomImg').on('click', function () {
+        setMainRoomImg($(this).val(), + $(this).prop('checked'));
     });
 });
 
-function redactPortfolioItemImg(id, src, main)
+function redactRoomImg(id, src, main)
 {
-    $('#setMainItemPage').prop('checked', false);
+    $('#setMainRoomPage').prop('checked', false);
 
     $('#redactImgModal .modal-body')
         .html('')
@@ -14,28 +14,28 @@ function redactPortfolioItemImg(id, src, main)
     ;
 
     if (main == 1) {
-        $('#setMainItemPage').prop('checked', true);
+        $('#setMainRoomPage').prop('checked', true);
     }
 
     $('#redactImgModal').modal('toggle');
 }
 
-function removePortfolioItemImg()
+function removeRoomImg()
 {
     var id = $('#redactImgModal .modal-body img').data('id');
 
-    $.ajax({url: '/ajax/remove_portfolio_item_img', type: 'POST', data: {id: id}, async: true})
+    $.ajax({url: '/ajax/remove_room_img', type: 'POST', data: {id: id}, async: true})
         .done(function () {
             $('#redactImgModal').modal('toggle');
-            $('#portfolioItemImg' + id).remove();
+            $('#roomImg' + id).remove();
         });
 }
 
-function removePortfolioItem(id)
+function removeRoom(id)
 {
-    $.ajax({url: '/ajax/remove_portfolio_item', type: 'POST', data: {id: id}, async: true})
+    $.ajax({url: '/ajax/remove_room', type: 'POST', data: {id: id}, async: true})
         .done(function () {
-            $('#portfolioItemRow' + id).remove();
+            $('#roomRow' + id).remove();
         });
 }
 function removeContact(id)
@@ -45,17 +45,17 @@ function removeContact(id)
             $('#contactRow' + id).remove();
         });
 }
-function setMainItemImg(itemId, value) {
+function setMainRoomImg(roomId, value) {
     var imgId = $('#redactImgModal .modal-body img').data('id');
 
-    $.ajax({url: '/ajax/set_main_item_img', type: 'POST', data: {imgId: imgId, itemId: itemId, value: value}, async: true})
+    $.ajax({url: '/ajax/set_main_room_img', type: 'POST', data: {imgId: imgId, roomId: roomId, value: value}, async: true})
         .done(function () {
             $('#redactImgModal').modal('toggle');
 
-            $('a.thumbnail img').removeClass('main-item-img')
+            $('a.thumbnail img').removeClass('main-room-img');
 
             if (value == 1) {
-                $('#portfolioItemImg' + imgId + ' img').addClass('main-item-img');
+                $('#roomImg' + imgId + ' img').addClass('main-room-img');
             }
         });
 }

@@ -4,9 +4,9 @@
         <div class="col-md-12">
             <h3>Изображение</h3>
             <?foreach($roomImgs as $img){?>
-                <div class="col-lg-3" id="portfolioItemImg<?=$img['id'];?>">
-                    <a href="#" class="thumbnail" onclick="redactPortfolioItemImg(<?=$img['id'];?>, '<?=$img['src'];?>', <?=(int)$img['main'];?>);">
-                        <img src="/public/img/thumb/<?=$img['src'];?>" class="<?=((bool)$img['main'] ? 'main-item-img' : '');?>">
+                <div class="col-lg-3" id="roomImg<?=$img['id'];?>">
+                    <a href="#" class="thumbnail" onclick="redactRoomImg(<?=$img['id'];?>, '<?=$img['src'];?>', <?=(int)$img['main'];?>);">
+                        <img src="/public/img/thumb/<?=$img['src'];?>" class="<?=((bool)$img['main'] ? 'main-room-img' : '');?>">
                     </a>
                 </div>
             <?}?>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="row form-group">
                     <div class="col-sm-6">
-                        <button type="submit" class="btn btn-block btn-success" name="redactPortfolioItem">Сохранить</button>
+                        <button type="submit" class="btn btn-block btn-success" name="redactRoom">Сохранить</button>
                     </div>
                 </div>
             </form>
@@ -78,8 +78,8 @@
 
             </div>
             <div class="modal-footer">
-                <span><input type="checkbox" id="setMainItemPage" value="<?=Arr::get($room, 'id');?>"> Сделать главной</span>
-                <button class="btn btn-danger" onclick="removePortfolioItemImg();">Удалить изображение</button>
+                <span><input type="checkbox" id="setMainRoomImg" value="<?=Arr::get($room, 'id');?>"> Сделать главной</span>
+                <button class="btn btn-danger" onclick="removeRoomImg();">Удалить изображение</button>
             </div>
         </div>
     </div>

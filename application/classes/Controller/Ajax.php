@@ -17,4 +17,28 @@ class Controller_Ajax extends Controller
 
         $this->response->body(json_encode(['result' =>'success']));
     }
+
+    public function action_remove_room_img()
+    {
+        /** @var $roomModel Model_Room */
+        $roomModel = Model::factory('Room');
+
+        $roomModel->removeImg((int)$this->request->post('id'));
+
+        $this->response->body(json_encode(['result' =>'success']));
+    }
+
+    public function action_set_main_room_img()
+    {
+        /** @var $roomModel Model_Room */
+        $roomModel = Model::factory('Room');
+
+        $roomModel->setMainRoomImg(
+            (int)$this->request->post('imgId'),
+            (int)$this->request->post('roomId'),
+            (int)$this->request->post('value')
+        );
+
+        $this->response->body(json_encode(['result' =>'success']));
+    }
 }

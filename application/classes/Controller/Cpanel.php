@@ -37,7 +37,7 @@ class Controller_Cpanel extends Controller
     {
         if (!Auth::instance()->logged_in() && isset($_POST['login'])) {
             Auth::instance()->login($this->request->post('username'), $this->request->post('password'),true);
-            HTTP::redirect('/cpanel/portfolio_items_list');
+            HTTP::redirect('/cpanel/rooms_list');
         }
 
         $template = View::factory('cpanel/login')
@@ -111,7 +111,7 @@ class Controller_Cpanel extends Controller
                         }
                     }
                 } else {
-                    HTTP::redirect('/cpanel/portfolio_items_list');
+                    HTTP::redirect('/cpanel/rooms_list');
                 }
             }
         }
@@ -119,71 +119,69 @@ class Controller_Cpanel extends Controller
         $this->response->body($template);
     }
 
-    public function action_portfolio_items_list()
+    public function action_rooms_list()
     {
-        /** @var $portfolioModel Model_Portfolio */
-        $portfolioModel = Model::factory('Portfolio');
+        /** @var $roomModel Model_Room */
+        $roomModel = Model::factory('Room');
 
         $template = $this->getBaseTemplate();
 
-        $template->content = View::factory('cpanel/portfolio_items_list')
-            ->set('itemsList', $portfolioModel->findAll(
+        $template->content = View::factory('cpanel/rooms_list')
+            ->set('roomsList', $roomModel->findAll(
                 Arr::get($this->request->query(), 'page', 1),
                 Arr::get($this->request->query(), 'limit', 20)
             ))
-            ->set('itemsListCount', count($portfolioModel->findAll(0,0)))
+            ->set('roomsListCount', count($roomModel->findAll(0,0)))
             ->set('page', Arr::get($this->request->query(), 'page', 1))
         ;
 
         $this->response->body($template);
     }
 
-	public function action_add_portfolio_item()
+	public function action_add_room()
 	{
-        /** @var $portfolioModel Model_Portfolio */
-        $portfolioModel = Model::factory('Portfolio');
+        /** @var $roomModel Model_Room */
+        $roomModel = Model::factory('Room');
 
         $template = $this->getBaseTemplate();
 
-        $template->content = View::factory('cpanel/add_portfolio_item')
-            ->set('categories', $portfolioModel->getCategories())
+        $template->content = View::factory('cpanel/add_room')
             ->set('get', $this->request->query())
         ;
 
-        if (isset($_POST['addPortfolioItem'])) {
-            $id = $portfolioModel->setItem(
+        if ((int)$this->request->post('addRoom') === 1) {
+            $id = $roomModel->setItem(
                 null,
                 (int)$this->request->post('category_id'),
                 $this->request->post('title'),
                 $this->request->post('description')
             );
 
-            HTTP::redirect('/cpanel/redact_portfolio_item/' . $id);
+            HTTP::redirect('/cpanel/redact_room/' . $id);
         }
 
 		$this->response->body($template);
 	}
 
-	public function action_redact_portfolio_item()
+	public function action_redact_room()
 	{
-        /** @var $portfolioModel Model_Portfolio */
-        $portfolioModel = Model::factory('Portfolio');
+        /** @var $roomModel Model_Room */
+        $roomModel = Model::factory('Room');
 
         $template = $this->getBaseTemplate();
         
-        $portfolioItemId = $this->request->param('id');
+        $roomId = $this->request->param('id');
         $filename = Arr::get($_FILES, 'imgname', []);
 
-        if ($portfolioItemId != '' && !empty($filename)) {
-            $portfolioModel->loadPortfolioImg($_FILES, $portfolioItemId);
+        if ($roomId != '' && !empty($filename)) {
+            $roomModel->loadRoomImg($_FILES, $roomId);
 
             HTTP::redirect($this->request->referrer());
         }
 
-        if (isset($_POST['redactPortfolioItem'])) {
-            $portfolioModel->setItem(
-                $portfolioItemId,
-                (int)$this->request->post('category_id'),
+        if ((int)$this->request->post('redactRoomItem') === 1) {
+            $roomModel->setRoom(
+                $roomId,
                 $this->request->post('title'),
                 $this->request->post('description')
             );
@@ -191,12 +189,9 @@ class Controller_Cpanel extends Controller
             HTTP::redirect($this->request->referrer());
         }
 
-        $portfolioItem = $portfolioModel->findById($portfolioItemId);
-
-        $template->content = View::factory('cpanel/redact_portfolio_item')
-            ->set('portfolioItem', $portfolioItem)
-            ->set('portfolioItemImgs', $portfolioModel->findImgsByItemId($portfolioItemId))
-            ->set('categories', $portfolioModel->getCategories())
+        $template->content = View::factory('cpanel/redact_room')
+            ->set('room', $roomModel->findById($roomId))
+            ->set('roomImgs', $roomModel->findImgsByRoomId($roomId))
         ;
 
 		$this->response->body($template);

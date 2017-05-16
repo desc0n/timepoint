@@ -27,4 +27,34 @@ class Model_Room extends Kohana_Model
             ->as_array()
             ;
     }
+
+    /**
+     * @param int $id
+     *
+     * @return array|bool
+     */
+    public function findById($id)
+    {
+        return DB::select()
+            ->from('rooms__rooms')
+            ->where('id', '=', $id)
+            ->execute()
+            ->current()
+        ;
+    }
+
+    /**
+     * @param $id
+     *
+     * @return array
+     */
+    public function findImgsByRoomId($id)
+    {
+        return DB::select()
+            ->from('rooms__imgs')
+            ->where('room_id', '=', $id)
+            ->execute()
+            ->as_array()
+            ;
+    }
 }

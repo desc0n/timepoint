@@ -153,7 +153,6 @@ $roomModel = Model::factory('Room');
                 </div>
                 <?foreach ($contentModel->getContacts(['address']) as $contact){?>
                     <div class="contacts-block__content">
-                        <img src="/public/images/point.png" alt="Адрес">
                         <?=$contact['value'];?>
                     </div>
                 <?}?>
@@ -224,9 +223,6 @@ $roomModel = Model::factory('Room');
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Контакты</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link nav-link__booking" href="#">Бронирование</a>
                                 </li>
                             </ul>
                         </div>

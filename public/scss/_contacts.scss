@@ -8,7 +8,7 @@
 
   text-align: center;
   color: darken($brand-foreground, 30);
-
+  font-size: 1rem;
 }
 .contacts-block__content{
 
@@ -21,6 +21,31 @@
     margin-right: 10px;
   }
 
+}
+
+@media (min-width: 1200px) {
+  .contacts-block__caption{
+    font-size: 1.5rem;
+  }
+  .contacts-block__content{
+    font-size: 1.5rem;
+  }
+}
+@media (min-width: 992px) {
+  .contacts-block__caption{
+    font-size: 1.5rem;
+  }
+  .contacts-block__content{
+    font-size: 1.5rem;
+  }
+}
+@media (min-width: 768px) {
+  .contacts-block__caption{
+    font-size: 1.5rem;
+  }
+  .contacts-block__content{
+    font-size: 1.5rem;
+  }
 }
 .contacts-block__address{
 

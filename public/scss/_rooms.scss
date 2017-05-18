@@ -35,7 +35,7 @@ $rooms-kind-bg: (
   flex-direction: column;
   justify-content: flex-end;
   margin-bottom: 5rem;
-  width: 430px;
+  max-width: 430px;
   height: 286px;
   border-top: 15px solid $brand-accent;
   background-size: cover!important;
@@ -59,9 +59,24 @@ $rooms-kind-bg: (
 .rooms__kind-caption-price{
 
   color: darken($brand-primary, 20);
-  font-size: 2rem;
+  font-size: 1.2rem;
   font-weight: 900;
-
+  margin-right: 20px;
+}
+@media (min-width: 1200px) {
+  .rooms__kind-caption-price {
+    font-size: 2rem;
+  }
+}
+@media (min-width: 992px) {
+  .rooms__kind-caption-price {
+    font-size: 2rem;
+  }
+}
+@media (min-width: 768px) {
+  .rooms__kind-caption-price {
+    font-size: 2rem;
+  }
 }
 .rooms__kind-caption-action{
 

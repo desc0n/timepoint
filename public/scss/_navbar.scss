@@ -1,28 +1,29 @@
 .wrapper{
-
-  background-image: url('/public/images/c1.png');
   background-repeat: no-repeat;
-  background-position: 80% -100px;
-  min-height: 450px;
-
+  background-position: 100% 0;
+  min-height: 250px;
+  background-size: cover;
+  background-image: url('/public/images/header_bg_xs.jpg');
 }
 
-@media (min-width: 520px) {
+@media (min-width: 1200px) {
   .wrapper {
-
-    background-position-x: 78%;
-
+    background-image: url('/public/images/header_bg_lg.jpg');
+    min-height: 450px;
   }
 }
-
-@media (min-width: 1280px) {
+@media (min-width: 992px) {
   .wrapper {
-
-    background-position-x: 50%;
-
+    background-image: url('/public/images/header_bg_md.jpg');
+    min-height: 450px;
   }
 }
-
+@media (min-width: 768px) {
+  .wrapper {
+    background-image: url('/public/images/header_bg_sm.jpg');
+    min-height: 450px;
+  }
+}
 .navbar{
 
   z-index: 1000;

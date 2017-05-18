@@ -22,7 +22,7 @@ $contentModel = Model::factory('Content');
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand" href="/">
-                <img src="/public/images/logo.svg" alt="VladPoint">
+                <img class="hidden-xs" src="/public/images/logo.svg" alt="VladPoint">
             </a>
 
             <div class="collapse navbar-collapse" id="navbar">
@@ -31,16 +31,13 @@ $contentModel = Model::factory('Content');
                         <a class="nav-link" href="#">Гостиница</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Номера и цены</a>
+                        <a class="nav-link nav-link__booking" href="#">Номера и цены</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Новости</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Контакты</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link__booking" href="#">Бронирование</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="dropdown1" data-toggle="dropdown" aria-haspopup="true"
@@ -80,8 +77,6 @@ $contentModel = Model::factory('Content');
         <div class="row">
             <div class="col-12">
                 <div class="header">
-                    <h1>МИНИ ОТЕЛЬ В ДЕЛОВОМ ЦЕНТРЕ ВЛАДИВОСТОКА С ВИДОМ НА ГОРОД И БУХТУ «ЗОЛОТОЙ РОГ»</h1>
-                    <img src="/public/images/logo.svg" alt="VladPoint">
                 </div>
             </div>
         </div>

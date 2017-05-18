@@ -11,6 +11,9 @@
 <?php
 /** @var Model_Content $contentModel */
 $contentModel = Model::factory('Content');
+
+/** @var $roomModel Model_Room */
+$roomModel = Model::factory('Room');
 ?>
 <body>
 <div class="wrapper">
@@ -86,25 +89,41 @@ $contentModel = Model::factory('Content');
 <div class="container">
     <div class="booking">
         <div class="row">
-            <div class="col-md-12 col-lg-3 booking__caption"><span>Бронирование</span></div>
-            <div class="col-md-12 col-lg-6 booking__selects">
+            <div class="col-md-12 col-lg-2 booking__caption"><span>Бронирование</span></div>
+            <div class="col-md-12 col-lg-8 booking__selects">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="row">
-                            <div class="col-lg-12 col-xl-3"><label for="arrival">Заезд </label></div>
-                            <div class="col-lg-12 col-xl-9"><input id="arrival" type="date" value="2017-05-10" class="form-control"/></div>
+                            <div class="col-lg-12 col-xl-3"><label for="guests">Гостей </label></div>
+                            <div class="col-lg-12 col-xl-9">
+                                <select class="form-control" id="guests">
+                                    <?foreach ($roomModel->roomsGuests as $guestNumber) {?>
+                                    <option><?=$guestNumber;?></option>
+                                    <?}?>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
+                        <div class="row">
+                            <div class="col-lg-12 col-xl-3"><label for="arrival">Заезд </label></div>
+                            <div class="col-lg-12 col-xl-9 booking-calendar">
+                                <input id="arrival" type="date" value="2017-05-10" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
                         <div class="row">
                             <div class="col-lg-12 col-xl-3"><label for="departureDate">Выезд </label></div>
-                            <div class="col-lg-12 col-xl-9"><input id="departureDate" type="date" value="2017-05-10" class="form-control"/></div>
+                            <div class="col-lg-12 col-xl-9 booking-calendar">
+                                <input id="departureDate" type="date" value="2017-05-10" class="form-control"/>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 col-lg-3 booking__action">
-                <button type="button" class="btn btn-primary rooms__kind-caption-action" data-toggle="modal" data-target=".modal-booking">Показать номера</button>
+            <div class="col-md-12 col-lg-2 booking__action">
+                <button type="button" class="btn btn-primary rooms__kind-caption-action" data-toggle="modal" data-target=".modal-booking">Показать свободные номера</button>
             </div>
         </div>
     </div>
@@ -185,7 +204,9 @@ $contentModel = Model::factory('Content');
             <div class="col-xl-3">
                 <div class="footer__block-contacts">
                     <div class="caption">Телефон для бронирования</div>
-                    <div class="phone">8 800 235 35 72</div>
+                    <?foreach ($contentModel->getContacts(['phone']) as $contact){?>
+                        <div class="phone"><?=$contact['value'];?></div>
+                    <?}?>
                 </div>
             </div>
             <div class="col-xl-6">
@@ -275,17 +296,6 @@ $contentModel = Model::factory('Content');
                             </ul>
                         </div>
                         <div class="col-12 col-md-6">
-                            <div class="row">
-                                <div class="form-group">
-                                    <label for="Select">Количество гостей</label>
-                                    <select class="form-control" id="Select">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                    </select>
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="form-group">
                                     <label for="modalArrival">Заезд </label>

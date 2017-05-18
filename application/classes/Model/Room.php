@@ -7,6 +7,8 @@ class Model_Room extends Kohana_Model
 {
     public $defaultLimit = 20;
 
+    public $roomsGuests = [1,2,3,4,5];
+
     /**
      * @param int $page
      * @param int $limit

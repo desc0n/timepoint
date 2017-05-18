@@ -65,7 +65,7 @@
 
 }
 .nav-link__address{
-
+  text-align: center;
   font-size: 1rem;
 
 }
@@ -73,7 +73,7 @@
 
   font-size: 1.5rem;
   font-weight: 900;
-
+  text-align: center;
 }
 .nav-link__booking{
   padding: 0.1em 1em;
@@ -87,6 +87,9 @@
   display: flex;
   align-items: center;
 
+  .nav-link {
+    color: #000!important;
+  }
   img{
 
     height: 44px;

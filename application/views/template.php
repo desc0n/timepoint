@@ -61,7 +61,6 @@ $roomModel = Model::factory('Room');
 
                     </li>
                     <li class="nav-item nav-item__contacts hidden-lg-down">
-                        <img src="/public/images/point.png" alt="Адрес">
                         <div class="nav-link">
                             <?foreach ($contentModel->getContacts(['address']) as $contact){?>
                                 <div class="nav-link__address"><?=$contact['value'];?></div>

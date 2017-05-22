@@ -168,18 +168,34 @@ $roomModel = Model::factory('Room');
                 <div class="map-controls">
                     <div class="row">
                         <div class="col-12">
-                            <ul class="map-controls__list">
-                                <li>из аэропорта</li>
-                                <li class="map-controls__list_active">с ж/д вокзала</li>
-                                <li>с автовокзала</li>
+                            <ul class="map-controls__list map-controls__list_parent">
+                                <li class="map-controls__list_active" data-path="1">с ж/д вокзала</li>
+                                <li data-path="2">из аэропорта</li>
+                                <li data-path="3">с автовокзала</li>
                             </ul>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row map-path-visible map-path-1">
                         <div class="col-12">
                             <ul class="map-controls__list map-controls__list_sublist">
-                                <li>на такси</li>
-                                <li class="map-controls__list_active">пешком</li>
+                                <li class="map-controls__list_active" data-img="path1_pedestrian">пешком</li>
+                                <li data-img="path1_taxi">на такси</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row map-path-hidden map-path-2">
+                        <div class="col-12">
+                            <ul class="map-controls__list map-controls__list_sublist">
+                                <li class="map-controls__list_active" data-img="path2_pedestrian">пешком</li>
+                                <li data-img="path2_taxi">на такси</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row map-path-hidden map-path-3">
+                        <div class="col-12">
+                            <ul class="map-controls__list map-controls__list_sublist">
+                                <li class="map-controls__list_active" data-img="path3_bus">на аавтобусе</li>
+                                <li data-img="path3_taxi">на такси</li>
                             </ul>
                         </div>
                     </div>
@@ -188,6 +204,7 @@ $roomModel = Model::factory('Room');
         </div>
     </div>
     <div class="map">
+        <img id="map" src="/public/images/path1_pedestrian.jpg">
     </div>
 </div>
 <!-- /.map -->
@@ -318,5 +335,6 @@ $roomModel = Model::factory('Room');
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script src="/public/js/scripts.js"></script>
 </body>
 </html>

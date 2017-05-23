@@ -24,5 +24,10 @@ $(document).ready(function () {
 
 function changeMapSrc(src) {
     $('#map').attr('src', '/public/images/' + src + '.jpg');
+    if(src.indexOf('taxi') !== -1) {
+        $('.taxi-link').css('display', 'block');
+    } else {
+        $('.taxi-link').css('display', 'none');
+    }
 }
 

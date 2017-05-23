@@ -164,7 +164,7 @@ $roomModel = Model::factory('Room');
 <div class="map-block">
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-6">
                 <div class="map-controls">
                     <div class="row">
                         <div class="col-12">
@@ -200,6 +200,10 @@ $roomModel = Model::factory('Room');
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="taxi-link">Такси Максим <a href="https://taximaxim.ru/?city=%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%B2%D0%BE%D1%81%D1%82%D0%BE%D0%BA">https://taximaxim.ru/?city=Владивосток</a></div>
+                <div class="taxi-link">Такси Сатурн <a href="http://vladivostok.taxisaturn.ru/">http://vladivostok.taxisaturn.ru/</a></div>
             </div>
         </div>
     </div>

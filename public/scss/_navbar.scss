@@ -46,11 +46,12 @@
 .navbar-brand{
 
   padding-top: .5rem;
+  //padding-top: 5px;
+  min-height: 50px;
 
   img{
 
     width: 220px;
-
   }
 
 }
@@ -118,4 +119,9 @@
 
   }
 
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .navbar-brand{
+    display: none;
+  }
 }

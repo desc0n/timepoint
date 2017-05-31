@@ -1,65 +1,59 @@
 .booking{
-
   position: relative;
   z-index: 1000;
   background-color: $brand-accent;
   margin-bottom: 5rem;
   padding: 1rem 3rem;
   margin-top: -3.25rem;
-
 }
 .booking__caption{
-
   display: flex;
   align-items: flex-end;
   color: #fff;
   font-size: 1.2rem;
   margin-top: -0.4rem;
-
 }
 
 @media (min-width: 1280px){
   .booking__caption {
-
     align-items: center;
-
   }
 }
 
 .booking__selects{
-
-
   display: flex;
   align-items: center;
   font-size: 1.1rem;
 
   label{
-
     color: darken($brand-foreground, 30);
     margin-top: 0.35rem;
-
   }
-
 }
 
 .booking__action{
-
   display: flex;
   justify-content: center;
   align-items: flex-end;
   margin-top: 1rem;
-
 }
 
 @media (min-width: 1280px){
   .booking__action {
-
     margin-top: 0;
     align-items: center;
     justify-content: flex-end;
-
   }
 }
 .booking-calendar {
   padding: 0 10px;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .booking__selects .booking__selects-form{
+    min-width: 280px;
+  }
+  .booking__selects .form-control{
+    min-width: 80px;
+  }
 }

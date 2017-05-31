@@ -3,10 +3,20 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/public/css/styles.css?v=4" >
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/public/css/styles.css?v=6" >
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="/public/js/scripts.js"></script>
+
 </head>
 <?php
 /** @var Model_Content $contentModel */
@@ -91,9 +101,9 @@ $roomModel = Model::factory('Room');
             <div class="col-md-12 col-lg-2 booking__caption"><span>Бронирование</span></div>
             <div class="col-md-12 col-lg-8 booking__selects">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-3 booking__selects-form">
                         <div class="row">
-                            <div class="col-lg-12 col-xl-3"><label for="guests">Гостей </label></div>
+                            <div class="col-lg-12 col-xl-3"><label for="guests">Гости </label></div>
                             <div class="col-lg-12 col-xl-9">
                                 <select class="form-control" id="guests">
                                     <?foreach ($roomModel->roomsGuests as $guestNumber) {?>
@@ -103,19 +113,19 @@ $roomModel = Model::factory('Room');
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-4 booking__selects-form">
                         <div class="row">
                             <div class="col-lg-12 col-xl-3"><label for="arrival">Заезд </label></div>
                             <div class="col-lg-12 col-xl-9 booking-calendar">
-                                <input id="arrival" type="date" value="2017-05-10" class="form-control"/>
+                                <input id="arrival" value="<?=date('d.m.Y');?>" type="text" class="form-control"/>
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-4 booking__selects-form">
                         <div class="row">
-                            <div class="col-lg-12 col-xl-3"><label for="departureDate">Выезд </label></div>
+                            <div class="col-lg-12 col-xl-3"><label for="departure">Выезд </label></div>
                             <div class="col-lg-12 col-xl-9 booking-calendar">
-                                <input id="departureDate" type="date" value="2017-05-10" class="form-control"/>
+                                <input id="departure" value="<?=date('d.m.Y');?>" type="text" class="form-control"/>
                             </div>
                         </div>
                     </div>
@@ -315,13 +325,13 @@ $roomModel = Model::factory('Room');
                             <div class="row">
                                 <div class="form-group">
                                     <label for="modalArrival">Заезд </label>
-                                    <input id="modalArrival" type="date" value="2017-05-10" class="form-control"/>
+                                    <input id="modalArrival" type="text" value="<?=date('d.m.Y');?>" class="form-control"/>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group">
-                                    <label for="modalDepartureDate">Выезд </label>
-                                    <input id="modalDepartureDate" type="date" value="2017-05-10" class="form-control"/>
+                                    <label for="modalDeparture">Выезд </label>
+                                    <input id="modalDeparture" type="text" value="<?=date('d.m.Y');?>" class="form-control"/>
                                 </div>
                             </div>
                         </div>
@@ -335,10 +345,21 @@ $roomModel = Model::factory('Room');
     </div>
 </div>
 <!-- modal -->
-<!-- jQuery first, then Tether, then Bootstrap JS. -->
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-<script src="/public/js/scripts.js"></script>
+<script>
+    $( function() {
+        $( "#arrival" ).datepicker({
+            dateFormat: 'dd.mm.yy'
+        });
+        $( "#departure" ).datepicker({
+            dateFormat: 'dd.mm.yy'
+        });
+        $( "#modalArrival" ).datepicker({
+            dateFormat: 'dd.mm.yy'
+        });
+        $( "#modalDeparture" ).datepicker({
+            dateFormat: 'dd.mm.yy'
+        });
+    } );
+</script>
 </body>
 </html>

@@ -101,7 +101,7 @@ $roomModel = Model::factory('Room');
             <div class="col-md-12 col-lg-2 booking__caption"><span>Бронирование</span></div>
             <div class="col-md-12 col-lg-8 booking__selects">
                 <div class="row">
-                    <div class="col-3 booking__selects-form">
+                    <div class="col-md-12 col-lg-3 booking__selects-form">
                         <div class="row">
                             <div class="col-lg-12 col-xl-3"><label for="guests">Гости </label></div>
                             <div class="col-lg-12 col-xl-9">
@@ -113,7 +113,7 @@ $roomModel = Model::factory('Room');
                             </div>
                         </div>
                     </div>
-                    <div class="col-4 booking__selects-form">
+                    <div class="col-md-12 col-lg-4 booking__selects-form">
                         <div class="row">
                             <div class="col-lg-12 col-xl-3"><label for="arrival">Заезд </label></div>
                             <div class="col-lg-12 col-xl-9 booking-calendar">
@@ -121,7 +121,7 @@ $roomModel = Model::factory('Room');
                             </div>
                         </div>
                     </div>
-                    <div class="col-4 booking__selects-form">
+                    <div class="col-md-12 col-lg-4 booking__selects-form">
                         <div class="row">
                             <div class="col-lg-12 col-xl-3"><label for="departure">Выезд </label></div>
                             <div class="col-lg-12 col-xl-9 booking-calendar">
@@ -174,7 +174,12 @@ $roomModel = Model::factory('Room');
 <div class="map-block">
     <div class="container">
         <div class="row">
-            <div class="col-6">
+            <div class="col-12">
+                <h1 class="map-block-header">Как к нам добраться</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="map-controls">
                     <div class="row">
                         <div class="col-12">
@@ -212,8 +217,8 @@ $roomModel = Model::factory('Room');
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="taxi-link">Такси Максим <a href="https://taximaxim.ru/?city=%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%B2%D0%BE%D1%81%D1%82%D0%BE%D0%BA">https://taximaxim.ru/?city=Владивосток</a></div>
-                <div class="taxi-link">Такси Сатурн <a href="http://vladivostok.taxisaturn.ru/">http://vladivostok.taxisaturn.ru/</a></div>
+                <div class="taxi-link">Максим <a href="https://taximaxim.ru/?city=%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%B2%D0%BE%D1%81%D1%82%D0%BE%D0%BA">https://taximaxim.ru/?city=Владивосток</a></div>
+                <div class="taxi-link">Сатурн <a href="http://vladivostok.taxisaturn.ru/">http://vladivostok.taxisaturn.ru/</a></div>
             </div>
         </div>
     </div>

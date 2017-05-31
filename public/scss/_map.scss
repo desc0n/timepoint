@@ -6,13 +6,11 @@
 }
 .map-controls{
 
-
-
 }
 
 .map-controls__list{
 
-  font-size: 1.5rem;
+  font-size: 1rem;
 
   li{
 
@@ -40,7 +38,7 @@
 
 .map-controls__list_sublist{
 
-  font-size: 1.25rem;
+  font-size: 1rem;
   margin-left: 2rem;
 
 }
@@ -63,9 +61,56 @@
 }
 .taxi-link {
   display: none;
+  font-size: 0.7rem;
   a,
   a:hover,
   a:visited {
     color: #fff;
+  }
+}
+.map-block-header {
+  color: #fff;
+  font-size: 1.5rem;
+}
+@media (min-width: 1200px) {
+  .map-block-header {
+    font-size: 2.5rem;
+  }
+  .map-controls__list {
+    font-size: 1.5rem;
+  }
+  .map-controls__list_sublist{
+    font-size: 1.25rem;
+  }
+  .taxi-link {
+    font-size: 1rem;
+  }
+}
+@media (min-width: 992px) {
+  .map-block-header {
+    font-size: 2.5rem;
+  }
+  .map-controls__list {
+    font-size: 1.5rem;
+  }
+  .map-controls__list_sublist{
+    font-size: 1.25rem;
+  }
+  .taxi-link {
+    font-size: 1rem;
+  }
+}
+@media (min-width: 768px) {
+  .map-block-header {
+    font-size: 2.5rem;
+  }
+  .map-controls__list {
+    font-size: 1.5rem;
+  }
+  .map-controls__list_sublist{
+    font-size: 1.25rem;
+  }
+  .taxi-link {
+    font-size: 1rem;
   }
 }

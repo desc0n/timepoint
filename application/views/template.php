@@ -8,6 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/public/css/styles.css?v=6" >
+    <link rel="stylesheet" href="/assets/bootstrap/css/font-awesome.css" >
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -184,41 +185,37 @@ $roomModel = Model::factory('Room');
                     <div class="row">
                         <div class="col-12">
                             <ul class="map-controls__list map-controls__list_parent">
-                                <li class="map-controls__list_active" data-path="1">с ж/д вокзала</li>
-                                <li data-path="2">из аэропорта</li>
-                                <li data-path="3">с автовокзала</li>
+                                <li class="map-controls__list_active" data-path="1"><span>с ж/д вокзала</span></li>
+                                <li data-path="2"><span>из аэропорта</span></li>
+                                <li data-path="3"><span>с автовокзала</span></li>
                             </ul>
                         </div>
                     </div>
                     <div class="row map-path-visible map-path-1">
                         <div class="col-12">
                             <ul class="map-controls__list map-controls__list_sublist">
-                                <li class="map-controls__list_active" data-img="path1_pedestrian">пешком</li>
-                                <li data-img="path1_taxi">на такси</li>
+                                <li class="map-controls__list_active" data-img="path1_pedestrian"><span>пешком</span></li>
+                                <li data-img="path1_taxi"><span>на такси</span> <i class="fa fa-question-circle" aria-hidden="true" onclick="$('#taxiInfo1').modal('toggle');"></i></li>
                             </ul>
                         </div>
                     </div>
                     <div class="row map-path-hidden map-path-2">
                         <div class="col-12">
                             <ul class="map-controls__list map-controls__list_sublist">
-                                <li class="map-controls__list_active" data-img="path2_pedestrian">пешком</li>
-                                <li data-img="path2_taxi">на такси</li>
+                                <li class="map-controls__list_active" data-img="path2_pedestrian"><span>пешком</span></li>
+                                <li data-img="path2_taxi"><span>на такси</span></li>
                             </ul>
                         </div>
                     </div>
                     <div class="row map-path-hidden map-path-3">
                         <div class="col-12">
                             <ul class="map-controls__list map-controls__list_sublist">
-                                <li class="map-controls__list_active" data-img="path3_bus">на аавтобусе</li>
-                                <li data-img="path3_taxi">на такси</li>
+                                <li class="map-controls__list_active" data-img="path3_bus"><span>на аавтобусе</span></li>
+                                <li data-img="path3_taxi"><span>на такси</span></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="taxi-link">Максим <a href="https://taximaxim.ru/?city=%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%B2%D0%BE%D1%81%D1%82%D0%BE%D0%BA">https://taximaxim.ru/?city=Владивосток</a></div>
-                <div class="taxi-link">Сатурн <a href="http://vladivostok.taxisaturn.ru/">http://vladivostok.taxisaturn.ru/</a></div>
             </div>
         </div>
     </div>
@@ -337,6 +334,29 @@ $roomModel = Model::factory('Room');
     </div>
 </div>
 <!-- modal -->
+<div id="taxiInfo1" class="modal fade modal-booking" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content modal-booking">
+            <div class="modal-header">
+                <h5 class="modal-title">Список такси</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>Такси Максим</h4>
+                <div>тел. (423) 2-888-888, (423) 2-511-115</div>
+                <div>стоимость от 140 руб.</div>
+                <div><a href="https://taximaxim.ru/?city=Владивосток" target="_blank">https://taximaxim.ru/?city=Владивосток</a></div>
+                <h4>Такси Сатурн</h4>
+                <div>тел. (423) 2-500-500</div>
+                <div>стоимость от 70 руб.</div>
+                <div><a href="http://vladivostok.taxisaturn.ru/" target="_blank">http://vladivostok.taxisaturn.ru/</a></div>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
 <script>
     $( function() {
         $( "#arrival" ).datepicker({

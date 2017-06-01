@@ -16,22 +16,29 @@
 
     color: $brand-primary;
     display: inline-block;
-    border-bottom: 1px dashed $brand-primary;
     cursor: pointer;
     margin-right: 1.5rem;
 
     &:hover{
 
       color: #fff;
-      border-bottom: 1px dashed #fff;
+      span {
+        border-bottom: 1px dashed #fff;
+      }
 
     }
 
     &.map-controls__list_active{
 
       color: #fff;
-      border-bottom: 1px dashed #fff;
+      span {
+        border-bottom: 1px dashed #fff;
+      }
 
+    }
+
+    span {
+      border-bottom: 1px dashed $brand-primary;
     }
   }
 }

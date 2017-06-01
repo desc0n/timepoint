@@ -89,7 +89,9 @@
   align-items: center;
 
   .nav-link {
-    color: #000!important;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.9);
+    filter: progid:DXImageTransform.Microsoft.Glow(Color=#000000,Strength=2);
+    font-weight: bold;
   }
   img{
 

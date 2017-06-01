@@ -284,22 +284,13 @@ $roomModel = Model::factory('Room');
                         <div class="col-12">
                             <div class="carousel-inner" role="listbox">
                                 <div class="carousel-item  active">
-                                    <img class="d-block"
-                                         alt=""
-                                         src="/public/images/rooms/room1__1.jpg"
-                                         style="height: 500px">
+                                    <img class="d-block" src="/public/images/rooms/room1__1.jpg">
                                 </div>
                                 <div class="carousel-item">
-                                    <img class="d-block"
-                                         alt=""
-                                         src="/public/images/rooms/room1__2.jpg"
-                                         style="height: 500px">
+                                    <img class="d-block" src="/public/images/rooms/room1__2.jpg">
                                 </div>
                                 <div class="carousel-item">
-                                    <img class="d-block"
-                                         alt=""
-                                         src="/public/images/rooms/room1__3.jpg"
-                                         style="height: 500px">
+                                    <img class="d-block" src="/public/images/rooms/room1__3.jpg">
                                 </div>
                             </div>
                             <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
@@ -327,17 +318,13 @@ $roomModel = Model::factory('Room');
                             </ul>
                         </div>
                         <div class="col-12 col-md-6">
-                            <div class="row">
-                                <div class="form-group">
-                                    <label for="modalArrival">Заезд </label>
-                                    <input id="modalArrival" type="text" value="<?=date('d.m.Y');?>" class="form-control"/>
-                                </div>
+                            <div class="form-group">
+                                <label for="modalArrival">Заезд </label>
+                                <input id="modalArrival" type="text" value="<?=date('d.m.Y');?>" class="form-control"/>
                             </div>
-                            <div class="row">
-                                <div class="form-group">
-                                    <label for="modalDeparture">Выезд </label>
-                                    <input id="modalDeparture" type="text" value="<?=date('d.m.Y');?>" class="form-control"/>
-                                </div>
+                            <div class="form-group">
+                                <label for="modalDeparture">Выезд </label>
+                                <input id="modalDeparture" type="text" value="<?=date('d.m.Y');?>" class="form-control"/>
                             </div>
                         </div>
                     </div>

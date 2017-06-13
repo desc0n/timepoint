@@ -403,7 +403,6 @@ $roomModel = Model::factory('Room');
         });
         $('.datepicker-toggler').click(function() {
             $("#" + $(this).data('target')).focus();
-            $('#ui-datepicker-div').css('z-index', 2000);
         });
     } );
 </script>

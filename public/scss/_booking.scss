@@ -1,6 +1,10 @@
+body{
+  position: relative;
+  z-index: 0;
+}
 .booking{
   position: relative;
-  z-index: 1000;
+  z-index: 1;
   background-color: $brand-accent;
   margin-bottom: 5rem;
   padding: 1rem;
@@ -28,6 +32,9 @@
   input[type=text] {
     font-size: 0.7rem;
   }
+}
+#ui-datepicker-div{
+  z-index: 2000;
 }
 @media (min-width: 1280px){
   .booking{

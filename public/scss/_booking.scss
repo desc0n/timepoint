@@ -3,8 +3,14 @@
   z-index: 1000;
   background-color: $brand-accent;
   margin-bottom: 5rem;
-  padding: 1rem 3rem;
-  margin-top: -3.25rem;
+  padding: 1rem;
+
+  .form-group{
+    margin: 0;
+  }
+}
+.booking__selects-date{
+  width: 50%;
 }
 .booking__caption{
   display: flex;
@@ -13,10 +19,31 @@
   font-size: 1.2rem;
   margin-top: -0.4rem;
 }
+.input-group.date .input-group-addon {
+  cursor: pointer;
+}
 
+.booking-calendar {
+  padding: 0 10px;
+  input[type=text] {
+    font-size: 0.7rem;
+  }
+}
 @media (min-width: 1280px){
+  .booking{
+    padding: 1rem 3rem;
+  }
   .booking__caption {
     align-items: center;
+  }
+  .booking__selects-date{
+    width: 100%;
+  }
+
+  .booking-calendar {
+    input[type=text] {
+      font-size: 1rem;
+    }
   }
 }
 
@@ -44,9 +71,6 @@
     align-items: center;
     justify-content: flex-end;
   }
-}
-.booking-calendar {
-  padding: 0 10px;
 }
 
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {

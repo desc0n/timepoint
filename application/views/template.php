@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/public/css/styles.css?v=6" >
+    <link rel="stylesheet" href="/public/css/styles.css?v=7" >
     <link rel="stylesheet" href="/assets/bootstrap/css/font-awesome.css" >
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -16,6 +16,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="/public/js/datepicker-ru.js"></script>
     <script src="/public/js/scripts.js"></script>
 
 </head>
@@ -114,19 +115,33 @@ $roomModel = Model::factory('Room');
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 col-lg-4 booking__selects-form">
+                    <div class="col-md-12 col-lg-4 booking__selects-form booking__selects-date">
                         <div class="row">
                             <div class="col-lg-12 col-xl-3"><label for="arrival">Заезд </label></div>
                             <div class="col-lg-12 col-xl-9 booking-calendar">
-                                <input id="arrival" value="<?=date('d.m.Y');?>" type="text" class="form-control"/>
+                                <div class="form-group">
+                                    <div class='input-group date'>
+                                        <input id="arrival" value="<?=date('d.m.Y');?>" type="text" class="form-control"/>
+                                        <span class="input-group-addon datepicker-toggler" data-target="arrival">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 col-lg-4 booking__selects-form">
+                    <div class="col-md-12 col-lg-4 booking__selects-form booking__selects-date">
                         <div class="row">
                             <div class="col-lg-12 col-xl-3"><label for="departure">Выезд </label></div>
                             <div class="col-lg-12 col-xl-9 booking-calendar">
-                                <input id="departure" value="<?=date('d.m.Y');?>" type="text" class="form-control"/>
+                                <div class="form-group">
+                                    <div class='input-group date'>
+                                        <input id="departure" value="<?=date('d.m.Y');?>" type="text" class="form-control"/>
+                                        <span class="input-group-addon datepicker-toggler" data-target="departure">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -317,11 +332,25 @@ $roomModel = Model::factory('Room');
                         <div class="col-12 col-md-6">
                             <div class="form-group">
                                 <label for="modalArrival">Заезд </label>
-                                <input id="modalArrival" type="text" value="<?=date('d.m.Y');?>" class="form-control"/>
+                                <div class="form-group">
+                                    <div class='input-group date'>
+                                        <input id="modalArrival" type="text" value="<?=date('d.m.Y');?>" class="form-control"/>
+                                        <span class="input-group-addon datepicker-toggler" data-target="modalArrival">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="modalDeparture">Выезд </label>
-                                <input id="modalDeparture" type="text" value="<?=date('d.m.Y');?>" class="form-control"/>
+                                <div class="form-group">
+                                    <div class='input-group date'>
+                                        <input id="modalDeparture" type="text" value="<?=date('d.m.Y');?>" class="form-control"/>
+                                        <span class="input-group-addon datepicker-toggler" data-target="modalDeparture">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -359,6 +388,7 @@ $roomModel = Model::factory('Room');
 </div>
 <script>
     $( function() {
+        $.datepicker.setDefaults($.datepicker.regional['ru']);
         $( "#arrival" ).datepicker({
             dateFormat: 'dd.mm.yy'
         });
@@ -370,6 +400,10 @@ $roomModel = Model::factory('Room');
         });
         $( "#modalDeparture" ).datepicker({
             dateFormat: 'dd.mm.yy'
+        });
+        $('.datepicker-toggler').click(function() {
+            $("#" + $(this).data('target')).focus();
+            $('#ui-datepicker-div').css('z-index', 2000);
         });
     } );
 </script>

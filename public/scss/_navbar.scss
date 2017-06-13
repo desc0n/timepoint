@@ -4,6 +4,19 @@
   min-height: 250px;
   background-size: cover;
   background-image: url('/public/images/header_bg_xs.jpg');
+
+  .navbar-brand {
+    display: none;
+  }
+  .navbar-inverse{
+    padding: 0;
+  }
+  .navbar-collapse{
+    background-color: #47C1E8
+  }
+  .navbar-toggler {
+    top: 10px;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -11,17 +24,35 @@
     background-image: url('/public/images/header_bg_lg.jpg');
     min-height: 450px;
   }
+  .navbar-collapse{
+    background-color: transparent!important;
+  }
+  .navbar-brand {
+    display: inline-block!important;
+  }
 }
 @media (min-width: 992px) {
   .wrapper {
     background-image: url('/public/images/header_bg_md.jpg');
     min-height: 450px;
   }
+  .navbar-collapse{
+    background-color: transparent!important;
+  }
+  .navbar-brand {
+    display: inline-block!important;
+  }
 }
 @media (min-width: 768px) {
   .wrapper {
     background-image: url('/public/images/header_bg_sm.jpg');
     min-height: 450px;
+  }
+  .navbar-collapse{
+    background-color: transparent!important;
+  }
+  .navbar-brand {
+    display: inline-block!important;
   }
 }
 .navbar{
@@ -68,13 +99,17 @@
 .nav-link__address{
   text-align: center;
   font-size: 1rem;
-
+  color: #000;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 1);
+  filter: progid:DXImageTransform.Microsoft.Glow(Color=#ffffff,Strength=2);
 }
 .nav-link__phone{
-
+  color: #000;
   font-size: 1.5rem;
   font-weight: 900;
   text-align: center;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 1);
+  filter: progid:DXImageTransform.Microsoft.Glow(Color=#ffffff,Strength=2);
 }
 .nav-link__booking{
   padding: 0.1em 1em;
@@ -84,13 +119,10 @@
 }
 
 .nav-item__contacts{
-
   display: flex;
   align-items: center;
 
   .nav-link {
-    text-shadow: 0 0 4px rgba(0, 0, 0, 0.9);
-    filter: progid:DXImageTransform.Microsoft.Glow(Color=#000000,Strength=2);
     font-weight: bold;
   }
   img{
@@ -121,9 +153,4 @@
 
   }
 
-}
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-  .navbar-brand{
-    display: none;
-  }
 }

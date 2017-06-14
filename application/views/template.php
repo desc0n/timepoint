@@ -92,7 +92,7 @@ $tomorrow->modify('+ 1 day');
     <!-- /.navbar -->
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="header">
                 </div>
             </div>
@@ -103,13 +103,13 @@ $tomorrow->modify('+ 1 day');
 <div class="container">
     <div class="booking">
         <div class="row">
-            <div class="col-md-12 col-lg-2 booking__caption"><span>Бронирование</span></div>
-            <div class="col-md-12 col-lg-8 booking__selects">
+            <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12 booking__caption"><span>Бронирование</span></div>
+            <div class="col-lg-8 col-md-12  col-sm-12  col-xs-12 booking__selects">
                 <div class="row">
-                    <div class="col-md-12 col-lg-3 booking__selects-form">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 booking__selects-form">
                         <div class="row">
-                            <div class="col-lg-12 col-xl-3"><label for="guests">Гости </label></div>
-                            <div class="col-lg-12 col-xl-9">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><label for="guests">Гости </label></div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
                                 <select class="form-control" id="guests">
                                     <?foreach ($roomModel->roomsGuests as $guestNumber) {?>
                                     <option><?=$guestNumber;?></option>
@@ -118,10 +118,10 @@ $tomorrow->modify('+ 1 day');
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 col-lg-4 booking__selects-form booking__selects-date">
+                    <div class="col-lg-4 col-md-4 col-sm-4 booking__selects-form booking__selects-date">
                         <div class="row">
-                            <div class="col-lg-12 col-xl-3"><label for="arrival">Заезд </label></div>
-                            <div class="col-lg-12 col-xl-9 booking-calendar">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><label for="arrival">Заезд </label></div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 booking-calendar">
                                 <div class="form-group">
                                     <div class='input-group date'>
                                         <input id="arrival" value="<?=$today->format('d.m.Y');?>" type="text" class="form-control"/>
@@ -133,10 +133,10 @@ $tomorrow->modify('+ 1 day');
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 col-lg-4 booking__selects-form booking__selects-date">
+                    <div class="col-lg-4 col-md-4 col-sm-4 booking__selects-form booking__selects-date">
                         <div class="row">
-                            <div class="col-lg-12 col-xl-3"><label for="departure">Выезд </label></div>
-                            <div class="col-lg-12 col-xl-9 booking-calendar">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><label for="departure">Выезд </label></div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 booking-calendar">
                                 <div class="form-group">
                                     <div class='input-group date'>
                                         <input id="departure" value="<?=$tomorrow->format('d.m.Y');?>" type="text" class="form-control"/>
@@ -150,7 +150,7 @@ $tomorrow->modify('+ 1 day');
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 col-lg-2 booking__action">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 booking__action">
                 <button type="button" class="btn btn-primary rooms__kind-caption-action" data-toggle="modal" data-target=".modal-booking">Показать свободные номера</button>
             </div>
         </div>
@@ -163,12 +163,12 @@ $tomorrow->modify('+ 1 day');
 <div class="contacts-block">
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h1>Контакты</h1>
             </div>
         </div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <div class="contacts-block__caption">
                     Телефон бронирования
                 </div>
@@ -176,7 +176,7 @@ $tomorrow->modify('+ 1 day');
                     <div class="contacts-block__content"><?=$contact['value'];?></div>
                 <?}?>
             </div>
-            <div class="col-6">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
                 <div class="contacts-block__caption">
                     Адрес
                 </div>
@@ -193,7 +193,7 @@ $tomorrow->modify('+ 1 day');
 <div class="map-block">
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h1 class="map-block-header">Как к нам добраться</h1>
             </div>
         </div>
@@ -201,7 +201,7 @@ $tomorrow->modify('+ 1 day');
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="map-controls">
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <ul class="map-controls__list map-controls__list_parent">
                                 <li class="map-controls__list_active" data-path="1"><span>с ж/д вокзала</span></li>
                                 <li data-path="2"><span>из аэропорта</span></li>
@@ -210,7 +210,7 @@ $tomorrow->modify('+ 1 day');
                         </div>
                     </div>
                     <div class="row map-path-visible map-path-1">
-                        <div class="col-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <ul class="map-controls__list map-controls__list_sublist">
                                 <li class="map-controls__list_active" data-img="path1_pedestrian"><span>пешком</span></li>
                                 <li data-img="path1_taxi"><span>на такси</span> <i class="fa fa-question-circle" aria-hidden="true" onclick="$('#taxiInfo1').modal('toggle');"></i></li>
@@ -218,7 +218,7 @@ $tomorrow->modify('+ 1 day');
                         </div>
                     </div>
                     <div class="row map-path-hidden map-path-2">
-                        <div class="col-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <ul class="map-controls__list map-controls__list_sublist">
                                 <li class="map-controls__list_active" data-img="path2_pedestrian"><span>пешком</span></li>
                                 <li data-img="path2_taxi"><span>на такси</span></li>
@@ -226,9 +226,9 @@ $tomorrow->modify('+ 1 day');
                         </div>
                     </div>
                     <div class="row map-path-hidden map-path-3">
-                        <div class="col-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <ul class="map-controls__list map-controls__list_sublist">
-                                <li class="map-controls__list_active" data-img="path3_bus"><span>на аавтобусе</span></li>
+                                <li class="map-controls__list_active" data-img="path3_bus"><span>на автобусе</span></li>
                                 <li data-img="path3_taxi"><span>на такси</span></li>
                             </ul>
                         </div>
@@ -245,12 +245,12 @@ $tomorrow->modify('+ 1 day');
 <div class="footer">
     <div class="container">
         <div class="row">
-            <div class="col-xl-3">
+            <div class="col-xs-3">
                 <div class="footer__block-logo">
                     <a href="/"><img src="/public/images/logo.svg" alt="VladPoint"></a>
                 </div>
             </div>
-            <div class="col-xl-3">
+            <div class="col-xs-3">
                 <div class="footer__block-contacts">
                     <div class="caption">Телефон для бронирования</div>
                     <?foreach ($contentModel->getContacts(['phone']) as $contact){?>
@@ -258,7 +258,7 @@ $tomorrow->modify('+ 1 day');
                     <?}?>
                 </div>
             </div>
-            <div class="col-xl-6">
+            <div class="col-xs-6">
                 <div class="footer__block-navbar">
                     <nav class="navbar navbar-toggleable-md navbar-inverse navbar_footer">
                         <div class="navbar-collapse">
@@ -296,7 +296,7 @@ $tomorrow->modify('+ 1 day');
             <div class="modal-body">
                 <div id="carousel" class="carousel slide" data-ride="carousel">
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="carousel-inner" role="listbox">
                                 <div class="carousel-item  active">
                                     <img class="d-block" src="/public/images/rooms/room1__1.jpg">
@@ -319,7 +319,7 @@ $tomorrow->modify('+ 1 day');
                         </div>
                     </div>
                     <div class="row">
-                        <div class="modal-booking__desc col-12 col-md-6">
+                        <div class="modal-booking__desc col-lg-12 col-md-12 col-sm-12 col-xs-12 col-md-6">
                             <h2>Удобства в номере</h2>
                             <ul>
                                 <li>Двуспальная кровать</li>
@@ -332,7 +332,7 @@ $tomorrow->modify('+ 1 day');
                                 <li>Телевизор</li>
                             </ul>
                         </div>
-                        <div class="col-12 col-md-6">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-md-6">
                             <div class="form-group">
                                 <label for="modalArrival">Заезд </label>
                                 <div class="form-group">

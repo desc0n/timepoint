@@ -154,3 +154,8 @@
   }
 
 }
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .navbar-brand{
+    display: none!important;
+  }
+}

@@ -88,3 +88,8 @@ body{
     min-width: 80px;
   }
 }
+@media only screen and (max-device-width: 480px) {
+  .booking__selects-date{
+    width: 50%;
+  }
+}

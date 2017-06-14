@@ -26,6 +26,9 @@ $contentModel = Model::factory('Content');
 
 /** @var $roomModel Model_Room */
 $roomModel = Model::factory('Room');
+$today = new \DateTime();
+$tomorrow = clone $today;
+$tomorrow->modify('+ 1 day');
 ?>
 <body>
 <div class="wrapper">
@@ -121,7 +124,7 @@ $roomModel = Model::factory('Room');
                             <div class="col-lg-12 col-xl-9 booking-calendar">
                                 <div class="form-group">
                                     <div class='input-group date'>
-                                        <input id="arrival" value="<?=date('d.m.Y');?>" type="text" class="form-control"/>
+                                        <input id="arrival" value="<?=$today->format('d.m.Y');?>" type="text" class="form-control"/>
                                         <span class="input-group-addon datepicker-toggler" data-target="arrival">
                                             <i class="fa fa-calendar"></i>
                                         </span>
@@ -136,7 +139,7 @@ $roomModel = Model::factory('Room');
                             <div class="col-lg-12 col-xl-9 booking-calendar">
                                 <div class="form-group">
                                     <div class='input-group date'>
-                                        <input id="departure" value="<?=date('d.m.Y');?>" type="text" class="form-control"/>
+                                        <input id="departure" value="<?=$tomorrow->format('d.m.Y');?>" type="text" class="form-control"/>
                                         <span class="input-group-addon datepicker-toggler" data-target="departure">
                                             <i class="fa fa-calendar"></i>
                                         </span>
@@ -334,7 +337,7 @@ $roomModel = Model::factory('Room');
                                 <label for="modalArrival">Заезд </label>
                                 <div class="form-group">
                                     <div class='input-group date'>
-                                        <input id="modalArrival" type="text" value="<?=date('d.m.Y');?>" class="form-control"/>
+                                        <input id="modalArrival" type="text" value="<?=$today->format('d.m.Y');?>" class="form-control"/>
                                         <span class="input-group-addon datepicker-toggler" data-target="modalArrival">
                                             <i class="fa fa-calendar"></i>
                                         </span>
@@ -345,7 +348,7 @@ $roomModel = Model::factory('Room');
                                 <label for="modalDeparture">Выезд </label>
                                 <div class="form-group">
                                     <div class='input-group date'>
-                                        <input id="modalDeparture" type="text" value="<?=date('d.m.Y');?>" class="form-control"/>
+                                        <input id="modalDeparture" type="text" value="<?=$tomorrow->format('d.m.Y');?>" class="form-control"/>
                                         <span class="input-group-addon datepicker-toggler" data-target="modalDeparture">
                                             <i class="fa fa-calendar"></i>
                                         </span>

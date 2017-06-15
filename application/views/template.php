@@ -118,7 +118,7 @@ $tomorrow->modify('+ 1 day');
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 booking__selects-form booking__selects-date">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 booking__selects-form">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label for="arrival">Заезд </label></div>
                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 booking-calendar">
@@ -133,7 +133,7 @@ $tomorrow->modify('+ 1 day');
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 booking__selects-form booking__selects-date">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 booking__selects-form">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label for="departure">Выезд </label></div>
                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 booking-calendar">

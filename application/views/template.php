@@ -118,10 +118,10 @@ $tomorrow->modify('+ 1 day');
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 booking__selects-form booking__selects-date">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 booking__selects-form booking__selects-date">
                         <div class="row">
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label for="arrival">Заезд </label></div>
-                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 booking-calendar">
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"><label for="arrival">Заезд </label></div>
+                            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 booking-calendar">
                                 <div class="form-group">
                                     <div class='input-group date'>
                                         <input id="arrival" value="<?=$today->format('d.m.Y');?>" type="text" class="form-control"/>
@@ -133,10 +133,10 @@ $tomorrow->modify('+ 1 day');
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 booking__selects-form booking__selects-date">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 booking__selects-form booking__selects-date">
                         <div class="row">
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label for="departure">Выезд </label></div>
-                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 booking-calendar">
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"><label for="departure">Выезд </label></div>
+                            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 booking-calendar">
                                 <div class="form-group">
                                     <div class='input-group date'>
                                         <input id="departure" value="<?=$tomorrow->format('d.m.Y');?>" type="text" class="form-control"/>
@@ -150,7 +150,7 @@ $tomorrow->modify('+ 1 day');
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 booking__action">
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 booking__action">
                 <button type="button" class="btn btn-primary rooms__kind-caption-action" data-toggle="modal" data-target=".modal-booking">Показать свободные номера</button>
             </div>
         </div>

@@ -764,7 +764,10 @@ body{
 #ui-datepicker-div{
   z-index: 2000;
 }
-@media (min-width: 1280px){
+.booking__selects-date{
+  width: 50%;
+}
+@media (min-width: 1200px){
   .booking{
     padding: 1rem 3rem;
   }
@@ -772,13 +775,29 @@ body{
     align-items: center;
   }
   .booking__selects-date{
-    width: 100%;
+    width: 33.33333333333333%!important;
   }
 
   .booking-calendar {
     input[type=text] {
       font-size: 1rem;
     }
+  }
+  .booking__action {
+    margin-top: 0;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
+
+@media (min-width: 992px) {
+  .booking__selects-date{
+    width: 33.33333333333333%!important;
+  }
+}
+@media (min-width: 768px) {
+  .booking__selects-date{
+    width: 33.33333333333333%!important;
   }
 }
 .booking__selects-form{
@@ -802,13 +821,6 @@ body{
   margin-top: 1rem;
 }
 
-@media (min-width: 1280px){
-  .booking__action {
-    margin-top: 0;
-    align-items: center;
-    justify-content: flex-end;
-  }
-}
 
 @media all and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   .booking__selects-form{

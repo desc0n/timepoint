@@ -245,12 +245,12 @@ $tomorrow->modify('+ 1 day');
 <div class="footer">
     <div class="container">
         <div class="row">
-            <div class="col-xs-3">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                 <div class="footer__block-logo">
                     <a href="/"><img src="/public/images/logo.svg" alt="VladPoint"></a>
                 </div>
             </div>
-            <div class="col-xs-3">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                 <div class="footer__block-contacts">
                     <div class="caption">Телефон для бронирования</div>
                     <?foreach ($contentModel->getContacts(['phone']) as $contact){?>
@@ -258,7 +258,7 @@ $tomorrow->modify('+ 1 day');
                     <?}?>
                 </div>
             </div>
-            <div class="col-xs-6">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="footer__block-navbar">
                     <nav class="navbar navbar-toggleable-md navbar-inverse navbar_footer">
                         <div class="navbar-collapse">

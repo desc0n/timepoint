@@ -106,10 +106,10 @@ $tomorrow->modify('+ 1 day');
             <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12 booking__caption"><span>Бронирование</span></div>
             <div class="col-lg-8 col-md-12  col-sm-12  col-xs-12 booking__selects">
                 <div class="row">
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 booking__selects-form">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 booking__selects-form">
                         <div class="row">
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><label for="guests">Гости </label></div>
-                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label for="guests">Гости </label></div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                                 <select class="form-control" id="guests">
                                     <?foreach ($roomModel->roomsGuests as $guestNumber) {?>
                                     <option><?=$guestNumber;?></option>
@@ -118,10 +118,10 @@ $tomorrow->modify('+ 1 day');
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 booking__selects-form booking__selects-date">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 booking__selects-form booking__selects-date">
                         <div class="row">
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><label for="arrival">Заезд </label></div>
-                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 booking-calendar">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label for="arrival">Заезд </label></div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 booking-calendar">
                                 <div class="form-group">
                                     <div class='input-group date'>
                                         <input id="arrival" value="<?=$today->format('d.m.Y');?>" type="text" class="form-control"/>
@@ -133,10 +133,10 @@ $tomorrow->modify('+ 1 day');
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 booking__selects-form booking__selects-date">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 booking__selects-form booking__selects-date">
                         <div class="row">
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><label for="departure">Выезд </label></div>
-                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 booking-calendar">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label for="departure">Выезд </label></div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 booking-calendar">
                                 <div class="form-group">
                                     <div class='input-group date'>
                                         <input id="departure" value="<?=$tomorrow->format('d.m.Y');?>" type="text" class="form-control"/>

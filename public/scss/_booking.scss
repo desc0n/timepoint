@@ -810,7 +810,7 @@ body{
   }
 }
 
-@media (-ms-high-contrast: active), (-ms-high-contrast: none) {
+@media all and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   .booking__selects-form{
     min-width: 280px;
   }

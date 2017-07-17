@@ -101,7 +101,7 @@ $tomorrow->modify('+ 1 day');
 </div>
 <!-- /.wrapper -->
 <div class="container">
-    <div class="booking">
+    <form action="/" class="booking">
         <div class="row">
             <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12 booking__caption"><span>Бронирование</span></div>
             <div class="col-lg-8 col-md-12  col-sm-12  col-xs-12 booking__selects">
@@ -110,11 +110,7 @@ $tomorrow->modify('+ 1 day');
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label for="guests">Гости </label></div>
                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                <select class="form-control" id="guests">
-                                    <?foreach ($roomModel->roomsGuests as $guestNumber) {?>
-                                    <option><?=$guestNumber;?></option>
-                                    <?}?>
-                                </select>
+                                <?=Form::select('guest_count', $roomModel->roomsGuests, Arr::get($get, 'guest_count'), ['class' => 'form-control', 'id' => 'guests']);?>
                             </div>
                         </div>
                     </div>
@@ -124,7 +120,7 @@ $tomorrow->modify('+ 1 day');
                             <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 booking-calendar">
                                 <div class="form-group">
                                     <div class='input-group date'>
-                                        <input id="arrival" value="<?=$today->format('d.m.Y');?>" type="text" class="form-control"/>
+                                        <input id="arrival" value="<?=Arr::get($get, 'arrival_date', $today->format('d.m.Y'));?>" type="text" name="arrival_date" class="form-control"/>
                                         <span class="input-group-addon datepicker-toggler" data-target="arrival">
                                             <i class="fa fa-calendar"></i>
                                         </span>
@@ -139,7 +135,7 @@ $tomorrow->modify('+ 1 day');
                             <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 booking-calendar">
                                 <div class="form-group">
                                     <div class='input-group date'>
-                                        <input id="departure" value="<?=$tomorrow->format('d.m.Y');?>" type="text" class="form-control"/>
+                                        <input id="departure" value="<?=Arr::get($get, 'departure_date', $tomorrow->format('d.m.Y'));?>" type="text" name="departure_date" class="form-control"/>
                                         <span class="input-group-addon datepicker-toggler" data-target="departure">
                                             <i class="fa fa-calendar"></i>
                                         </span>
@@ -151,10 +147,10 @@ $tomorrow->modify('+ 1 day');
                 </div>
             </div>
             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 booking__action">
-                <button type="button" class="btn btn-primary rooms__kind-caption-action" data-toggle="modal" data-target=".modal-booking">Показать свободные номера</button>
+                <button type="submit" class="btn btn-primary rooms__kind-caption-action">Показать свободные номера</button>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 <div class="container">
     <?=$content;?>

@@ -767,6 +767,12 @@ body{
 .booking__selects-date{
   width: 50%;
 }
+.booking__action{
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 1rem;
+}
 @media (min-width: 1200px){
   .booking{
     padding: 1rem 3rem;
@@ -794,10 +800,16 @@ body{
   .booking__selects-date{
     width: 33.33333333333333%!important;
   }
+  .booking__action {
+    margin-top: 0;
+  }
 }
 @media (min-width: 768px) {
   .booking__selects-date{
     width: 33.33333333333333%!important;
+  }
+  .booking__action {
+    margin-top: 0;
   }
 }
 .booking__selects-form{
@@ -813,14 +825,6 @@ body{
     margin-top: 0.35rem;
   }
 }
-
-.booking__action{
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  margin-top: 1rem;
-}
-
 
 @media all and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   .booking__selects-form{

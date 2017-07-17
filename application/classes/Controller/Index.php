@@ -10,7 +10,9 @@ class Controller_Index extends Controller
         View::set_global('title', 'Главная');
         View::set_global('rootPage', 'main');
 
-		$template = $contentModel->getBaseTemplate('main');
+		$template = $contentModel->getBaseTemplate('main')
+            ->set('get', $this->request->query())
+        ;
         
 		$this->response->body($template);
 	}

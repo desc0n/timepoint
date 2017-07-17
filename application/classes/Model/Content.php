@@ -28,7 +28,7 @@ class Model_Content extends Kohana_Model
     /**
      * @param string $slug
      * 
-     * @return string
+     * @return array
      */
     public function findPageBySlug($slug = '')
     {
@@ -39,7 +39,13 @@ class Model_Content extends Kohana_Model
             case 'main':
                 return [
                     'content' => View::factory('main')
-                        ->set('rooms', $roomModel->findAll())
+                        ->set('rooms',
+                            $roomModel->findRomsOnMainPage(
+                                (int)Arr::get($_GET, 'guest_count'),
+                                new DateTime(date('Y-m-d H:i:s', strtotime(Arr::get($_GET, 'arrival_date')))),
+                                new DateTime(date('Y-m-d H:i:s', strtotime(Arr::get($_GET, 'departure_date'))))
+                            )
+                        )
                 ];
             default:
                 return DB::select()

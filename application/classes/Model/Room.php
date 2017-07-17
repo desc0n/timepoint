@@ -7,7 +7,7 @@ class Model_Room extends Kohana_Model
 {
     public $defaultLimit = 20;
 
-    public $roomsGuests = [1,2,3,4,5];
+    public $roomsGuests = [1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5];
 
     /**
      * @param int $page
@@ -137,6 +137,20 @@ class Model_Room extends Kohana_Model
     }
 
     /**
+     * @param int $id
+     * @return array
+     */
+    public function findRoomConveniencesById($id)
+    {
+        return DB::select()
+            ->from('rooms__conveniences')
+            ->where('room_id', '=', $id)
+            ->execute()
+            ->as_array()
+        ;
+    }
+
+    /**
      * @return array
      */
     public function getConveniences()
@@ -189,5 +203,67 @@ class Model_Room extends Kohana_Model
             ->where('id', '=', $id)
             ->execute()
         ;
+    }
+
+    /**
+     * @param int $roomId
+     * @return array
+     */
+    public function getRoomData($roomId)
+    {
+        return [
+            'room' => $this->findById($roomId),
+            'room_imgs' => $this->findImgsByRoomId($roomId),
+            'room_conveniences' => $this->findRoomConveniencesById($roomId),
+        ];
+    }
+
+    /**
+     * @param DateTime $firstDate
+     * @param DateTime $lastDate
+     * @return array
+     */
+    public function findNotReservationRoomsByPeriod(\DateTime $firstDate, \DateTime $lastDate)
+    {
+        $rooms = [];
+        $allRooms = $this->findAll();
+
+        foreach ($allRooms as $room) {
+            $reservationRoom = DB::select()
+                ->from('reservations__reservations')
+                ->where('room_id', '=', $room['id'])
+                ->and_where('status_id', '=', 1)
+                ->and_where('arrival_at', 'BETWEEN', [$firstDate->format('Y-m-d H:i:s'), $lastDate->format('Y-m-d H:i:s')])
+                ->and_where('departure_at', 'BETWEEN', [$firstDate->format('Y-m-d H:i:s'), $lastDate->format('Y-m-d H:i:s')])
+                ->limit(1)
+                ->execute()
+                ->current()
+            ;
+
+            if (!$reservationRoom) {
+                $rooms[] = $this->getRoomData((int)$room['id']);
+            }
+        }
+
+        return $rooms;
+    }
+
+    /**
+     * @param int $guestsCount
+     * @param DateTime $arrivalDate
+     * @param DateTime $departureDate
+     * @return array
+     */
+    public function findRomsOnMainPage($guestsCount, \DateTime $arrivalDate, \DateTime $departureDate)
+    {
+        $notReservationRooms = $this->findNotReservationRoomsByPeriod($arrivalDate, $departureDate);
+
+        foreach ($notReservationRooms as $key => $value) {
+            if ((int)$value['room']['guests_count'] < $guestsCount) {
+                unset($notReservationRooms[$key]);
+            }
+        }
+
+        return $notReservationRooms;
     }
 }

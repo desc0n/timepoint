@@ -52,7 +52,7 @@ $tomorrow->modify('+ 1 day');
                             </div>
                         </div>
                         <div class="row">
-                            <div class="modal-booking__desc col-lg-12 col-md-12 col-sm-12 col-xs-12 col-md-6">
+                            <div class="modal-booking__desc col-lg-6 col-sm-12 col-xs-12 col-md-6">
                                 <h2>Удобства в номере</h2>
                                 <ul>
                                     <li>Двуспальная кровать</li>
@@ -65,13 +65,13 @@ $tomorrow->modify('+ 1 day');
                                     <li>Телевизор</li>
                                 </ul>
                             </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-md-6">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label for="modalArrival<?=$room['room']['id'];?>">Заезд </label>
                                     <div class="form-group">
                                         <div class='input-group date'>
                                             <input id="modalArrival<?=$room['room']['id'];?>" type="text" value="<?=$today->format('d.m.Y');?>" class="form-control"/>
-                                            <span class="input-group-addon datepicker-toggler" data-target="modalArrival">
+                                            <span class="input-group-addon datepicker-toggler" data-target="modalArrival<?=$room['room']['id'];?>">
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                         </div>
@@ -82,7 +82,7 @@ $tomorrow->modify('+ 1 day');
                                     <div class="form-group">
                                         <div class='input-group date'>
                                             <input id="modalDeparture<?=$room['room']['id'];?>" type="text" value="<?=$tomorrow->format('d.m.Y');?>" class="form-control"/>
-                                            <span class="input-group-addon datepicker-toggler" data-target="modalDeparture">
+                                            <span class="input-group-addon datepicker-toggler" data-target="modalDeparture<?=$room['room']['id'];?>">
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                         </div>
@@ -99,4 +99,14 @@ $tomorrow->modify('+ 1 day');
         </div>
     </div>
     <!-- modal -->
+    <script>
+        $( function() {
+            $( "#modalArrival<?=$room['room']['id'];?>" ).datepicker({
+                dateFormat: 'dd.mm.yy'
+            });
+            $( "#modalDeparture<?=$room['room']['id'];?>" ).datepicker({
+                dateFormat: 'dd.mm.yy'
+            });
+        } );
+    </script>
 <?}?>

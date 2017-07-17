@@ -311,12 +311,6 @@ $tomorrow->modify('+ 1 day');
         $( "#departure" ).datepicker({
             dateFormat: 'dd.mm.yy'
         });
-        $( "#modalArrival" ).datepicker({
-            dateFormat: 'dd.mm.yy'
-        });
-        $( "#modalDeparture" ).datepicker({
-            dateFormat: 'dd.mm.yy'
-        });
         $('.datepicker-toggler').click(function() {
             $("#" + $(this).data('target')).focus();
         });

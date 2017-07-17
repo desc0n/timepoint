@@ -137,6 +137,22 @@ class Model_Room extends Kohana_Model
     }
 
     /**
+     * @param int $roomId
+     * @return array
+     */
+    public function getMainImg($roomId)
+    {
+        return DB::select()
+            ->from('rooms__imgs')
+            ->where('main', '=', 1)
+            ->and_where('room_id', '=', $roomId)
+            ->limit(1)
+            ->execute()
+            ->current()
+        ;
+    }
+
+    /**
      * @param int $id
      * @return array
      */
@@ -213,6 +229,7 @@ class Model_Room extends Kohana_Model
     {
         return [
             'room' => $this->findById($roomId),
+            'room_main_img' => $this->getMainImg($roomId),
             'room_imgs' => $this->findImgsByRoomId($roomId),
             'room_conveniences' => $this->findRoomConveniencesById($roomId),
         ];

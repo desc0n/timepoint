@@ -53,6 +53,8 @@ $tomorrow->modify('+ 1 day');
                         </div>
                         <div class="row">
                             <div class="modal-booking__desc col-lg-6 col-sm-12 col-xs-12 col-md-6">
+                                <h2>Стоимость</h2>
+                                <h2 class="rooms__kind-caption-price"><?=$room['room']['price'];?> руб.</h2>
                                 <h2>Удобства в номере</h2>
                                 <ul>
                                     <?foreach ($room['room_conveniences'] as $roomConvenience) {?>
@@ -61,6 +63,7 @@ $tomorrow->modify('+ 1 day');
                                 </ul>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <h2>Период бронирования</h2>
                                 <div class="form-group">
                                     <label for="modalArrival<?=$room['room']['id'];?>">Заезд </label>
                                     <div class="form-group">
@@ -82,6 +85,9 @@ $tomorrow->modify('+ 1 day');
                                         </span>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-primary">Забронировать</button>
                                 </div>
                             </div>
                         </div>

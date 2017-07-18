@@ -55,14 +55,9 @@ $tomorrow->modify('+ 1 day');
                             <div class="modal-booking__desc col-lg-6 col-sm-12 col-xs-12 col-md-6">
                                 <h2>Удобства в номере</h2>
                                 <ul>
-                                    <li>Двуспальная кровать</li>
-                                    <li>Удобное рабочее место</li>
-                                    <li>Кондиционер</li>
-                                    <li>Бесплатный Wi-Fi</li>
-                                    <li>Телевизор</li>
-                                    <li>Холодильник</li>
-                                    <li>Фен</li>
-                                    <li>Телевизор</li>
+                                    <?foreach ($room['room_conveniences'] as $roomConvenience) {?>
+                                    <li><?=$conveniencesList[$roomConvenience['convenience_id']];?></li>
+                                    <?}?>
                                 </ul>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">

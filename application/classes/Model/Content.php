@@ -46,6 +46,7 @@ class Model_Content extends Kohana_Model
                                 new DateTime(date('Y-m-d H:i:s', strtotime(Arr::get($_GET, 'departure_date'))))
                             )
                         )
+                        ->set('conveniencesList', $roomModel->getConveniences())
                 ];
             default:
                 return DB::select()

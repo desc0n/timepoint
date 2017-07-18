@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>CRM</title>
-    <link href="/public/i/fav.png"  sizes="38x38" rel="shortcut icon" type="image/png" />
+    <link href="/public/images/fav.png"  sizes="38x38" rel="shortcut icon" type="image/png" />
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="/assets/admin/css/styles.css?v=2" />
@@ -16,7 +16,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.js"></script>
     <script src="/assets/bootstrap/js/bootstrap3-typeahead.js"></script>
-    <script src="/assets/admin/js/scripts.js?v=2"></script>
+    <script src="/assets/admin/js/scripts.js?v=3"></script>
     <script src="/assets/admin/js/holder.js"></script>
     <script src="/assets/admin/js/ckeditor/ckeditor.js"></script>
 </head>
@@ -48,9 +48,9 @@
                     <li>
                         <a href="/cpanel/rooms_list"><i class="fa fa-list fa-fw"></i> Список номеров</a>
                     </li>
-                    <li>
-                        <a href="/cpanel/add_room"><i class="fa fa-file fa-fw"></i> Добавить номер</a>
-                    </li>
+<!--                    <li>-->
+<!--                        <a href="/cpanel/add_room"><i class="fa fa-file fa-fw"></i> Добавить номер</a>-->
+<!--                    </li>-->
                     <li>
                         <a href="/cpanel/contacts"><i class="fa fa-phone fa-fw"></i> Редактировать контакты</a>
                     </li>

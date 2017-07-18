@@ -7,7 +7,7 @@ class Model_Room extends Kohana_Model
 {
     public $defaultLimit = 20;
 
-    public $roomsGuests = [1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5];
+    public $roomsGuests = [1 => 1, 2 => 2, 3 => 3, 4 => 4];
 
     /**
      * @param int $page
@@ -42,6 +42,21 @@ class Model_Room extends Kohana_Model
             ->where('id', '=', $id)
             ->execute()
             ->current()
+        ;
+    }
+
+    /**
+     * @param int $id
+     * @param string $title
+     * @param int $guestsCount
+     * @param int $price
+     */
+    public function setRoomData($id, $title, $guestsCount, $price)
+    {
+        DB::update('rooms__rooms')
+            ->set(['title' => $title, 'guests_count' => $guestsCount, 'price' => $price])
+            ->where('id', '=', $id)
+            ->execute()
         ;
     }
 
@@ -153,6 +168,31 @@ class Model_Room extends Kohana_Model
     }
 
     /**
+     * @param int $roomId
+     * @param int $convenienceId
+     */
+    public function addRoomConvenience($roomId, $convenienceId)
+    {
+         DB::insert('rooms__conveniences', ['room_id', 'convenience_id'])
+            ->values([$roomId, $convenienceId])
+            ->execute()
+        ;
+    }
+
+    /**
+     * @param int $roomId
+     * @param int $convenienceId
+     */
+    public function removeRoomConvenience($roomId, $convenienceId)
+    {
+         DB::delete('rooms__conveniences')
+            ->where('room_id', '=', $roomId)
+            ->and_where('convenience_id', '=', $convenienceId)
+            ->execute()
+        ;
+    }
+
+    /**
      * @param int $id
      * @return array
      */
@@ -171,11 +211,11 @@ class Model_Room extends Kohana_Model
      */
     public function getConveniences()
     {
-        $query = DB::select()
+        return DB::select()
             ->from('conveniences')
+            ->execute()
+            ->as_array('id', 'value')
         ;
-
-        return $query->execute()->as_array();
     }
 
     /**

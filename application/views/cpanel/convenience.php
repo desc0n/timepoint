@@ -8,16 +8,16 @@
             </tr>
             </thead>
             <tbody>
-            <?foreach ($conveniences as $convenience) {?>
-                <tr id="convenienceRow<?=$convenience['id'];?>">
+            <?foreach ($conveniences as $id => $value) {?>
+                <tr id="convenienceRow<?=$id;?>">
                     <td>
-                        <?=Form::input('values[]', $convenience['value'], ['class' => 'form-control']);?>
+                        <?=Form::input('values[]', $value, ['class' => 'form-control']);?>
                     </td>
                     <td class="text-center">
-                        <button class="btn btn-danger" type="button" onclick="removeConvenience(<?=$convenience['id'];?>);">
+                        <button class="btn btn-danger" type="button" onclick="removeConvenience(<?=$id;?>);">
                             <span class="fa fa-remove"></span>
                         </button>
-                        <?=Form::hidden('ids[]', $convenience['id']);?>
+                        <?=Form::hidden('ids[]', $id);?>
                     </td>
                 </tr>
             <?}?>

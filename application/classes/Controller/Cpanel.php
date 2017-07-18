@@ -179,11 +179,12 @@ class Controller_Cpanel extends Controller
             HTTP::redirect($this->request->referrer());
         }
 
-        if ((int)$this->request->post('redactRoomItem') === 1) {
-            $roomModel->setRoom(
+        if ((int)$this->request->post('redactRoom') === 1) {
+            $roomModel->setRoomData(
                 $roomId,
                 $this->request->post('title'),
-                $this->request->post('description')
+                (int)$this->request->post('guests_count'),
+                (int)$this->request->post('price')
             );
 
             HTTP::redirect($this->request->referrer());
@@ -191,7 +192,10 @@ class Controller_Cpanel extends Controller
 
         $template->content = View::factory('cpanel/redact_room')
             ->set('room', $roomModel->findById($roomId))
+            ->set('roomId', $roomId)
             ->set('roomImgs', $roomModel->findImgsByRoomId($roomId))
+            ->set('roomConveniences', $roomModel->findRoomConveniencesById($roomId))
+            ->set('conveniencesList', $roomModel->getConveniences())
         ;
 
 		$this->response->body($template);

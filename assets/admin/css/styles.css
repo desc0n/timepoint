@@ -418,3 +418,9 @@ body {
 .main-room-img {
     border: solid 4px #a94442;
 }
+.add-convenience-btn > .fa{
+    padding: 3px 12px;
+}
+.remove-convenience-btn {
+    cursor: pointer;
+}

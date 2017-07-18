@@ -2,6 +2,12 @@ $(document).ready(function() {
     $('#setMainRoomImg').on('click', function () {
         setMainRoomImg($(this).val(), + $(this).prop('checked'));
     });
+    $('.add-convenience-btn').on('click', function () {
+        addRoomConvenience();
+    });
+    $('.remove-convenience-btn').on('click', function () {
+        removeRoomConvenience($(this).data('id'));
+    });
 });
 
 function redactRoomImg(id, src, main)
@@ -65,4 +71,10 @@ function setMainRoomImg(roomId, value) {
                 $('#roomImg' + imgId + ' img').addClass('main-room-img');
             }
         });
+}
+function addRoomConvenience() {
+    $.ajax({url: '/ajax/add_room_convenience', type: 'POST', data: {roomId: $('#roomId').val(), value: $('#conveniencesList>option:selected').val()}, async: true}).done(function () {location.reload();});
+}
+function removeRoomConvenience(convenienceId) {
+    $.ajax({url: '/ajax/remove_room_convenience', type: 'POST', data: {roomId: $('#roomId').val(), convenienceId: convenienceId}, async: true}).done(function () {location.reload();});
 }

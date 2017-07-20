@@ -280,7 +280,7 @@ $tomorrow->modify('+ 1 day');
         </div>
     </div>
 </div>
-<div id="taxiInfo1" class="modal fade modal-booking" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" data-backdrop="static">
+<div id="taxiInfo1" class="modal fade modal-booking" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content modal-booking">
             <div class="modal-header">
@@ -300,6 +300,14 @@ $tomorrow->modify('+ 1 day');
                 <div><a href="http://vladivostok.taxisaturn.ru/" target="_blank">http://vladivostok.taxisaturn.ru/</a></div>
             </div>
             <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+<div id="notificationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+            </div>
         </div>
     </div>
 </div>

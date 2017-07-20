@@ -35,14 +35,14 @@ function changeMapSrc(src) {
 }
 function reserveRoom(roomId) {
     if (parseInt($('#notChecked' + roomId).val()) === 0) {
-        alert('Проверьте возможность забронировать в нужный период');
+        showNotificationModal('Проверьте возможность забронировать в нужный период', 'danger');
         return;
     }
     if(formIsValid(roomId) === 'errorName') {
-        alert('Заполните поле Имя!');
+        showNotificationModal('Заполните поле Имя!', 'danger');
         return;
     } else if(formIsValid(roomId) === 'errorPhone') {
-        alert('Некорректно указан номер телефона!');
+        showNotificationModal('Некорректно указан номер телефона!', 'danger');
         return;
     }
     $.ajax({url: '/ajax/reserve_room', type: 'POST', data: {roomId: roomId, phone: $('#inputPhone' + roomId).val(), name: $('#inputName' + roomId).val(), comment: $('#inputComment' + roomId).val()}, async: true}).done(function () {location.reload();});
@@ -57,4 +57,9 @@ function formIsValid(roomId) {
         return 'errorName';
     }
     return 'valid';
+}
+function showNotificationModal(text, style) {
+    var html = '<div class="alert alert-' + style + '">' + text + '</div>';
+    $('#notificationModal .modal-body').html(html);
+    $('#notificationModal').modal('toggle');
 }

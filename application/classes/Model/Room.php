@@ -276,26 +276,29 @@ class Model_Room extends Kohana_Model
     }
 
     /**
-     * @param DateTime $firstDate
-     * @param DateTime $lastDate
+     * @param DateTime|null $firstDate
+     * @param DateTime|null $lastDate
      * @return array
      */
-    public function findNotReservationRoomsByPeriod(\DateTime $firstDate, \DateTime $lastDate)
+    public function findNotReservationRoomsByPeriod(\DateTime $firstDate = null, \DateTime $lastDate = null)
     {
         $rooms = [];
         $allRooms = $this->findAll();
 
         foreach ($allRooms as $room) {
-            $reservationRoom = DB::select()
-                ->from('reservations__reservations')
-                ->where('room_id', '=', $room['id'])
-                ->and_where('status_id', '=', 1)
-                ->and_where('arrival_at', 'BETWEEN', [$firstDate->format('Y-m-d H:i:s'), $lastDate->format('Y-m-d H:i:s')])
-                ->and_where('departure_at', 'BETWEEN', [$firstDate->format('Y-m-d H:i:s'), $lastDate->format('Y-m-d H:i:s')])
-                ->limit(1)
-                ->execute()
-                ->current()
-            ;
+            $reservationRoom =
+                $firstDate === null || $lastDate === null
+                ? false
+                : DB::select()
+                    ->from('reservations__reservations')
+                    ->where('room_id', '=', $room['id'])
+                    ->and_where('status_id', '=', 1)
+                    ->and_where('arrival_at', 'BETWEEN', [$firstDate->format('Y-m-d H:i:s'), $lastDate->format('Y-m-d H:i:s')])
+                    ->and_where('departure_at', 'BETWEEN', [$firstDate->format('Y-m-d H:i:s'), $lastDate->format('Y-m-d H:i:s')])
+                    ->limit(1)
+                    ->execute()
+                    ->current()
+                ;
 
             if (!$reservationRoom) {
                 $rooms[] = $this->getRoomData((int)$room['id']);
@@ -307,11 +310,11 @@ class Model_Room extends Kohana_Model
 
     /**
      * @param int $guestsCount
-     * @param DateTime $arrivalDate
-     * @param DateTime $departureDate
+     * @param DateTime|null $arrivalDate
+     * @param DateTime|null $departureDate
      * @return array
      */
-    public function findRomsOnMainPage($guestsCount, \DateTime $arrivalDate, \DateTime $departureDate)
+    public function findRomsOnMainPage($guestsCount, \DateTime $arrivalDate = null, \DateTime $departureDate = null)
     {
         $notReservationRooms = $this->findNotReservationRoomsByPeriod($arrivalDate, $departureDate);
 

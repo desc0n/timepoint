@@ -19,7 +19,7 @@ $tomorrow->modify('+ 1 day');
 </div>
 <?foreach ($rooms as $room) {?>
     <!-- modal -->
-    <div id="roomModal<?=$room['room']['id'];?>" class="modal fade modal-booking" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" data-backdrop="static">
+    <div id="roomModal<?=$room['room']['id'];?>" class="modal fade modal-booking" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content modal-booking">
                 <div class="modal-header">
@@ -53,9 +53,9 @@ $tomorrow->modify('+ 1 day');
                         </div>
                         <div class="row">
                             <div class="modal-booking__desc col-lg-6 col-sm-12 col-xs-12 col-md-6">
-                                <h2>Стоимость</h2>
+                                <legend>Стоимость</legend>
                                 <h2 class="rooms__kind-caption-price"><?=$room['room']['price'];?> руб.</h2>
-                                <h2>Удобства в номере</h2>
+                                <legend>Удобства в номере</legend>
                                 <ul>
                                     <?foreach ($room['room_conveniences'] as $roomConvenience) {?>
                                     <li><?=$conveniencesList[$roomConvenience['convenience_id']];?></li>
@@ -63,12 +63,12 @@ $tomorrow->modify('+ 1 day');
                                 </ul>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <h2>Период бронирования</h2>
+                                <legend>Период бронирования</legend>
                                 <div class="form-group">
                                     <label for="modalArrival<?=$room['room']['id'];?>">Заезд </label>
                                     <div class="form-group">
                                         <div class='input-group date'>
-                                            <input id="modalArrival<?=$room['room']['id'];?>" type="text" value="<?=$today->format('d.m.Y');?>" class="form-control"/>
+                                            <input id="modalArrival<?=$room['room']['id'];?>" type="text" value="<?=($queryArrivalDate === null ? $today->format('d.m.Y') : $queryArrivalDate);?>" class="form-control"/>
                                             <span class="input-group-addon datepicker-toggler" data-target="modalArrival<?=$room['room']['id'];?>">
                                             <i class="fa fa-calendar"></i>
                                         </span>
@@ -79,22 +79,36 @@ $tomorrow->modify('+ 1 day');
                                     <label for="modalDeparture<?=$room['room']['id'];?>">Выезд </label>
                                     <div class="form-group">
                                         <div class='input-group date'>
-                                            <input id="modalDeparture<?=$room['room']['id'];?>" type="text" value="<?=$tomorrow->format('d.m.Y');?>" class="form-control"/>
+                                            <input id="modalDeparture<?=$room['room']['id'];?>" type="text" value="<?=($queryDepartureDate === null ? $tomorrow->format('d.m.Y') : $queryDepartureDate);?>" class="form-control"/>
                                             <span class="input-group-addon datepicker-toggler" data-target="modalDeparture<?=$room['room']['id'];?>">
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-right">
-                                    <button type="button" class="btn btn-primary">Забронировать</button>
+                                <div class="form-group text-right">
+                                    <button type="button" class="btn btn-info">Проверить</button>
+                                </div>
+                                <legend>Запрос на бронирование</legend>
+                                <div class="form-group">
+                                    <label for="inputPhone<?=$room['room']['id'];?>">Телефон *</label>
+                                    <input type="text" class="form-control" id="inputPhone<?=$room['room']['id'];?>" placeholder="+79001234567">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputName<?=$room['room']['id'];?>">Имя *</label>
+                                    <input type="text" class="form-control" id="inputName<?=$room['room']['id'];?>" placeholder="Имя">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputComment<?=$room['room']['id'];?>">Комментарий</label>
+                                    <textarea id="inputComment<?=$room['room']['id'];?>" class="form-control" rows="3" placeholder="Комментарий"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Забронировать</button>
+                    <button type="button" class="btn btn-primary reserve-room-btn" data-id="<?=$room['room']['id'];?>">Забронировать</button>
+                    <input type="hidden" id="notChecked<?=$room['room']['id'];?>" value="<?=(int)($queryArrivalDate !== null && $queryDepartureDate !== null);?>">
                 </div>
             </div>
         </div>

@@ -20,6 +20,9 @@ $(document).ready(function () {
             .addClass('map-controls__list_active');
         changeMapSrc($('.map-controls .map-path-' + $(this).data('path') + ' ul li:first').data('img'));
     });
+    $('.reserve-room-btn').on('click', function () {
+        reserveRoom($(this).data('id'));
+    });
 });
 
 function changeMapSrc(src) {
@@ -30,4 +33,28 @@ function changeMapSrc(src) {
         $('.taxi-link').css('display', 'none');
     }
 }
-
+function reserveRoom(roomId) {
+    if (parseInt($('#notChecked' + roomId).val()) === 0) {
+        alert('Проверьте возможность забронировать в нужный период');
+        return;
+    }
+    if(formIsValid(roomId) === 'errorName') {
+        alert('Заполните поле Имя!');
+        return;
+    } else if(formIsValid(roomId) === 'errorPhone') {
+        alert('Некорректно указан номер телефона!');
+        return;
+    }
+    $.ajax({url: '/ajax/reserve_room', type: 'POST', data: {roomId: roomId, phone: $('#inputPhone' + roomId).val(), name: $('#inputName' + roomId).val(), comment: $('#inputComment' + roomId).val()}, async: true}).done(function () {location.reload();});
+}
+function formIsValid(roomId) {
+    var phoneReg = /\+7[\d]{10}/;
+    var phone = $('#inputPhone' + roomId).val();
+    if(!phoneReg.test(phone)) {
+        return 'errorPhone';
+    }
+    if($('#inputName' + roomId).val() === '') {
+        return 'errorName';
+    }
+    return 'valid';
+}

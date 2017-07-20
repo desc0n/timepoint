@@ -35,6 +35,9 @@ class Model_Content extends Kohana_Model
         /** @var $roomModel Model_Room */
         $roomModel = Model::factory('Room');
 
+        $queryArrivalDate = Arr::get($_GET, 'arrival_date');
+        $queryDepartureDate = Arr::get($_GET, 'departure_date');
+
         switch ($slug) {
             case 'main':
                 return [
@@ -42,11 +45,13 @@ class Model_Content extends Kohana_Model
                         ->set('rooms',
                             $roomModel->findRomsOnMainPage(
                                 (int)Arr::get($_GET, 'guest_count'),
-                                new DateTime(date('Y-m-d H:i:s', strtotime(Arr::get($_GET, 'arrival_date')))),
-                                new DateTime(date('Y-m-d H:i:s', strtotime(Arr::get($_GET, 'departure_date'))))
+                                $queryArrivalDate === null ? null : new DateTime(date('Y-m-d H:i:s', strtotime($queryArrivalDate))),
+                                $queryDepartureDate === null ? null : new DateTime(date('Y-m-d H:i:s', strtotime($queryDepartureDate)))
                             )
                         )
                         ->set('conveniencesList', $roomModel->getConveniences())
+                        ->set('queryArrivalDate', $queryArrivalDate)
+                        ->set('queryDepartureDate', $queryDepartureDate)
                 ];
             default:
                 return DB::select()

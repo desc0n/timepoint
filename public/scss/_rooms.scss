@@ -6,31 +6,26 @@ $rooms-kind-bg: (
         'd': url('/public/images/d.png')
 
 );
-
+button {
+  cursor: pointer;
+}
 @function room-kind-bg($key) {
 
   @return map-get($rooms-kind-bg, $key);
 
 }
 .rooms{
-
   display: flex;
   justify-content: center;
-
 }
-
 .rooms__wrapper{
-
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   max-width: 930px;
-
 }
-
 .rooms__kind{
-
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -40,13 +35,9 @@ $rooms-kind-bg: (
   height: 286px;
   border-top: 15px solid $brand-accent;
   background-size: cover!important;
-
   &:hover{
-
     cursor: pointer;
-
   }
-
 }
 .rooms__kind-caption{
 

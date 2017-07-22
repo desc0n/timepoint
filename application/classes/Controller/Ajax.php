@@ -77,4 +77,16 @@ class Controller_Ajax extends Controller
 
         $this->response->body(json_encode(['result' =>'success']));
     }
+
+    public function action_show_reserve_modal()
+    {
+        $body = View::factory('reservation_modal')
+            ->set('roomId', $this->request->post('roomId'))
+            ->set('phone', $this->request->post('phone'))
+            ->set('name', $this->request->post('name'))
+            ->set('comment', $this->request->post('comment'))
+        ;
+
+        $this->response->body($body);
+    }
 }

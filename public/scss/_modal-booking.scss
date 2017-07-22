@@ -16,3 +16,12 @@
 #notificationModal .alert {
   margin-bottom: 0;
 }
+#notificationModal {
+  top: 20%;
+}
+#reservationModal {
+  top: 30%;
+}
+#reservationModal .modal-content {
+  background-color: $brand-backbgound;
+}

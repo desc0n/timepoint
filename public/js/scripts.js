@@ -45,7 +45,7 @@ function reserveRoom(roomId) {
         showNotificationModal('Некорректно указан номер телефона!', 'danger');
         return;
     }
-    $.ajax({url: '/ajax/reserve_room', type: 'POST', data: {roomId: roomId, phone: $('#inputPhone' + roomId).val(), name: $('#inputName' + roomId).val(), comment: $('#inputComment' + roomId).val()}, async: true}).done(function () {location.reload();});
+    $.ajax({url: '/ajax/show_reserve_modal', type: 'POST', data: {roomId: roomId, phone: $('#inputPhone' + roomId).val(), name: $('#inputName' + roomId).val(), comment: $('#inputComment' + roomId).val()}, async: true}).done(function (html) {$('#reservationModal .modal-body').html(html);$('#reservationModal').modal('toggle');});
 }
 function formIsValid(roomId) {
     var phoneReg = /\+7[\d]{10}/;

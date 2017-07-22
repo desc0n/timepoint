@@ -8,7 +8,7 @@
     <link rel="icon" href="/public/images/fav.png" sizes="38x38" type="image/png">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/public/css/styles.css?v=7" >
+    <link rel="stylesheet" href="/public/css/styles.css?v=8" >
     <link rel="stylesheet" href="/assets/bootstrap/css/font-awesome.css" >
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -18,7 +18,7 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <script src="/public/js/datepicker-ru.js"></script>
-    <script src="/public/js/scripts.js?v=1"></script>
+    <script src="/public/js/scripts.js?v=2"></script>
 
 </head>
 <?php
@@ -303,8 +303,16 @@ $tomorrow->modify('+ 1 day');
         </div>
     </div>
 </div>
-<div id="notificationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+<div id="notificationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
     <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="reservationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-body">
             </div>

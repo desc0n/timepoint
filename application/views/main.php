@@ -19,7 +19,7 @@ $tomorrow->modify('+ 1 day');
 </div>
 <?foreach ($rooms as $room) {?>
     <!-- modal -->
-    <div id="roomModal<?=$room['room']['id'];?>" class="modal fade modal-booking" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div id="roomModal<?=$room['room']['id'];?>" class="modal fade modal-booking" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content modal-booking">
                 <div class="modal-header">
@@ -63,6 +63,23 @@ $tomorrow->modify('+ 1 day');
                                 </ul>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <legend>Запрос на бронирование</legend>
+                                <div class="form-group">
+                                    <label for="inputPhone<?=$room['room']['id'];?>">Телефон *</label>
+                                    <input type="text" class="form-control" id="inputPhone<?=$room['room']['id'];?>" placeholder="+79001234567">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputName<?=$room['room']['id'];?>">Имя *</label>
+                                    <input type="text" class="form-control" id="inputName<?=$room['room']['id'];?>" placeholder="Имя">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputComment<?=$room['room']['id'];?>">Комментарий</label>
+                                    <textarea id="inputComment<?=$room['room']['id'];?>" class="form-control" rows="3" placeholder="Комментарий"></textarea>
+                                </div>
+                                <div class="form-group text-right">
+                                    <button type="button" class="btn btn-primary reserve-room-btn" data-id="<?=$room['room']['id'];?>">Забронировать</button>
+                                    <input type="hidden" id="notChecked<?=$room['room']['id'];?>" value="<?=(int)($queryArrivalDate !== null && $queryDepartureDate !== null);?>">
+                                </div>
                                 <legend>Период бронирования</legend>
                                 <div class="form-group">
                                     <label for="modalArrival<?=$room['room']['id'];?>">Заезд </label>
@@ -89,26 +106,9 @@ $tomorrow->modify('+ 1 day');
                                 <div class="form-group text-right">
                                     <button type="button" class="btn btn-info">Проверить</button>
                                 </div>
-                                <legend>Запрос на бронирование</legend>
-                                <div class="form-group">
-                                    <label for="inputPhone<?=$room['room']['id'];?>">Телефон *</label>
-                                    <input type="text" class="form-control" id="inputPhone<?=$room['room']['id'];?>" placeholder="+79001234567">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputName<?=$room['room']['id'];?>">Имя *</label>
-                                    <input type="text" class="form-control" id="inputName<?=$room['room']['id'];?>" placeholder="Имя">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputComment<?=$room['room']['id'];?>">Комментарий</label>
-                                    <textarea id="inputComment<?=$room['room']['id'];?>" class="form-control" rows="3" placeholder="Комментарий"></textarea>
-                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary reserve-room-btn" data-id="<?=$room['room']['id'];?>">Забронировать</button>
-                    <input type="hidden" id="notChecked<?=$room['room']['id'];?>" value="<?=(int)($queryArrivalDate !== null && $queryDepartureDate !== null);?>">
                 </div>
             </div>
         </div>

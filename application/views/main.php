@@ -65,11 +65,11 @@ $tomorrow->modify('+ 1 day');
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <legend>Запрос на бронирование</legend>
                                 <div class="form-group">
-                                    <label for="inputPhone<?=$room['room']['id'];?>">Телефон *</label>
-                                    <input type="text" class="form-control" id="inputPhone<?=$room['room']['id'];?>" placeholder="+79001234567">
+                                    <label for="inputPhone<?=$room['room']['id'];?>">Ваш телефон *</label>
+                                    <input type="text" class="form-control" id="inputPhone<?=$room['room']['id'];?>" placeholder="Укажите телефон в формате +79001234567">
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputName<?=$room['room']['id'];?>">Имя *</label>
+                                    <label for="inputName<?=$room['room']['id'];?>">Ваше имя *</label>
                                     <input type="text" class="form-control" id="inputName<?=$room['room']['id'];?>" placeholder="Имя">
                                 </div>
                                 <div class="form-group">

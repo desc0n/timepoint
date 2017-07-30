@@ -6,8 +6,8 @@ $tomorrow->modify('+ 1 day');
 <div class="rooms">
     <div class="rooms__wrapper">
         <?foreach ($rooms as $room) {?>
-            <?$mainImg = !empty($room['room_main_img']) ? $room['room_main_img']['src'] : null;?>
-            <?$mainImg = !empty($room['room_imgs']) ? $room['room_imgs'][0]['src'] : $mainImg;?>
+            <?$mainImg = !empty($room['room_imgs']) ? $room['room_imgs'][0]['src'] : null;?>
+            <?$mainImg = !empty($room['room_main_img']) ? $room['room_main_img']['src'] : $mainImg;?>
         <div class="rooms__kind" style="background: url('/public/img/original/<?=$mainImg;?>');">
             <div class="rooms__kind-caption">
                 <div class="rooms__kind-caption-price"><?=$room['room']['price'];?> руб.</div>

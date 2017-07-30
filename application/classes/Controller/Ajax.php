@@ -5,10 +5,14 @@ class Controller_Ajax extends Controller
     /** @var Model_Content */
     private $contentModel;
 
+    /** @var  Model_Reservation */
+    private $reservationModel;
+
     public function __construct(Request $request, Response $response)
     {
         parent::__construct($request, $response);
         $this->contentModel = Model::factory('Content');
+        $this->reservationModel = Model::factory('Reservation');
     }
 
     public function action_remove_contact()
@@ -82,10 +86,26 @@ class Controller_Ajax extends Controller
     {
         $body = View::factory('reservation_modal')
             ->set('roomId', $this->request->post('roomId'))
+            ->set('arrivalDate', date('Y-m-d', strtotime($this->request->post('arrivalDate'))))
+            ->set('departureDate', date('Y-m-d', strtotime($this->request->post('departureDate'))))
             ->set('phone', $this->request->post('phone'))
             ->set('name', $this->request->post('name'))
-            ->set('comment', $this->request->post('comment'))
+            ->set('comment', preg_replace('/["\<\>]+/', '', $this->request->post('comment')))
         ;
+
+        $this->response->body($body);
+    }
+
+    public function action_reserve_room()
+    {
+        $body = $this->reservationModel->addReservation(
+            $this->request->post('roomId'),
+            new DateTime($this->request->post('arrivalDate')),
+            new DateTime($this->request->post('departureDate')),
+            $this->request->post('phone'),
+            $this->request->post('name'),
+            preg_replace('/["\<\>]+/', '', $this->request->post('comment'))
+        );
 
         $this->response->body($body);
     }

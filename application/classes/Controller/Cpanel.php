@@ -224,20 +224,15 @@ class Controller_Cpanel extends Controller
         $this->response->body($template);
     }
 
-    public function action_services()
+    public function action_reservations_list()
     {
-        /** @var $contentModel Model_Content */
-        $contentModel = Model::factory('Content');
+        /** @var $reservationModel Model_Reservation */
+        $reservationModel = Model::factory('Reservation');
 
         $template = $this->getBaseTemplate();
 
-        if (!empty($this->request->post('addService'))) {
-            $contentModel->addService($this->request->post('title'), $this->request->post('description'));
-            HTTP::redirect($this->request->referrer());
-        }
-
-        $template->content = View::factory('cpanel/services')
-            ->set('services', $contentModel->findAllServices())
+        $template->content = View::factory('cpanel/reservations_list')
+            ->set('listData', $reservationModel->getList(Arr::get($this->request->query(), 'page', 1)))
         ;
 
         $this->response->body($template);

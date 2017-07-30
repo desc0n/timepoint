@@ -2,6 +2,8 @@
 
 class Model_Reservation extends Kohana_Model
 {
+    const ROW_LIMIT = 20;
+
     /**
      * @param int $roomId
      * @param string $phone
@@ -38,5 +40,34 @@ class Model_Reservation extends Kohana_Model
         ;
 
         return json_encode(['result' => 'success']);
+    }
+
+    /**
+     * @param int $page
+     * @return array
+     */
+    public function getList($page = 1)
+    {
+        return DB::select('rr.*', 'r.title', ['rs.name', 'status_name'])
+            ->from(['reservations__reservations', 'rr'])
+            ->join(['rooms__rooms', 'r'])
+            ->on('r.id', '=', 'rr.room_id')
+            ->join(['reservations__statuses', 'rs'])
+            ->on('rs.id', '=', 'rr.status_id')
+            ->limit(self::ROW_LIMIT)
+            ->offset(($page - 1) * self::ROW_LIMIT)
+            ->execute()
+            ->as_array()
+        ;
+    }
+
+    /**
+     * @param string $date
+     * @param string $format
+     * @return false|string
+     */
+    public function formatDate($date, $format = 'd.m.Y')
+    {
+        return date($format, strtotime($date));
     }
 }

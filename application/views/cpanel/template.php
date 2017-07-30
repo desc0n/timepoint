@@ -48,9 +48,9 @@
                     <li>
                         <a href="/cpanel/rooms_list"><i class="fa fa-list fa-fw"></i> Список номеров</a>
                     </li>
-<!--                    <li>-->
-<!--                        <a href="/cpanel/add_room"><i class="fa fa-file fa-fw"></i> Добавить номер</a>-->
-<!--                    </li>-->
+                    <li>
+                        <a href="/cpanel/reservations_list"><i class="fa fa-lock fa-fw"></i> Бронирование</a>
+                    </li>
                     <li>
                         <a href="/cpanel/contacts"><i class="fa fa-phone fa-fw"></i> Редактировать контакты</a>
                     </li>

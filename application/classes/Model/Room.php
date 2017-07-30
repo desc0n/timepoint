@@ -289,16 +289,8 @@ class Model_Room extends Kohana_Model
             $reservationRoom =
                 $firstDate === null || $lastDate === null
                 ? false
-                : DB::select()
-                    ->from('reservations__reservations')
-                    ->where('room_id', '=', $room['id'])
-                    ->and_where('status_id', '=', 1)
-                    ->and_where('arrival_at', 'BETWEEN', [$firstDate->format('Y-m-d H:i:s'), $lastDate->format('Y-m-d H:i:s')])
-                    ->and_where('departure_at', 'BETWEEN', [$firstDate->format('Y-m-d H:i:s'), $lastDate->format('Y-m-d H:i:s')])
-                    ->limit(1)
-                    ->execute()
-                    ->current()
-                ;
+                : $this->checkRoomReservationStatusByPeriod($room['id'], $firstDate, $lastDate)
+            ;
 
             if (!$reservationRoom) {
                 $rooms[] = $this->getRoomData((int)$room['id']);
@@ -306,6 +298,26 @@ class Model_Room extends Kohana_Model
         }
 
         return $rooms;
+    }
+
+    /**
+     * @param $roomId
+     * @param DateTime $firstDate
+     * @param DateTime $lastDate
+     * @return mixed
+     */
+    public function checkRoomReservationStatusByPeriod($roomId, DateTime $firstDate, DateTime $lastDate)
+    {
+        return DB::select()
+            ->from('reservations__reservations')
+            ->where('room_id', '=', $roomId)
+            ->and_where('status_id', '=', 1)
+            ->and_where('arrival_at', 'BETWEEN', [$firstDate->format('Y-m-d H:i:s'), $lastDate->format('Y-m-d H:i:s')])
+            ->and_where('departure_at', 'BETWEEN', [$firstDate->format('Y-m-d H:i:s'), $lastDate->format('Y-m-d H:i:s')])
+            ->limit(1)
+            ->execute()
+            ->current()
+        ;
     }
 
     /**

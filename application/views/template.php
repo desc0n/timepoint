@@ -18,7 +18,7 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <script src="/public/js/datepicker-ru.js"></script>
-    <script src="/public/js/scripts.js?v=2"></script>
+    <script src="/public/js/scripts.js?v=3"></script>
 
 </head>
 <?php

@@ -8,11 +8,15 @@ class Controller_Ajax extends Controller
     /** @var  Model_Reservation */
     private $reservationModel;
 
+    /** @var  Model_Room */
+    private $roomModel;
+
     public function __construct(Request $request, Response $response)
     {
         parent::__construct($request, $response);
         $this->contentModel = Model::factory('Content');
         $this->reservationModel = Model::factory('Reservation');
+        $this->roomModel = Model::factory('Room');
     }
 
     public function action_remove_contact()
@@ -108,5 +112,16 @@ class Controller_Ajax extends Controller
         );
 
         $this->response->body($body);
+    }
+
+    public function action_check_room_reserve()
+    {
+        $check = $this->roomModel->checkRoomReservationStatusByPeriod(
+            $this->request->post('roomId'),
+            new DateTime($this->request->post('arrivalDate')),
+            new DateTime($this->request->post('departureDate'))
+        );
+
+        $this->response->body(!$check ? 'free' : 'busy');
     }
 }

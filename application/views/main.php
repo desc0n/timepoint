@@ -104,7 +104,7 @@ $tomorrow->modify('+ 1 day');
                                     </div>
                                 </div>
                                 <div class="form-group text-right">
-                                    <button type="button" class="btn btn-info">Проверить</button>
+                                    <button type="button" class="btn btn-info check-room-reserve" data-id="<?=$room['room']['id'];?>">Проверить</button>
                                 </div>
                             </div>
                         </div>

@@ -23,6 +23,9 @@ $(document).ready(function () {
     $('.reserve-room-btn').on('click', function () {
         reserveRoom($(this).data('id'));
     });
+    $('.check-room-reserve').on('click', function () {
+        checkRoomReserve($(this).data('id'));
+    });
 });
 
 function changeMapSrc(src) {
@@ -63,6 +66,10 @@ function showNotificationModal(text, style) {
     $('#notificationModal .modal-body').html(html);
     $('#notificationModal').modal('toggle');
 }
+function checkRoomReserve(roomId) {
+    $.ajax({url: '/ajax/check_room_reserve', type: 'POST', data: {roomId: roomId, arrivalDate: $('#modalArrival' + roomId).val(), departureDate: $('#modalDeparture' + roomId).val()}, async: true}).done(function (response) {if(response === 'free') {showNotificationModal('Бронирование номера доступно.', 'success');$('#notChecked' + roomId).val(1);}else{showNotificationModal('Бронирование номера не доступно.', 'danger');$('#notChecked' + roomId).val(0);}});
+}
 function notPayedReserveRoom() {
-    $.ajax({url: '/ajax/reserve_room', type: 'POST', data: {roomId: $('#reserveRoomData > #reserveRoomId').val(), phone: $('#reserveRoomData > #customerPhone').val(), name: $('#reserveRoomData > #customerName').val(), comment: $('#reserveRoomData > #customerComment').val(),arrivalDate: $('#reserveRoomData > #arrivalDate').val(), departureDate: $('#reserveRoomData > #departureDate').val()}, async: true}).done(function () {$('#reservationModal').modal('toggle');showNotificationModal('Номер успешно забронирован!', 'success');});
+    var roomId = $('#reserveRoomData > #reserveRoomId').val();
+    $.ajax({url: '/ajax/reserve_room', type: 'POST', data: {roomId: roomId, phone: $('#reserveRoomData > #customerPhone').val(), name: $('#reserveRoomData > #customerName').val(), comment: $('#reserveRoomData > #customerComment').val(),arrivalDate: $('#reserveRoomData > #arrivalDate').val(), departureDate: $('#reserveRoomData > #departureDate').val()}, async: true}).done(function () {$('#reservationModal').modal('toggle');showNotificationModal('Номер успешно забронирован!', 'success');$('#notChecked' + roomId).val(0);});
 }

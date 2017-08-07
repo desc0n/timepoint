@@ -30,6 +30,7 @@ $roomModel = Model::factory('Room');
 $today = new \DateTime();
 $tomorrow = clone $today;
 $tomorrow->modify('+ 1 day');
+$arrivalDate = new DateTime(date('Y-m-d', strtotime(Arr::get($get, 'arrival_date', $today->format('d.m.Y')))));
 ?>
 <body>
 <div class="wrapper">
@@ -121,7 +122,7 @@ $tomorrow->modify('+ 1 day');
                             <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 booking-calendar">
                                 <div class="form-group">
                                     <div class='input-group date'>
-                                        <input id="arrival" value="<?=Arr::get($get, 'arrival_date', $today->format('d.m.Y'));?>" type="text" name="arrival_date" class="form-control"/>
+                                        <input id="arrival" value="<?=$arrivalDate->format('d.m.Y');?>" type="text" name="arrival_date" class="form-control"/>
                                         <span class="input-group-addon datepicker-toggler" data-target="arrival">
                                             <i class="fa fa-calendar"></i>
                                         </span>
@@ -323,15 +324,29 @@ $tomorrow->modify('+ 1 day');
     $( function() {
         $.datepicker.setDefaults($.datepicker.regional['ru']);
         $( "#arrival" ).datepicker({
-            dateFormat: 'dd.mm.yy'
+            dateFormat: 'dd.mm.yy',
+            minDate: getMinArrivalDate(),
+            onClose:function() {
+                var newDate = $(this).datepicker('getDate');
+                newDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate()+1);
+                $( "#departure" ).datepicker( "option", "minDate", newDate );
+            }
         });
         $( "#departure" ).datepicker({
-            dateFormat: 'dd.mm.yy'
+            dateFormat: 'dd.mm.yy',
+            minDate: getMinDepartureDate()
         });
         $('.datepicker-toggler').click(function() {
             $("#" + $(this).data('target')).focus();
         });
     } );
+    function getMinArrivalDate() {
+        return new Date(<?=$arrivalDate->format('Y');?>, <?=$arrivalDate->format('m');?>, <?=$arrivalDate->format('d');?>);
+    }
+    function getMinDepartureDate() {
+        var minDepartureDate = $('#arrival').datepicker('getDate');
+        return new Date(minDepartureDate.getFullYear(), minDepartureDate.getMonth(), minDepartureDate.getDate()+1);
+    }
 </script>
 </body>
 </html>

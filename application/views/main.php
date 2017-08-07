@@ -2,6 +2,7 @@
 $today = new \DateTime();
 $tomorrow = clone $today;
 $tomorrow->modify('+ 1 day');
+$arrivalDate = $queryArrivalDate === null ? new DateTime() : new DateTime(date('Y-m-d', strtotime($queryArrivalDate)));
 ?>
 <div class="rooms">
     <div class="rooms__wrapper">
@@ -117,11 +118,25 @@ $tomorrow->modify('+ 1 day');
     <script>
         $( function() {
             $( "#modalArrival<?=$room['room']['id'];?>" ).datepicker({
-                dateFormat: 'dd.mm.yy'
+                dateFormat: 'dd.mm.yy',
+                minDate: getModalMinArrivalDate(<?=$room['room']['id'];?>),
+                onClose:function() {
+                    var newDate = $(this).datepicker('getDate');
+                    newDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate()+1);
+                    $( "#modalDeparture<?=$room['room']['id'];?>" ).datepicker( "option", "minDate", newDate );
+                }
             });
             $( "#modalDeparture<?=$room['room']['id'];?>" ).datepicker({
-                dateFormat: 'dd.mm.yy'
+                dateFormat: 'dd.mm.yy',
+                minDate: getModalMinDepartureDate(<?=$room['room']['id'];?>)
             });
         } );
+        function getModalMinArrivalDate(id) {
+            return new Date(<?=$arrivalDate->format('Y');?>, <?=$arrivalDate->format('m');?>, <?=$arrivalDate->format('d');?>);
+        }
+        function getModalMinDepartureDate(id) {
+            var minDepartureDate = $('#modalArrival' + id).datepicker('getDate');
+            return new Date(minDepartureDate.getFullYear(), minDepartureDate.getMonth(), minDepartureDate.getDate()+1);
+        }
     </script>
 <?}?>

@@ -1,0 +1,121 @@
+.latest-news {
+	padding:40px 0;
+}
+.blog-item, .blog-sizer {
+	margin:10px 0 40px 0;
+	width: auto;
+	overflow:hidden;
+}
+.blog-wrapper {
+	position: relative;
+}
+.blog-wrapper-title {
+	color: #fff;
+}
+.blog-thumbnail {
+	position: relative;
+}
+.blog-thumbnail img {
+	display: block;
+	width: 100%;
+}
+.blog-date {
+	padding: 5px 10.5px 10px 12.5px;
+	position: absolute;
+	text-align: center;
+	top: 0;
+}
+.day {
+	color: #FFFFFF;
+	font-size: 42px;
+	font-weight: 900;
+	line-height: 44px;
+	margin: 0 0 0 2px;
+	font-weight: 800;
+}
+.monthyear {
+	color: #FFFFFF;
+	font-size: 12px;
+	line-height: 13px;
+	margin: 2px 0 0;
+}
+.blog-content {
+	border-image: none;
+	border: 1px solid #e1e1e1;
+	border-style: none solid solid;
+	border-width: 0 1px 1px;
+	padding: 10px 15px 19px;
+}
+.blog-content a.btn {
+	font-weight: 400;
+}
+.blog-title, .blog-item .blog-title a {
+	color: #fff;
+	font-size: 19px;
+	text-transform:none;
+	line-height: 26px;
+}
+.blog-content .blog-meta {
+	color: #fff;
+	font-size: 11px;
+	font-weight: 400;
+	margin-bottom:10px;
+}
+.blog-content .blog-meta a {
+	color:#fff;
+}
+.blog-content p {
+	color: #fff;
+	line-height: 1.42857;
+	margin-bottom:10px;
+}
+.blog-content .blog-body {
+	color: #fff;
+}
+.blog-full-width {
+	width:100%;
+	float:none;
+	border-bottom:1px solid #eeeeee;
+}
+.blog-full-width-date {
+	width:76px;
+	background:#2b96cc;
+	float:left;
+	text-align:center;
+	margin-top:29px;
+	border-radius:5px;
+	padding:13px 0 0;
+	box-shadow: 0 3px 0 #1B83B8;
+}
+.blog-full-width-date .monthyear {
+	border-bottom:1px solid #fff;
+	padding-bottom:10px;
+}
+.blog-full-width-date a {
+	color:#fff;
+	margin:8px 0 5px;
+	display:block;
+}
+.blog-full-width-date a:hover i, .blog-full-width-date a:hover {
+	color:#fff;
+}
+.blog-full-width-date a i {
+	color:#fff;
+	font-size:15px;
+	margin-right:3px;
+}
+.blog-full-width .blog-content {
+	padding:20px 0 60px 100px;
+	border:none;
+}
+.blog-full-width.blog-detail .blog-content {
+	padding:20px 0 30px 0;
+}
+.blog-full-width.last {
+	border-bottom:0;
+	margin-bottom:0;
+}
+.blog-3-coloumn .w2 {
+	margin:0;
+	width:530px
+}

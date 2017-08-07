@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Мини-отель VLADPOINT. В деловом центре Владивостока.</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +9,7 @@
     <link rel="icon" href="/public/images/fav.png" sizes="38x38" type="image/png">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/public/css/styles.css?v=8" >
+    <link rel="stylesheet" href="/public/css/styles.css?v=9" >
     <link rel="stylesheet" href="/assets/bootstrap/css/font-awesome.css" >
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -48,17 +49,17 @@ $arrivalDate = new DateTime(date('Y-m-d', strtotime(Arr::get($get, 'arrival_date
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Гостиница</a>
+                        <a class="nav-link" href="/">Гостиница</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link nav-link__booking" href="#">Номера и цены</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Новости</a>
+                        <a class="nav-link" href="/news">Новости</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Контакты</a>
-                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="#">Контакты</a>-->
+<!--                    </li>-->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="dropdown1" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="true">RU</a>
@@ -270,9 +271,9 @@ $arrivalDate = new DateTime(date('Y-m-d', strtotime(Arr::get($get, 'arrival_date
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Новости</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Контакты</a>
-                                </li>
+<!--                                <li class="nav-item">-->
+<!--                                    <a class="nav-link" href="#">Контакты</a>-->
+<!--                                </li>-->
                             </ul>
                         </div>
                     </nav>

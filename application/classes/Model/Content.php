@@ -22,6 +22,7 @@ class Model_Content extends Kohana_Model
             ->set('googlePlusNetwork', $this->getSocialNetworks('google+'))
             ->set('twitterNetwork', $this->getSocialNetworks('twitter'))
             ->set('facebookNetwork', $this->getSocialNetworks('facebook'))
+            ->set('get', $_GET)
         ;
     }
 
@@ -52,6 +53,11 @@ class Model_Content extends Kohana_Model
                         ->set('conveniencesList', $roomModel->getConveniences())
                         ->set('queryArrivalDate', $queryArrivalDate)
                         ->set('queryDepartureDate', $queryDepartureDate)
+                ];
+            case 'news':
+                return [
+                    'content' => View::factory('news')
+                        ->set('newsList', $this->getNewsList())
                 ];
             default:
                 return DB::select()
@@ -263,4 +269,15 @@ class Model_Content extends Kohana_Model
         }
     }
 
+    /**
+     * @return  array
+     */
+    public function getNewsList()
+    {
+        return DB::select()
+            ->from('content__news')
+            ->execute()
+            ->as_array()
+        ;
+    }
 }

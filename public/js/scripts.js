@@ -48,7 +48,7 @@ function reserveRoom(roomId) {
         showNotificationModal('Некорректно указан номер телефона!', 'danger');
         return;
     }
-    $.ajax({url: '/ajax/show_reserve_modal', type: 'POST', data: {roomId: roomId, phone: $('#inputPhone' + roomId).val(), name: $('#inputName' + roomId).val(), comment: $('#inputComment' + roomId).val(), arrivalDate: $('#modalArrival' + roomId).val(), departureDate: $('#modalDeparture' + roomId).val()}, async: true}).done(function (html) {$('#reservationModal .modal-body').html(html);$('#reservationModal').modal('toggle');});
+    $.ajax({url: '/ajax/show_reserve_modal', type: 'POST', data: {roomId: roomId, phone: $('#inputPhone' + roomId).val(), name: $('#inputName' + roomId).val(), comment: $('#inputComment' + roomId).val(), arrivalDate: $('#modalArrival' + roomId).val(), departureDate: $('#modalDeparture' + roomId).val(), childrenTo2: $('#inputChildrenTo2' + roomId).val(), childrenTo6: $('#inputChildrenTo6' + roomId).val(), childrenTo12: $('#inputChildrenTo12' + roomId).val()}, async: true}).done(function (html) {$('#reservationModal .modal-body').html(html);$('#reservationModal').modal('toggle');});
 }
 function formIsValid(roomId) {
     var phoneReg = /\+7[\d]{10}/;
@@ -71,5 +71,5 @@ function checkRoomReserve(roomId) {
 }
 function notPayedReserveRoom() {
     var roomId = $('#reserveRoomData > #reserveRoomId').val();
-    $.ajax({url: '/ajax/reserve_room', type: 'POST', data: {roomId: roomId, phone: $('#reserveRoomData > #customerPhone').val(), name: $('#reserveRoomData > #customerName').val(), comment: $('#reserveRoomData > #customerComment').val(),arrivalDate: $('#reserveRoomData > #arrivalDate').val(), departureDate: $('#reserveRoomData > #departureDate').val()}, async: true}).done(function () {$('#reservationModal').modal('toggle');showNotificationModal('Номер успешно забронирован!', 'success');$('#notChecked' + roomId).val(0);});
+    $.ajax({url: '/ajax/reserve_room', type: 'POST', data: {roomId: roomId, phone: $('#reserveRoomData > #customerPhone').val(), name: $('#reserveRoomData > #customerName').val(), comment: $('#reserveRoomData > #customerComment').val(),arrivalDate: $('#reserveRoomData > #arrivalDate').val(), departureDate: $('#reserveRoomData > #departureDate').val(), childrenTo2: $('#reserveRoomData > #childrenTo2').val(), childrenTo6: $('#reserveRoomData > #childrenTo6').val(), childrenTo12: $('#reserveRoomData > #childrenTo12').val()}, async: true}).done(function () {$('#reservationModal').modal('toggle');showNotificationModal('Номер успешно забронирован!', 'success');$('#notChecked' + roomId).val(0);});
 }

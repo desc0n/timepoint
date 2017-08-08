@@ -11,10 +11,13 @@ class Model_Reservation extends Kohana_Model
      * @param string $comment
      * @param DateTime $arrivalAt
      * @param DateTime $departureAt
+     * @param int $childrenTo2
+     * @param int $childrenTo6
+     * @param int $childrenTo12
      *
      * @return string
      */
-    public function addReservation($roomId, \DateTime $arrivalAt, \DateTime $departureAt, $phone, $name, $comment)
+    public function addReservation($roomId, \DateTime $arrivalAt, \DateTime $departureAt, $phone, $name, $comment, $childrenTo2, $childrenTo6, $childrenTo12)
     {
         DB::insert('reservations__reservations', [
                 'room_id',
@@ -24,6 +27,9 @@ class Model_Reservation extends Kohana_Model
                 'arrival_at',
                 'departure_at',
                 'status_id',
+                'children_to_2',
+                'children_to_6',
+                'children_to_12',
                 'created_at'
             ])
             ->values([
@@ -34,6 +40,9 @@ class Model_Reservation extends Kohana_Model
                 $arrivalAt->format('Y-m-d H:i:s'),
                 $departureAt->format('Y-m-d H:i:s'),
                 1,
+                $childrenTo2,
+                $childrenTo6,
+                $childrenTo12,
                 DB::expr('NOW()')
             ])
             ->execute()

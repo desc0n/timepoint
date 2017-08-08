@@ -77,6 +77,18 @@ $arrivalDate = $queryArrivalDate === null ? new DateTime() : new DateTime(date('
                                     <label for="inputComment<?=$room['room']['id'];?>">Комментарий</label>
                                     <textarea id="inputComment<?=$room['room']['id'];?>" class="form-control" rows="3" placeholder="Комментарий"></textarea>
                                 </div>
+                                <div class="form-group">
+                                    <label for="inputChildreTo2<?=$room['room']['id'];?>">Количество детей до 2 лет</label>
+                                    <input type="text" class="form-control" id="inputChildreTo2<?=$room['room']['id'];?>" placeholder="Количество детей до 2 лет" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputChildreTo6<?=$room['room']['id'];?>">Количество детей до 6 лет</label>
+                                    <input type="text" class="form-control" id="inputChildreTo6<?=$room['room']['id'];?>" placeholder="Количество детей до 2 лет" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputChildreTo12<?=$room['room']['id'];?>">Количество детей до 12 лет</label>
+                                    <input type="text" class="form-control" id="inputChildreTo12<?=$room['room']['id'];?>" placeholder="Количество детей до 2 лет" value="0">
+                                </div>
                                 <div class="form-group text-right">
                                     <button type="button" class="btn btn-primary reserve-room-btn" data-id="<?=$room['room']['id'];?>">Забронировать</button>
                                     <input type="hidden" id="notChecked<?=$room['room']['id'];?>" value="<?=(int)($queryArrivalDate !== null && $queryDepartureDate !== null);?>">

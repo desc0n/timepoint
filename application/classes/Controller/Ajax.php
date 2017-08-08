@@ -95,6 +95,9 @@ class Controller_Ajax extends Controller
             ->set('phone', $this->request->post('phone'))
             ->set('name', $this->request->post('name'))
             ->set('comment', preg_replace('/["\<\>]+/', '', $this->request->post('comment')))
+            ->set('childrenTo2', $this->request->post('childrenTo2'))
+            ->set('childrenTo6', $this->request->post('childrenTo6'))
+            ->set('childrenTo12', $this->request->post('childrenTo12'))
         ;
 
         $this->response->body($body);
@@ -103,12 +106,15 @@ class Controller_Ajax extends Controller
     public function action_reserve_room()
     {
         $body = $this->reservationModel->addReservation(
-            $this->request->post('roomId'),
+            (int)$this->request->post('roomId'),
             new DateTime($this->request->post('arrivalDate')),
             new DateTime($this->request->post('departureDate')),
             $this->request->post('phone'),
             $this->request->post('name'),
-            preg_replace('/["\<\>]+/', '', $this->request->post('comment'))
+            preg_replace('/["\<\>]+/', '', $this->request->post('comment')),
+            (int)$this->request->post('childrenTo2'),
+            (int)$this->request->post('childrenTo6'),
+            (int)$this->request->post('childrenTo12')
         );
 
         $this->response->body($body);

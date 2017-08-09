@@ -3,6 +3,8 @@ $today = new \DateTime();
 $tomorrow = clone $today;
 $tomorrow->modify('+ 1 day');
 $arrivalDate = $queryArrivalDate === null ? new DateTime() : new DateTime(date('Y-m-d', strtotime($queryArrivalDate)));
+$calendarArrivalDate = clone $arrivalDate;
+$calendarArrivalDate->modify('- 1 month');
 ?>
 <div class="rooms">
     <div class="rooms__wrapper">
@@ -144,7 +146,7 @@ $arrivalDate = $queryArrivalDate === null ? new DateTime() : new DateTime(date('
             });
         } );
         function getModalMinArrivalDate(id) {
-            return new Date(<?=$arrivalDate->format('Y');?>, <?=$arrivalDate->format('m');?>, <?=$arrivalDate->format('d');?>);
+            return new Date(<?=$calendarArrivalDate->format('Y');?>, <?=$calendarArrivalDate->format('m');?>, <?=$calendarArrivalDate->format('d');?>);
         }
         function getModalMinDepartureDate(id) {
             var minDepartureDate = $('#modalArrival' + id).datepicker('getDate');

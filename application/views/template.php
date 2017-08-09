@@ -32,6 +32,8 @@ $today = new \DateTime();
 $tomorrow = clone $today;
 $tomorrow->modify('+ 1 day');
 $arrivalDate = new DateTime(date('Y-m-d', strtotime(Arr::get($get, 'arrival_date', $today->format('d.m.Y')))));
+$calendarArrivalDate = clone $arrivalDate;
+$calendarArrivalDate->modify('- 1 month');
 ?>
 <body>
 <div class="wrapper">
@@ -342,7 +344,7 @@ $arrivalDate = new DateTime(date('Y-m-d', strtotime(Arr::get($get, 'arrival_date
         });
     } );
     function getMinArrivalDate() {
-        return new Date(<?=$arrivalDate->format('Y');?>, <?=$arrivalDate->format('m');?>, <?=$arrivalDate->format('d');?>);
+        return new Date(<?=$calendarArrivalDate->format('Y');?>, <?=$calendarArrivalDate->format('m');?>, <?=$calendarArrivalDate->format('d');?>);
     }
     function getMinDepartureDate() {
         var minDepartureDate = $('#arrival').datepicker('getDate');

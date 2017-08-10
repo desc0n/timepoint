@@ -57,6 +57,9 @@
                     <li>
                         <a href="/cpanel/conveniences_list"><i class="fa fa-star fa-fw"></i> Список удобств</a>
                     </li>
+                    <li>
+                        <a href="/cpanel/news_list"><i class="fa fa-newspaper-o fa-fw"></i> Список новостей</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->

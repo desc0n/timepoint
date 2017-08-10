@@ -238,7 +238,21 @@ class Controller_Cpanel extends Controller
         $this->response->body($template);
     }
 
-    public function action_redact_service()
+    public function action_news_list()
+    {
+        /** @var $contentModel Model_Content */
+        $contentModel = Model::factory('Content');
+
+        $template = $this->getBaseTemplate();
+
+        $template->content = View::factory('cpanel/news_list')
+            ->set('newsList', $contentModel->getNewsList())
+        ;
+
+        $this->response->body($template);
+    }
+
+    public function action_redact_news()
     {
         /** @var $contentModel Model_Content */
         $contentModel = Model::factory('Content');
@@ -246,21 +260,13 @@ class Controller_Cpanel extends Controller
         $template = $this->getBaseTemplate();
         $id = (int)$this->request->param('id');
 
-        $filename = Arr::get($_FILES, 'imgname');
-
-        if (!empty($filename)) {
-            $contentModel->loadServiceImg($id, $_FILES);
-
+        if ((int)$this->request->post('updateNews') === 1) {
+            $contentModel->updateNews($id, $this->request->post('title'), $this->request->post('content'));
             HTTP::redirect($this->request->referrer());
         }
 
-        if (!empty($this->request->post('updateService'))) {
-            $contentModel->updateService($id, $this->request->post('title'), $this->request->post('description'));
-            HTTP::redirect($this->request->referrer());
-        }
-
-        $template->content = View::factory('cpanel/redact_service')
-            ->set('serviceData', $contentModel->findServiceById($id))
+        $template->content = View::factory('cpanel/redact_news')
+            ->set('news', $contentModel->findNewsById($id))
         ;
 
         $this->response->body($template);

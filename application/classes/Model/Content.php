@@ -280,4 +280,32 @@ class Model_Content extends Kohana_Model
             ->as_array()
         ;
     }
+
+    /**
+     * @return  array
+     */
+    public function findNewsById($id)
+    {
+        return DB::select()
+            ->from('content__news')
+            ->where('id', '=', $id)
+            ->limit(1)
+            ->execute()
+            ->current()
+        ;
+    }
+
+    /**
+     * @param int $id
+     * @param string $title
+     * @param string $content
+     */
+    public function updateNews($id, $title, $content)
+    {
+        DB::update('content__news')
+            ->set(['title' => $title, 'content' => $content])
+            ->where('id', '=', $id)
+            ->execute()
+        ;
+    }
 }

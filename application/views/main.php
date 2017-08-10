@@ -2,9 +2,13 @@
 $today = new \DateTime();
 $tomorrow = clone $today;
 $tomorrow->modify('+ 1 day');
-$arrivalDate = $queryArrivalDate === null ? new DateTime() : new DateTime(date('Y-m-d', strtotime($queryArrivalDate)));
+$arrivalDate = $queryArrivalDate === null ? $today : new DateTime(date('Y-m-d', strtotime($queryArrivalDate)));
+$departureDate = $queryDepartureDate === null ? $tomorrow : new DateTime(date('Y-m-d', strtotime($queryDepartureDate)));
 $calendarArrivalDate = clone $arrivalDate;
 $calendarArrivalDate->modify('- 1 month');
+$calendarDepartureDate = clone $departureDate;
+$calendarDepartureDate->modify('- 1 month');
+$nightCount = (round(($departureDate->getTimestamp() - $arrivalDate->getTimestamp()) / 86400));
 ?>
 <div class="rooms">
     <div class="rooms__wrapper">
@@ -97,22 +101,10 @@ $calendarArrivalDate->modify('- 1 month');
                                 </div>
                                 <legend>Период бронирования</legend>
                                 <div class="form-group">
-                                    <label for="modalArrival<?=$room['room']['id'];?>">Заезд </label>
                                     <div class="form-group">
                                         <div class='input-group date'>
-                                            <input id="modalArrival<?=$room['room']['id'];?>" type="text" value="<?=($queryArrivalDate === null ? $today->format('d.m.Y') : $queryArrivalDate);?>" class="form-control"/>
-                                            <span class="input-group-addon datepicker-toggler" data-target="modalArrival<?=$room['room']['id'];?>">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="modalDeparture<?=$room['room']['id'];?>">Выезд </label>
-                                    <div class="form-group">
-                                        <div class='input-group date'>
-                                            <input id="modalDeparture<?=$room['room']['id'];?>" type="text" value="<?=($queryDepartureDate === null ? $tomorrow->format('d.m.Y') : $queryDepartureDate);?>" class="form-control"/>
-                                            <span class="input-group-addon datepicker-toggler" data-target="modalDeparture<?=$room['room']['id'];?>">
+                                            <input id="daterange<?=$room['room']['id'];?>" type="text" value="<?=$arrivalDate->format('d.m.Y');?> - <?=$departureDate->format('d.m.Y');?>" class="form-control"/>
+                                            <span class="input-group-addon datepicker-toggler" data-target="daterange<?=$room['room']['id'];?>">
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                         </div>
@@ -130,27 +122,21 @@ $calendarArrivalDate->modify('- 1 month');
     </div>
     <!-- modal -->
     <script>
-        $( function() {
-            $( "#modalArrival<?=$room['room']['id'];?>" ).datepicker({
-                dateFormat: 'dd.mm.yy',
-                minDate: getModalMinArrivalDate(<?=$room['room']['id'];?>),
-                onClose:function() {
-                    var newDate = $(this).datepicker('getDate');
-                    newDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate()+1);
-                    $( "#modalDeparture<?=$room['room']['id'];?>" ).datepicker( "option", "minDate", newDate );
-                }
+        $('#daterange<?=$room['room']['id'];?>').daterangepicker({
+            autoApply: true,
+            locale: {
+                format: 'DD.MM.YYYY'
+            },
+            minDate: getMinDate(),
+            startDate: getStartDate(),
+            endDate: getEndDate()
+        })
+            .on('apply.daterangepicker', function(ev, picker) {
+                var dateDiff = picker.endDate - picker.startDate;
+                writeNightCount((Math.round(dateDiff / 86400000) - 1), <?=$room['room']['id'];?>);
             });
-            $( "#modalDeparture<?=$room['room']['id'];?>" ).datepicker({
-                dateFormat: 'dd.mm.yy',
-                minDate: getModalMinDepartureDate(<?=$room['room']['id'];?>)
-            });
-        } );
-        function getModalMinArrivalDate(id) {
-            return new Date(<?=$calendarArrivalDate->format('Y');?>, <?=$calendarArrivalDate->format('m');?>, <?=$calendarArrivalDate->format('d');?>);
-        }
-        function getModalMinDepartureDate(id) {
-            var minDepartureDate = $('#modalArrival' + id).datepicker('getDate');
-            return new Date(minDepartureDate.getFullYear(), minDepartureDate.getMonth(), minDepartureDate.getDate()+1);
-        }
+        $('.datepicker-toggler').click(function() {
+            $("#" + $(this).data('target')).focus();
+        });
     </script>
 <?}?>

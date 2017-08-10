@@ -30,7 +30,8 @@ $contentModel = Model::factory('Content');
 /** @var $roomModel Model_Room */
 $roomModel = Model::factory('Room');
 $today = new \DateTime();
-$calendarToday = $today->modify('- 1 month');
+$calendarToday = clone $today;
+$calendarToday = $calendarToday->modify('- 1 month');
 $tomorrow = clone $today;
 $tomorrow->modify('+ 1 day');
 $arrivalDate = new DateTime(date('Y-m-d', strtotime(Arr::get($get, 'arrival_date', $today->format('d.m.Y')))));
@@ -39,7 +40,8 @@ $calendarArrivalDate = clone $arrivalDate;
 $calendarArrivalDate->modify('- 1 month');
 $calendarDepartureDate = clone $departureDate;
 $calendarDepartureDate->modify('- 1 month');
-$nightCount = (round(($departureDate->getTimestamp() - $arrivalDate->getTimestamp()) / 86400));
+$startDate = $arrivalDate < $today ? $today : $arrivalDate;
+$nightCount = (round(($departureDate->getTimestamp() - $startDate->getTimestamp()) / 86400) + 1);
 ?>
 <script>
     function getMinDate() {

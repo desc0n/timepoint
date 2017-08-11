@@ -21,7 +21,7 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <script src="/public/js/moment.js"></script>
     <script src="/public/js/moment-with-locales.js"></script>
-    <script src="/public/js/daterangepicker.js"></script>
+    <script src="/public/js/daterangepicker.js?v=1"></script>
 </head>
 <?php
 /** @var Model_Content $contentModel */
@@ -140,7 +140,7 @@ $nightCount = (round(($departureDate->getTimestamp() - $startDate->getTimestamp(
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 booking__selects-form">
                         <div class="row">
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"><label for="arrival">Заезд </label></div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"><label for="arrival">Период </label></div>
                             <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 booking-calendar">
                                 <div class="form-group">
                                     <div class='input-group date'>

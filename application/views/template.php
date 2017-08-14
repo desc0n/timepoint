@@ -91,13 +91,13 @@ $nightCount = (round(($departureDate->getTimestamp() - $startDate->getTimestamp(
 
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="dropdown2" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="true">RUB</a>
+                        <a class="nav-link dropdown-toggle" id="dropdown2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <?=mb_strtoupper(Arr::get($get, 'currency', 'RUB'));?>
+                        </a>
                         <div class="dropdown-menu" aria-labelledby="dropdown2">
-                            <a class="dropdown-item" href="#">RUB</a>
-                            <a class="dropdown-item" href="#">USD</a>
+                            <a class="dropdown-item" href="/?currency=rub<?=$contentModel->createQueryString($get, false, ['currency']);?>">RUB</a>
+                            <a class="dropdown-item" href="/?currency=usd<?=$contentModel->createQueryString($get, false, ['currency']);?>">USD</a>
                         </div>
-
                     </li>
                     <li class="nav-item nav-item__contacts hidden-lg-down">
                         <div class="nav-link">
@@ -164,6 +164,7 @@ $nightCount = (round(($departureDate->getTimestamp() - $startDate->getTimestamp(
         </div>
         <input value="<?=$arrivalDate->format('d.m.Y');?>" type="hidden" name="arrival_date">
         <input value="<?=$departureDate->format('d.m.Y');?>" type="hidden" name="departure_date">
+        <input value="<?=Arr::get($get, 'currency', 'rub');?>" type="hidden" name="currency">
     </form>
 </div>
 <div class="container">

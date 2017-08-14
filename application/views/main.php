@@ -17,7 +17,7 @@ $nightCount = (round(($departureDate->getTimestamp() - $arrivalDate->getTimestam
             <?$mainImg = !empty($room['room_main_img']) ? $room['room_main_img']['src'] : $mainImg;?>
         <div class="rooms__kind" style="background: url('/public/img/original/<?=$mainImg;?>');">
             <div class="rooms__kind-caption">
-                <div class="rooms__kind-caption-price"><?=$room['room']['price'];?> руб.</div>
+                <div class="rooms__kind-caption-price"><?=($course && $currency === 'USD' ? round($room['room']['price'] / $course) . ' USD': $room['room']['price'] . ' руб.')?></div>
                 <button type="button" class="btn btn-primary rooms__kind-caption-action" data-toggle="modal" data-target="#roomModal<?=$room['room']['id'];?>">Посмотреть</button>
             </div>
         </div>

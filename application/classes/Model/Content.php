@@ -53,6 +53,8 @@ class Model_Content extends Kohana_Model
                         ->set('conveniencesList', $roomModel->getConveniences())
                         ->set('queryArrivalDate', $queryArrivalDate)
                         ->set('queryDepartureDate', $queryDepartureDate)
+                        ->set('course', $this->getCurrencyCourse())
+                        ->set('currency', mb_strtoupper(Arr::get($_GET, 'currency', 'rub')))
                 ];
             case 'news':
                 return [
@@ -307,5 +309,49 @@ class Model_Content extends Kohana_Model
             ->where('id', '=', $id)
             ->execute()
         ;
+    }
+
+    /**
+     * @param array $get
+     * @param bool $first
+     * @param array $ignoreKeys
+     * @return string
+     */
+    public function createQueryString(array $get, $first = true, $ignoreKeys = [])
+    {
+        $queryString = $first ? '?' : '&';
+        $count = 0;
+
+        foreach ($get as $key => $value) {
+            if (in_array($key, $ignoreKeys)) {
+                continue;
+            }
+
+            $queryString .= $key . '=' . $value . ($value === end($get) ? null : '&');
+            $count++;
+        }
+
+        return $count ? $queryString : '';
+    }
+
+    public function getCurrencyCourse()
+    {
+        $course = 0;
+        $content = file_get_contents('http://www.cbr.ru/scripts/XML_daily.asp');
+        $xml = new SimpleXMLElement($content);
+        $json_string = json_encode($xml);
+        $currencyData = json_decode($json_string, TRUE);
+
+        if (!Arr::get($currencyData, 'Valute')) {
+            return $course;
+        }
+
+        foreach ($currencyData['Valute'] as $data) {
+            if ($data['CharCode'] === 'USD') {
+                $course = $data['Value'];
+            }
+        }
+
+        return $course;
     }
 }

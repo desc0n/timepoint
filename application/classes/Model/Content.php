@@ -5,6 +5,42 @@
  */
 class Model_Content extends Kohana_Model
 {
+    private $templateWords = [
+        'ru' => [
+            'menu' => [
+                'rooms_and_prices' => 'Номера и цены',
+                'news' => 'Новости',
+            ],
+            'filter' => [
+                'booking' => 'Бронирование',
+                'quests' => 'Гости',
+                'period' => 'Период',
+                'show_free_rooms' => 'Показать свободные номера',
+            ],
+            'contacts' => [
+                'contacts' => 'Контакты',
+                'booking_phone' => 'Телефон для бронирования',
+                'address' => 'Адрес',
+            ]
+        ],
+        'en' => [
+            'menu' => [
+                'rooms_and_prices' => 'Rooms and prices',
+                'news' => 'News',
+            ],
+            'filter' => [
+                'booking' => 'Booking',
+                'quests' => 'Quests',
+                'period' => 'Period',
+                'show_free_rooms' => 'Show free rooms',
+            ],
+            'contacts' => [
+                'contacts' => 'Contacts',
+                'booking_phone' => 'Booking phone',
+                'address' => 'Address',
+            ]
+        ]
+    ];
     private $contactTypes = ['address' => 'Адрес', 'phone' => 'Телефон', 'email' => 'E-mail'];
 
     /**
@@ -15,13 +51,27 @@ class Model_Content extends Kohana_Model
         return $this->contactTypes;
     }
 
-    public function getBaseTemplate($slug)
+    /**
+     * @return array
+     */
+    public function getTemplateWords()
+    {
+        return $this->templateWords;
+    }
+
+    /**
+     * @param string $slug
+     * @param string $language
+     * @return View
+     */
+    public function getBaseTemplate($slug, $language)
     {
         return View::factory('template')
             ->set('content', Arr::get($this->findPageBySlug($slug), 'content'))
             ->set('googlePlusNetwork', $this->getSocialNetworks('google+'))
             ->set('twitterNetwork', $this->getSocialNetworks('twitter'))
             ->set('facebookNetwork', $this->getSocialNetworks('facebook'))
+            ->set('templateWords', $this->templateWords[$language])
             ->set('get', $_GET)
         ;
     }

@@ -70,13 +70,10 @@ $nightCount = (round(($departureDate->getTimestamp() - $startDate->getTimestamp(
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Гостиница</a>
+                        <a class="nav-link nav-link__booking" href="/"><?=$templateWords['menu']['rooms_and_prices'];?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link__booking" href="#">Номера и цены</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/news">Новости</a>
+                        <a class="nav-link" href="/news"><?=$templateWords['menu']['news'];?></a>
                     </li>
 <!--                    <li class="nav-item">-->
 <!--                        <a class="nav-link" href="#">Контакты</a>-->
@@ -85,8 +82,8 @@ $nightCount = (round(($departureDate->getTimestamp() - $startDate->getTimestamp(
                         <a class="nav-link dropdown-toggle" id="dropdown1" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="true">RU</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown1">
-                            <a class="dropdown-item" href="#">RU</a>
-                            <a class="dropdown-item" href="#">EN</a>
+                            <a class="dropdown-item" href="/">RU</a>
+                            <a class="dropdown-item" href="/en">EN</a>
                         </div>
 
                     </li>
@@ -127,12 +124,12 @@ $nightCount = (round(($departureDate->getTimestamp() - $startDate->getTimestamp(
 <div class="container">
     <form action="/" class="booking" id="filter_form">
         <div class="row">
-            <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12 booking__caption"><span>Бронирование</span></div>
+            <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12 booking__caption"><span><?=$templateWords['filter']['booking'];?></span></div>
             <div class="col-lg-8 col-md-12  col-sm-12  col-xs-12 booking__selects">
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 booking__selects-form">
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"><label for="guests">Гости </label></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"><label for="guests"><?=$templateWords['filter']['quests'];?> </label></div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                 <?=Form::select('guest_count', $roomModel->roomsGuests, Arr::get($get, 'guest_count'), ['class' => 'form-control', 'id' => 'guests']);?>
                             </div>
@@ -140,7 +137,7 @@ $nightCount = (round(($departureDate->getTimestamp() - $startDate->getTimestamp(
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 booking__selects-form">
                         <div class="row">
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"><label for="arrival">Период </label></div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"><label for="arrival"><?=$templateWords['filter']['period'];?> </label></div>
                             <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 booking-calendar">
                                 <div class="form-group">
                                     <div class='input-group date'>
@@ -159,7 +156,7 @@ $nightCount = (round(($departureDate->getTimestamp() - $startDate->getTimestamp(
                 </div>
             </div>
             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 booking__action">
-                <button type="button" class="btn btn-primary rooms__kind-caption-action" onclick="filterRooms();">Показать свободные номера</button>
+                <button type="button" class="btn btn-primary rooms__kind-caption-action" onclick="filterRooms();"><?=$templateWords['filter']['show_free_rooms'];?></button>
             </div>
         </div>
         <input value="<?=$arrivalDate->format('d.m.Y');?>" type="hidden" name="arrival_date">
@@ -175,13 +172,13 @@ $nightCount = (round(($departureDate->getTimestamp() - $startDate->getTimestamp(
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <h1>Контакты</h1>
+                <h1><?=$templateWords['contacts']['contacts'];?></h1>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <div class="contacts-block__caption">
-                    Телефон бронирования
+                    <?=$templateWords['contacts']['booking_phone'];?>
                 </div>
                 <?foreach ($contentModel->getContacts(['phone']) as $contact){?>
                     <div class="contacts-block__content"><?=$contact['value'];?></div>
@@ -189,7 +186,7 @@ $nightCount = (round(($departureDate->getTimestamp() - $startDate->getTimestamp(
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
                 <div class="contacts-block__caption">
-                    Адрес
+                    <?=$templateWords['contacts']['address'];?>
                 </div>
                 <?foreach ($contentModel->getContacts(['address']) as $contact){?>
                     <div class="contacts-block__content">
@@ -263,7 +260,7 @@ $nightCount = (round(($departureDate->getTimestamp() - $startDate->getTimestamp(
             </div>
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                 <div class="footer__block-contacts">
-                    <div class="caption">Телефон для бронирования</div>
+                    <div class="caption"><?=$templateWords['contacts']['booking_phone'];?></div>
                     <?foreach ($contentModel->getContacts(['phone']) as $contact){?>
                         <div class="phone"><?=$contact['value'];?></div>
                     <?}?>
@@ -275,17 +272,11 @@ $nightCount = (round(($departureDate->getTimestamp() - $startDate->getTimestamp(
                         <div class="navbar-collapse">
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Гостиница</a>
+                                    <a class="nav-link" href="/"><?=$templateWords['menu']['rooms_and_prices'];?></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Номера и цены</a>
+                                    <a class="nav-link" href="/news"><?=$templateWords['menu']['news'];?></a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Новости</a>
-                                </li>
-<!--                                <li class="nav-item">-->
-<!--                                    <a class="nav-link" href="#">Контакты</a>-->
-<!--                                </li>-->
                             </ul>
                         </div>
                     </nav>

@@ -23,7 +23,7 @@ class Controller_Index extends Controller
         View::set_global('title', 'Новости');
         View::set_global('rootPage', 'news');
 
-		$template = $contentModel->getBaseTemplate('news');
+		$template = $contentModel->getBaseTemplate('news', 'ru');
 
 		$this->response->body($template);
 	}

@@ -243,6 +243,11 @@ class Controller_Cpanel extends Controller
         /** @var $contentModel Model_Content */
         $contentModel = Model::factory('Content');
 
+        if ((int)$this->request->post('addNews') === 1) {
+            $newsId = $contentModel->addNews();
+            HTTP::redirect('cpanel/redact_news/' . $newsId);
+        }
+
         $template = $this->getBaseTemplate();
 
         $template->content = View::factory('cpanel/news_list')

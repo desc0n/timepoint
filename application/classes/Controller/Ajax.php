@@ -86,6 +86,13 @@ class Controller_Ajax extends Controller
         $this->response->body(json_encode(['result' =>'success']));
     }
 
+    public function action_remove_news()
+    {
+        $this->contentModel->removeNews((int)$this->request->post('newsId'));
+
+        $this->response->body(json_encode(['result' =>'success']));
+    }
+
     public function action_show_reserve_modal()
     {
         $body = View::factory('reservation_modal')

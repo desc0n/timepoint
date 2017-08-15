@@ -16,7 +16,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.js"></script>
     <script src="/assets/bootstrap/js/bootstrap3-typeahead.js"></script>
-    <script src="/assets/admin/js/scripts.js?v=3"></script>
+    <script src="/assets/admin/js/scripts.js?v=4"></script>
     <script src="/assets/admin/js/holder.js"></script>
     <script src="/assets/admin/js/ckeditor/ckeditor.js"></script>
 </head>

@@ -72,9 +72,6 @@ function setMainRoomImg(roomId, value) {
             }
         });
 }
-function addRoomConvenience() {
-    $.ajax({url: '/ajax/add_room_convenience', type: 'POST', data: {roomId: $('#roomId').val(), value: $('#conveniencesList>option:selected').val()}, async: true}).done(function () {location.reload();});
-}
-function removeRoomConvenience(convenienceId) {
-    $.ajax({url: '/ajax/remove_room_convenience', type: 'POST', data: {roomId: $('#roomId').val(), convenienceId: convenienceId}, async: true}).done(function () {location.reload();});
-}
+function addRoomConvenience() {$.ajax({url: '/ajax/add_room_convenience', type: 'POST', data: {roomId: $('#roomId').val(), value: $('#conveniencesList>option:selected').val()}, async: true}).done(function () {location.reload();});}
+function removeRoomConvenience(convenienceId) {$.ajax({url: '/ajax/remove_room_convenience', type: 'POST', data: {roomId: $('#roomId').val(), convenienceId: convenienceId}, async: true}).done(function () {location.reload();});}
+function removeNews(newsId) {$.ajax({url: '/ajax/remove_news', type: 'POST', data: {newsId: newsId}, async: true}).done(function () {location.reload();});}

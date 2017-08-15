@@ -322,6 +322,30 @@ class Model_Content extends Kohana_Model
     }
 
     /**
+     * @return  int
+     */
+    public function addNews()
+    {
+        $res = DB::insert('content__news', [])
+            ->values([])
+            ->execute()
+        ;
+
+        return $res[0];
+    }
+
+    /**
+     * @param int $newsId
+     */
+    public function removeNews($newsId)
+    {
+        DB::delete('content__news')
+            ->where('id', '=', $newsId)
+            ->execute()
+        ;
+    }
+
+    /**
      * @return  array
      */
     public function getNewsList()

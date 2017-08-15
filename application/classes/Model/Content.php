@@ -326,8 +326,8 @@ class Model_Content extends Kohana_Model
      */
     public function addNews()
     {
-        $res = DB::insert('content__news', [])
-            ->values([])
+        $res = DB::insert('content__news', ['created_at'])
+            ->values([DB::expr('NOW()')])
             ->execute()
         ;
 
@@ -379,7 +379,7 @@ class Model_Content extends Kohana_Model
     public function updateNews($id, $title, $content)
     {
         DB::update('content__news')
-            ->set(['title' => $title, 'content' => $content])
+            ->set(['title' => $title, 'content' => $content, 'updated_at' => DB::expr('NOW()')])
             ->where('id', '=', $id)
             ->execute()
         ;

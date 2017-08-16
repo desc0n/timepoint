@@ -46,7 +46,7 @@ $(document).ready(function () {
 });
 
 function changeMapSrc(src) {
-    $('#map').attr('src', '/public/images/' + src + '.jpg');
+    $('#map').attr('src', '/public/images/' + src + '.jpg?v=1');
     if(src.indexOf('taxi') !== -1) {
         $('.taxi-link').css('display', 'block');
     } else {

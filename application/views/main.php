@@ -84,16 +84,16 @@ $nightCount = (round(($departureDate->getTimestamp() - $arrivalDate->getTimestam
                                     <textarea id="inputComment<?=$room['room']['id'];?>" class="form-control" rows="3" placeholder="Комментарий"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputChildreTo2<?=$room['room']['id'];?>">Количество детей до 2 лет</label>
-                                    <input type="text" class="form-control" id="inputChildreTo2<?=$room['room']['id'];?>" placeholder="Количество детей до 2 лет" value="0">
+                                    <label for="inputChildrenTo2<?=$room['room']['id'];?>">Количество детей до 2 лет</label>
+                                    <input type="text" class="form-control" id="inputChildrenTo2<?=$room['room']['id'];?>" placeholder="Количество детей до 2 лет" value="0">
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputChildreTo6<?=$room['room']['id'];?>">Количество детей до 6 лет</label>
-                                    <input type="text" class="form-control" id="inputChildreTo6<?=$room['room']['id'];?>" placeholder="Количество детей до 2 лет" value="0">
+                                    <label for="inputChildrenTo6<?=$room['room']['id'];?>">Количество детей до 6 лет</label>
+                                    <input type="text" class="form-control" id="inputChildrenTo6<?=$room['room']['id'];?>" placeholder="Количество детей до 2 лет" value="0">
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputChildreTo12<?=$room['room']['id'];?>">Количество детей до 12 лет</label>
-                                    <input type="text" class="form-control" id="inputChildreTo12<?=$room['room']['id'];?>" placeholder="Количество детей до 2 лет" value="0">
+                                    <label for="inputChildrenTo12<?=$room['room']['id'];?>">Количество детей до 12 лет</label>
+                                    <input type="text" class="form-control" id="inputChildrenTo12<?=$room['room']['id'];?>" placeholder="Количество детей до 2 лет" value="0">
                                 </div>
                                 <div class="form-group text-right">
                                     <button type="button" class="btn btn-primary reserve-room-btn" data-id="<?=$room['room']['id'];?>">Забронировать</button>

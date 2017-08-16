@@ -228,8 +228,8 @@ $nightCount = (round(($departureDate->getTimestamp() - $startDate->getTimestamp(
                     <div class="row map-path-hidden map-path-2">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <ul class="map-controls__list map-controls__list_sublist">
-                                <li class="map-controls__list_active" data-img="path2_pedestrian"><span>пешком</span></li>
-                                <li data-img="path2_taxi"><span>на такси</span></li>
+                                <li class="map-controls__list_active" data-img="path2_express"><span>аэроэкспрессом</span> <i class="fa fa-question-circle" aria-hidden="true" onclick="$('#expressInfo').modal('toggle');"></i></li>
+                                <li data-img="path2_taxi"><span>на такси</span> <i class="fa fa-question-circle" aria-hidden="true" onclick="$('#taxiInfo1').modal('toggle');"></i></li>
                             </ul>
                         </div>
                     </div>
@@ -237,7 +237,7 @@ $nightCount = (round(($departureDate->getTimestamp() - $startDate->getTimestamp(
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <ul class="map-controls__list map-controls__list_sublist">
                                 <li class="map-controls__list_active" data-img="path3_bus"><span>на автобусе</span></li>
-                                <li data-img="path3_taxi"><span>на такси</span></li>
+                                <li data-img="path3_taxi"><span>на такси</span> <i class="fa fa-question-circle" aria-hidden="true" onclick="$('#taxiInfo1').modal('toggle');"></i></li>
                             </ul>
                         </div>
                     </div>
@@ -303,6 +303,29 @@ $nightCount = (round(($departureDate->getTimestamp() - $startDate->getTimestamp(
                 <div>тел. (423) 2-500-500</div>
                 <div>стоимость от 70 руб.</div>
                 <div><a href="http://vladivostok.taxisaturn.ru/" target="_blank">http://vladivostok.taxisaturn.ru/</a></div>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+<div id="expressInfo" class="modal fade modal-booking" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content modal-booking">
+            <div class="modal-header">
+                <h5 class="modal-title">Расписание аэроэкспресса</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>Владивосток - Кневичи</h4>
+                <strong>стоимость 230 руб.</strong>
+                <div>07:08 (отправление) - 08:03 (прибытие)</div>
+                <div>09:01 (отправление) - 09:56 (прибытие)</div>
+                <div>12:00 (отправление) - 12:56 (прибытие)</div>
+                <div>16:00 (отправление) - 16:55 (прибытие)</div>
+                <div>18:00 (отправление) - 18:55 (прибытие)</div>
+                <div><a href="http://www.vl.ru/transport/aeroexpress" target="_blank">http://www.vl.ru/transport/aeroexpress</a></div>
             </div>
             <div class="modal-footer"></div>
         </div>

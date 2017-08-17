@@ -19,6 +19,9 @@ class Model_Reservation extends Kohana_Model
      */
     public function addReservation($roomId, \DateTime $arrivalAt, \DateTime $departureAt, $phone, $name, $comment, $childrenTo2, $childrenTo6, $childrenTo12)
     {
+        /** @var Model_Mail $mailModel */
+        $mailModel = Model::factory('Mail');
+
         DB::insert('reservations__reservations', [
                 'room_id',
                 'customer_phone',
@@ -47,6 +50,11 @@ class Model_Reservation extends Kohana_Model
             ])
             ->execute()
         ;
+
+        $message = '<strong>Клиент: </strong>' . $name . ' <strong>Номер телефона: </strong>' . $phone;
+        $mailModel->send('site@vladpointhotel.ru', 'descon@bk.ru', 'Запрос на бронирование', $message);
+        $mailModel->send('site@vladpointhotel.ru', 'vladpointhotel@mail.ru', 'Запрос на бронирование', $message);
+        $mailModel->send('site@vladpointhotel.ru', 'pvr2569@mail.ru', 'Запрос на бронирование', $message);
 
         return json_encode(['result' => 'success']);
     }

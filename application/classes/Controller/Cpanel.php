@@ -291,7 +291,7 @@ class Controller_Cpanel extends Controller
         }
 
         $template->content = View::factory('cpanel/redact_page')
-            ->set('pageData', $contentModel->findPageBySlug($slug))
+            ->set('pageData', $contentModel->findPageBySlug($slug, 'ru'))
         ;
         $this->response->body($template);
     }

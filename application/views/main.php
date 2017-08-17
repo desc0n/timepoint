@@ -17,8 +17,8 @@ $nightCount = (round(($departureDate->getTimestamp() - $arrivalDate->getTimestam
             <?$mainImg = !empty($room['room_main_img']) ? $room['room_main_img']['src'] : $mainImg;?>
         <div class="rooms__kind" style="background: url('/public/img/original/<?=$mainImg;?>');">
             <div class="rooms__kind-caption">
-                <div class="rooms__kind-caption-price"><?=($course && $currency === 'USD' ? round($room['room']['price'] / $course) . ' USD': $room['room']['price'] . ' руб.')?></div>
-                <button type="button" class="btn btn-primary rooms__kind-caption-action" data-toggle="modal" data-target="#roomModal<?=$room['room']['id'];?>">Посмотреть</button>
+                <div class="rooms__kind-caption-price"><?=($course && $currency === 'USD' ? round($room['room']['price'] / $course) . ' USD': $room['room']['price'] . ' ' . $templateWords['currency']['rub'])?></div>
+                <button type="button" class="btn btn-primary rooms__kind-caption-action" data-toggle="modal" data-target="#roomModal<?=$room['room']['id'];?>"><?=$templateWords['main']['detail'];?></button>
             </div>
         </div>
         <?}?>
@@ -30,7 +30,7 @@ $nightCount = (round(($departureDate->getTimestamp() - $arrivalDate->getTimestam
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content modal-booking">
                 <div class="modal-header">
-                    <h5 class="modal-title">Бронирование номера</h5>
+                    <h5 class="modal-title"><?=$templateWords['main']['booking_room'];?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -60,9 +60,9 @@ $nightCount = (round(($departureDate->getTimestamp() - $arrivalDate->getTimestam
                         </div>
                         <div class="row">
                             <div class="modal-booking__desc col-lg-6 col-sm-12 col-xs-12 col-md-6">
-                                <legend>Стоимость</legend>
-                                <h2 class="rooms__kind-caption-price"><?=$room['room']['price'];?> руб.</h2>
-                                <legend>Удобства в номере</legend>
+                                <legend><?=$templateWords['main']['cost'];?></legend>
+                                <h2 class="rooms__kind-caption-price"><?=($course && $currency === 'USD' ? round($room['room']['price'] / $course) . ' USD': $room['room']['price'] . ' ' . $templateWords['currency']['rub'])?></h2>
+                                <legend><?=$templateWords['main']['rooms_comfort'];?></legend>
                                 <ul>
                                     <?foreach ($room['room_conveniences'] as $roomConvenience) {?>
                                     <li><?=$conveniencesList[$roomConvenience['convenience_id']];?></li>
@@ -70,36 +70,36 @@ $nightCount = (round(($departureDate->getTimestamp() - $arrivalDate->getTimestam
                                 </ul>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <legend>Запрос на бронирование</legend>
+                                <legend><?=$templateWords['main']['booking_request'];?></legend>
                                 <div class="form-group">
-                                    <label for="inputPhone<?=$room['room']['id'];?>">Ваш телефон *</label>
-                                    <input type="text" class="form-control" id="inputPhone<?=$room['room']['id'];?>" placeholder="Укажите телефон в формате +79001234567">
+                                    <label for="inputPhone<?=$room['room']['id'];?>"><?=$templateWords['main']['phone'];?> *</label>
+                                    <input type="text" class="form-control" id="inputPhone<?=$room['room']['id'];?>" placeholder="<?=$templateWords['main']['specify_phone'];?> +79001234567">
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputName<?=$room['room']['id'];?>">Ваше имя *</label>
-                                    <input type="text" class="form-control" id="inputName<?=$room['room']['id'];?>" placeholder="Имя">
+                                    <label for="inputName<?=$room['room']['id'];?>"><?=$templateWords['main']['name'];?> *</label>
+                                    <input type="text" class="form-control" id="inputName<?=$room['room']['id'];?>" placeholder="<?=$templateWords['main']['name'];?>">
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputComment<?=$room['room']['id'];?>">Комментарий</label>
-                                    <textarea id="inputComment<?=$room['room']['id'];?>" class="form-control" rows="3" placeholder="Комментарий"></textarea>
+                                    <label for="inputComment<?=$room['room']['id'];?>"><?=$templateWords['main']['comment'];?></label>
+                                    <textarea id="inputComment<?=$room['room']['id'];?>" class="form-control" rows="3" placeholder="<?=$templateWords['main']['comment'];?>"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputChildrenTo2<?=$room['room']['id'];?>">Количество детей до 2 лет</label>
-                                    <input type="text" class="form-control" id="inputChildrenTo2<?=$room['room']['id'];?>" placeholder="Количество детей до 2 лет" value="0">
+                                    <label for="inputChildrenTo2<?=$room['room']['id'];?>"><?=$templateWords['main']['children_2'];?></label>
+                                    <input type="text" class="form-control" id="inputChildrenTo2<?=$room['room']['id'];?>" placeholder="<?=$templateWords['main']['children_2'];?>" value="0">
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputChildrenTo6<?=$room['room']['id'];?>">Количество детей до 6 лет</label>
-                                    <input type="text" class="form-control" id="inputChildrenTo6<?=$room['room']['id'];?>" placeholder="Количество детей до 2 лет" value="0">
+                                    <label for="inputChildrenTo6<?=$room['room']['id'];?>"><?=$templateWords['main']['children_6'];?></label>
+                                    <input type="text" class="form-control" id="inputChildrenTo6<?=$room['room']['id'];?>" placeholder="<?=$templateWords['main']['children_6'];?>" value="0">
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputChildrenTo12<?=$room['room']['id'];?>">Количество детей до 12 лет</label>
-                                    <input type="text" class="form-control" id="inputChildrenTo12<?=$room['room']['id'];?>" placeholder="Количество детей до 2 лет" value="0">
+                                    <label for="inputChildrenTo12<?=$room['room']['id'];?>"><?=$templateWords['main']['children_12'];?></label>
+                                    <input type="text" class="form-control" id="inputChildrenTo12<?=$room['room']['id'];?>" placeholder="<?=$templateWords['main']['children_12'];?>" value="0">
                                 </div>
                                 <div class="form-group text-right">
-                                    <button type="button" class="btn btn-primary reserve-room-btn" data-id="<?=$room['room']['id'];?>">Забронировать</button>
+                                    <button type="button" class="btn btn-primary reserve-room-btn" data-id="<?=$room['room']['id'];?>"><?=$templateWords['main']['book_a_room'];?></button>
                                     <input type="hidden" id="notChecked<?=$room['room']['id'];?>" value="<?=(int)($queryArrivalDate !== null && $queryDepartureDate !== null);?>">
                                 </div>
-                                <legend>Период бронирования</legend>
+                                <legend><?=$templateWords['main']['booking_period'];?></legend>
                                 <div class="form-group">
                                     <div class="form-group">
                                         <div class='input-group date'>
@@ -111,7 +111,7 @@ $nightCount = (round(($departureDate->getTimestamp() - $arrivalDate->getTimestam
                                     </div>
                                 </div>
                                 <div class="form-group text-right">
-                                    <button type="button" class="btn btn-info check-room-reserve" data-id="<?=$room['room']['id'];?>">Проверить</button>
+                                    <button type="button" class="btn btn-info check-room-reserve" data-id="<?=$room['room']['id'];?>"><?=$templateWords['main']['check'];?></button>
                                 </div>
                             </div>
                         </div>

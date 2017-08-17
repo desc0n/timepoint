@@ -7,6 +7,9 @@ class Model_Content extends Kohana_Model
 {
     private $templateWords = [
         'ru' => [
+            'currency' => [
+                'rub' => 'руб.'
+            ],
             'menu' => [
                 'rooms_and_prices' => 'Номера и цены',
                 'news' => 'Новости',
@@ -21,9 +24,29 @@ class Model_Content extends Kohana_Model
                 'contacts' => 'Контакты',
                 'booking_phone' => 'Телефон для бронирования',
                 'address' => 'Адрес',
+            ],
+            'main' => [
+                'detail' => 'Посмотреть',
+                'booking_room' => 'Бронирование номера',
+                'cost' => 'Стоимость',
+                'rooms_comfort' => 'Удобства в номере',
+                'booking_request' => 'Запрос на бронирование',
+                'phone' => 'Ваш телефон',
+                'specify_phone' => 'Укажите телефон в формате',
+                'name' => 'Ваше имя',
+                'comment' => 'Комментарий',
+                'children_2' => 'Количество детей до 2 лет',
+                'children_6' => 'Количество детей до 6 лет',
+                'children_12' => 'Количество детей до 12 лет',
+                'book_a_room' => 'Забронировать номер',
+                'booking_period' => 'Период бронирования',
+                'check' => 'Проверить',
             ]
         ],
         'en' => [
+            'currency' => [
+                'rub' => 'RUB'
+            ],
             'menu' => [
                 'rooms_and_prices' => 'Rooms and prices',
                 'news' => 'News',
@@ -38,6 +61,23 @@ class Model_Content extends Kohana_Model
                 'contacts' => 'Contacts',
                 'booking_phone' => 'Booking phone',
                 'address' => 'Address',
+            ],
+            'main' => [
+                'detail' => 'Detail',
+                'booking_room' => 'Booking room',
+                'cost' => 'Cost',
+                'rooms_comfort' => 'Rooms comfort',
+                'booking_request' => 'Booking request',
+                'phone' => 'Your phone',
+                'specify_phone' => 'Specify the phone in the format',
+                'name' => 'Your name',
+                'comment' => 'Comment',
+                'children_2' => 'Number of children under 2 years',
+                'children_6' => 'Number of children under 6 years',
+                'children_12' => 'Number of children under 12 years',
+                'book_a_room' => 'Book a room',
+                'booking_period' => 'Booking period',
+                'check' => 'Check',
             ]
         ]
     ];
@@ -67,7 +107,7 @@ class Model_Content extends Kohana_Model
     public function getBaseTemplate($slug, $language)
     {
         return View::factory('template')
-            ->set('content', Arr::get($this->findPageBySlug($slug), 'content'))
+            ->set('content', Arr::get($this->findPageBySlug($slug, $language), 'content'))
             ->set('googlePlusNetwork', $this->getSocialNetworks('google+'))
             ->set('twitterNetwork', $this->getSocialNetworks('twitter'))
             ->set('facebookNetwork', $this->getSocialNetworks('facebook'))
@@ -81,7 +121,7 @@ class Model_Content extends Kohana_Model
      * 
      * @return array
      */
-    public function findPageBySlug($slug = '')
+    public function findPageBySlug($slug = '', $language)
     {
         /** @var $roomModel Model_Room */
         $roomModel = Model::factory('Room');
@@ -105,6 +145,7 @@ class Model_Content extends Kohana_Model
                         ->set('queryDepartureDate', $queryDepartureDate)
                         ->set('course', $this->getCurrencyCourse())
                         ->set('currency', mb_strtoupper(Arr::get($_GET, 'currency', 'rub')))
+                        ->set('templateWords', $this->templateWords[$language])
                 ];
             case 'news':
                 return [

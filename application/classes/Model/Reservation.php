@@ -22,6 +22,9 @@ class Model_Reservation extends Kohana_Model
         /** @var Model_Mail $mailModel */
         $mailModel = Model::factory('Mail');
 
+        /** @var Model_Room $roomModel */
+        $roomModel = Model::factory('Room');
+
         DB::insert('reservations__reservations', [
                 'room_id',
                 'customer_phone',
@@ -51,7 +54,15 @@ class Model_Reservation extends Kohana_Model
             ->execute()
         ;
 
-        $message = '<strong>Клиент: </strong>' . $name . ' <strong>Номер телефона: </strong>' . $phone;
+        $roomData = $roomModel->findById($roomId);
+        $message = '<div><strong>Номер: </strong>' . $roomData['title'] . '</div>';
+        $message .= '<div><strong>Клиент: </strong>' . $name . '</div>';
+        $message .= '<div><strong>Номер телефона: </strong>' . $phone . '</div>';
+        $message .= '<div><strong>Комментарий: </strong>' . $comment . '</div>';
+        $message .= '<div><strong>Период бронирования: </strong>' . $arrivalAt->format('d.m.Y') . ' - ' . $departureAt->format('d.m.Y') . '</div>';
+        $message .= '<div><strong>Детей до 2 лет: </strong>' . $childrenTo2 . '</div>';
+        $message .= '<div><strong>Детей до 6 лет: </strong>' . $childrenTo6 . '</div>';
+        $message .= '<div><strong>Детей до 12 лет: </strong>' . $childrenTo12 . '</div>';
         $mailModel->send('site@vladpointhotel.ru', 'descon@bk.ru', 'Запрос на бронирование', $message);
         $mailModel->send('site@vladpointhotel.ru', 'vladpointhotel@mail.ru', 'Запрос на бронирование', $message);
         $mailModel->send('site@vladpointhotel.ru', 'pvr2569@mail.ru', 'Запрос на бронирование', $message);

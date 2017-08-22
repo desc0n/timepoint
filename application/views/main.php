@@ -124,6 +124,8 @@ $nightCount = (round(($departureDate->getTimestamp() - $arrivalDate->getTimestam
     <script>
         $('#daterange<?=$room['room']['id'];?>').daterangepicker({
             autoApply: true,
+            opens: "center",
+            drops: "up",
             locale: {
                 format: 'DD.MM.YYYY'
             },

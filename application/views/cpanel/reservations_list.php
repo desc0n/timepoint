@@ -19,6 +19,7 @@ $reservationModel = Model::factory('Reservation');
                 <th class="text-center">Имя клиента</th>
                 <th class="text-center">Телефон клиента</th>
                 <th class="text-center">Комментарий клиента</th>
+                <th class="text-center">Кол-во взрослых</th>
                 <th class="text-center">Кол-во детей до 2 лет</th>
                 <th class="text-center">Кол-во детей до 6 лет</th>
                 <th class="text-center">Кол-во детей до 12 лет</th>
@@ -35,6 +36,7 @@ $reservationModel = Model::factory('Reservation');
                     <td><?=$data['customer_name'];?></td>
                     <td><?=$data['customer_phone'];?></td>
                     <td><?=$data['customer_comment'];?></td>
+                    <td class="text-center"><?=$data['adult'];?></td>
                     <td class="text-center"><?=$data['children_to_2'];?></td>
                     <td class="text-center"><?=$data['children_to_6'];?></td>
                     <td class="text-center"><?=$data['children_to_12'];?></td>

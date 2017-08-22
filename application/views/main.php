@@ -83,17 +83,25 @@ $nightCount = (round(($departureDate->getTimestamp() - $arrivalDate->getTimestam
                                     <label for="inputComment<?=$room['room']['id'];?>"><?=$templateWords['main']['comment'];?></label>
                                     <textarea id="inputComment<?=$room['room']['id'];?>" class="form-control" rows="3" placeholder="<?=$templateWords['main']['comment'];?>"></textarea>
                                 </div>
-                                <div class="form-group">
-                                    <label for="inputChildrenTo2<?=$room['room']['id'];?>"><?=$templateWords['main']['children_2'];?></label>
-                                    <input type="text" class="form-control" id="inputChildrenTo2<?=$room['room']['id'];?>" placeholder="<?=$templateWords['main']['children_2'];?>" value="0">
+                                <div class="form-group row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <label class="label-sm" for="inputAdult<?=$room['room']['id'];?>"><?=$templateWords['main']['adult'];?></label>
+                                        <input type="text" class="form-control" id="inputAdult<?=$room['room']['id'];?>" value="0">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <label class="label-sm" for="inputChildrenTo12<?=$room['room']['id'];?>"><?=$templateWords['main']['children_12'];?></label>
+                                        <input type="text" class="form-control" id="inputChildrenTo12<?=$room['room']['id'];?>" value="0">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="inputChildrenTo6<?=$room['room']['id'];?>"><?=$templateWords['main']['children_6'];?></label>
-                                    <input type="text" class="form-control" id="inputChildrenTo6<?=$room['room']['id'];?>" placeholder="<?=$templateWords['main']['children_6'];?>" value="0">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputChildrenTo12<?=$room['room']['id'];?>"><?=$templateWords['main']['children_12'];?></label>
-                                    <input type="text" class="form-control" id="inputChildrenTo12<?=$room['room']['id'];?>" placeholder="<?=$templateWords['main']['children_12'];?>" value="0">
+                                <div class="form-group row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <label class="label-sm" for="inputChildrenTo2<?=$room['room']['id'];?>"><?=$templateWords['main']['children_2'];?></label>
+                                        <input type="text" class="form-control" id="inputChildrenTo2<?=$room['room']['id'];?>" value="0">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <label class="label-sm" for="inputChildrenTo6<?=$room['room']['id'];?>"><?=$templateWords['main']['children_6'];?></label>
+                                        <input type="text" class="form-control" id="inputChildrenTo6<?=$room['room']['id'];?>" value="0">
+                                    </div>
                                 </div>
                                 <div class="form-group text-right">
                                     <button type="button" class="btn btn-primary reserve-room-btn" data-id="<?=$room['room']['id'];?>"><?=$templateWords['main']['book_a_room'];?></button>

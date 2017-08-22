@@ -102,6 +102,7 @@ class Controller_Ajax extends Controller
             ->set('phone', $this->request->post('phone'))
             ->set('name', $this->request->post('name'))
             ->set('comment', preg_replace('/["\<\>]+/', '', $this->request->post('comment')))
+            ->set('adult', $this->request->post('adult'))
             ->set('childrenTo2', $this->request->post('childrenTo2'))
             ->set('childrenTo6', $this->request->post('childrenTo6'))
             ->set('childrenTo12', $this->request->post('childrenTo12'))
@@ -119,6 +120,7 @@ class Controller_Ajax extends Controller
             $this->request->post('phone'),
             $this->request->post('name'),
             preg_replace('/["\<\>]+/', '', $this->request->post('comment')),
+            (int)$this->request->post('adult'),
             (int)$this->request->post('childrenTo2'),
             (int)$this->request->post('childrenTo6'),
             (int)$this->request->post('childrenTo12')

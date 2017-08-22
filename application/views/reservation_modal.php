@@ -17,6 +17,7 @@
     <input type="hidden" id="customerPhone" value="<?=$phone;?>">
     <input type="hidden" id="customerName" value="<?=$name;?>">
     <input type="hidden" id="customerComment" value="<?=$comment;?>">
+    <input type="hidden" id="adult" value="<?=$adult;?>">
     <input type="hidden" id="childrenTo2" value="<?=$childrenTo2;?>">
     <input type="hidden" id="childrenTo6" value="<?=$childrenTo6;?>">
     <input type="hidden" id="childrenTo12" value="<?=$childrenTo12;?>">

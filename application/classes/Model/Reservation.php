@@ -11,13 +11,14 @@ class Model_Reservation extends Kohana_Model
      * @param string $comment
      * @param DateTime $arrivalAt
      * @param DateTime $departureAt
+     * @param int $adult
      * @param int $childrenTo2
      * @param int $childrenTo6
      * @param int $childrenTo12
      *
      * @return string
      */
-    public function addReservation($roomId, \DateTime $arrivalAt, \DateTime $departureAt, $phone, $name, $comment, $childrenTo2, $childrenTo6, $childrenTo12)
+    public function addReservation($roomId, \DateTime $arrivalAt, \DateTime $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12)
     {
         /** @var Model_Mail $mailModel */
         $mailModel = Model::factory('Mail');
@@ -33,6 +34,7 @@ class Model_Reservation extends Kohana_Model
                 'arrival_at',
                 'departure_at',
                 'status_id',
+                'adult',
                 'children_to_2',
                 'children_to_6',
                 'children_to_12',
@@ -46,6 +48,7 @@ class Model_Reservation extends Kohana_Model
                 $arrivalAt->format('Y-m-d H:i:s'),
                 $departureAt->format('Y-m-d H:i:s'),
                 1,
+                $adult,
                 $childrenTo2,
                 $childrenTo6,
                 $childrenTo12,
@@ -59,6 +62,7 @@ class Model_Reservation extends Kohana_Model
         $message .= '<div><strong>Период бронирования: </strong>' . $arrivalAt->format('d.m.Y') . ' - ' . $departureAt->format('d.m.Y') . '</div>';
         $message .= '<div><strong>Клиент: </strong>' . $name . '</div>';
         $message .= '<div><strong>Номер телефона: </strong>' . $phone . '</div>';
+        $message .= '<div><strong>Взрослых: </strong>' . $adult . '</div>';
         $message .= '<div><strong>Детей до 2 лет: </strong>' . $childrenTo2 . '</div>';
         $message .= '<div><strong>Детей до 6 лет: </strong>' . $childrenTo6 . '</div>';
         $message .= '<div><strong>Детей до 12 лет: </strong>' . $childrenTo12 . '</div>';

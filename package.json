@@ -22,6 +22,8 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
+    "flux": "^2.1.1",
+    "mirror-creator": "^1.1.0",
     "react": "^15.6.1",
     "react-dom": "~15.6.1",
     "react-images": "^0.5.5",

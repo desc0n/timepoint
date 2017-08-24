@@ -58,6 +58,16 @@ class Model_Reservation extends Kohana_Model
         ;
 
         $roomData = $roomModel->findById($roomId);
+        $bookingDate = clone $arrivalAt;
+
+        while ($bookingDate <= $departureAt) {
+            DB::insert('reservations__summary_table', ['type', 'booking_at', 'room_id', 'price'])
+                ->values(['site', $bookingDate->format('Y-m-d'), $roomId, $roomData['price']])
+                ->execute()
+            ;
+            $bookingDate->modify('+ 1 day');
+        }
+
         $message = '<div><strong>Номер: </strong>' . $roomData['title'] . '</div>';
         $message .= '<div><strong>Период бронирования: </strong>' . $arrivalAt->format('d.m.Y') . ' - ' . $departureAt->format('d.m.Y') . '</div>';
         $message .= '<div><strong>Клиент: </strong>' . $name . '</div>';
@@ -101,5 +111,39 @@ class Model_Reservation extends Kohana_Model
     public function formatDate($date, $format = 'd.m.Y')
     {
         return date($format, strtotime($date));
+    }
+
+    /**
+     * @param int $dayDifferent
+     * @param int $limit
+     * @return array
+     */
+    public function getSummaryTableData($dayDifferent = 0, $limit = 30)
+    {
+        /** @var Model_Room $roomModel */
+        $roomModel = Model::factory('Room');
+
+        $data = [];
+        $today = new DateTime();
+        $firstDate = $today->modify($dayDifferent >= 0 ? '+ ' . $dayDifferent . ' day' : '- ' . abs($dayDifferent ). ' day');
+
+        for ($i = 0; $i < $limit; $i++) {
+            foreach ($roomModel->findAll() as $room) {
+                $info = DB::select()
+                    ->from('reservations__summary_table')
+                    ->where('booking_at', '=', $firstDate->format('Y') . '-' . $firstDate->format('m') . '-' . $firstDate->format('d'))
+                    ->and_where('room_id', '=', $room['id'])
+                    ->limit(1)
+                    ->execute()
+                    ->current()
+                ;
+
+                $data[$firstDate->format('Y')][$firstDate->format('m')][$firstDate->format('d')][$room['id']] = $info;
+            }
+
+            $firstDate->modify('+ 1 day');
+        }
+
+        return $data;
     }
 }

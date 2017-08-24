@@ -60,6 +60,9 @@
                     <li>
                         <a href="/cpanel/news_list"><i class="fa fa-newspaper-o fa-fw"></i> Список новостей</a>
                     </li>
+                    <li>
+                        <a href="/cpanel/summary_table"><i class="fa fa-table fa-fw"></i> Результирующая таблица</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->

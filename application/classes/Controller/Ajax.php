@@ -139,4 +139,11 @@ class Controller_Ajax extends Controller
 
         $this->response->body(!$check ? 'free' : 'busy');
     }
+
+    public function action_get_summary_table_data()
+    {
+        $data = $this->reservationModel->getSummaryTableData();
+
+        $this->response->body(json_encode($data));
+    }
 }

@@ -424,3 +424,9 @@ body {
 .remove-convenience-btn {
     cursor: pointer;
 }
+.summary-table tr td.alert-danger{
+    cursor: pointer;
+}
+.summary-table tr td.alert-danger:hover{
+    background-color: #0e90d2;
+}

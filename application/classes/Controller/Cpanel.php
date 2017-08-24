@@ -336,4 +336,21 @@ class Controller_Cpanel extends Controller
         ;
         $this->response->body($template);
     }
+
+    public function action_summary_table()
+    {
+        /** @var $roomModel Model_Room */
+        $roomModel = Model::factory('Room');
+
+        /** @var $reservationModel Model_Reservation */
+        $reservationModel = Model::factory('Reservation');
+
+        $template = $this->getBaseTemplate();
+
+        $template->content = View::factory('cpanel/summary_table')
+            ->set('summaryTableData', $reservationModel->getSummaryTableData())
+            ->set('rooms', $roomModel->findAll())
+        ;
+        $this->response->body($template);
+    }
 }

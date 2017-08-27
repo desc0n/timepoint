@@ -3,6 +3,11 @@
 class Model_Reservation extends Kohana_Model
 {
     const ROW_LIMIT = 20;
+    public $types = [
+        'booking' => 'Booking',
+        'office' => 'Офис',
+        'site' => 'Сайт',
+    ];
 
     /**
      * @param int $roomId
@@ -15,10 +20,12 @@ class Model_Reservation extends Kohana_Model
      * @param int $childrenTo2
      * @param int $childrenTo6
      * @param int $childrenTo12
+     * @param string $type
+     * @param int $price
      *
      * @return string
      */
-    public function addReservation($roomId, \DateTime $arrivalAt, \DateTime $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12)
+    public function addReservation($roomId, \DateTime $arrivalAt, \DateTime $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12, $type, $price = null)
     {
         /** @var Model_Mail $mailModel */
         $mailModel = Model::factory('Mail');
@@ -26,11 +33,15 @@ class Model_Reservation extends Kohana_Model
         /** @var Model_Room $roomModel */
         $roomModel = Model::factory('Room');
 
+        $roomData = $roomModel->findById($roomId);
+
         DB::insert('reservations__reservations', [
+                'type',
                 'room_id',
                 'customer_phone',
                 'customer_name',
                 'customer_comment',
+                'price',
                 'arrival_at',
                 'departure_at',
                 'status_id',
@@ -41,10 +52,12 @@ class Model_Reservation extends Kohana_Model
                 'created_at'
             ])
             ->values([
+                $type,
                 $roomId,
                 $phone,
                 $name,
                 $comment,
+                $price ?: $roomData['price'],
                 $arrivalAt->format('Y-m-d H:i:s'),
                 $departureAt->format('Y-m-d H:i:s'),
                 1,
@@ -56,17 +69,6 @@ class Model_Reservation extends Kohana_Model
             ])
             ->execute()
         ;
-
-        $roomData = $roomModel->findById($roomId);
-        $bookingDate = clone $arrivalAt;
-
-        while ($bookingDate <= $departureAt) {
-            DB::insert('reservations__summary_table', ['type', 'booking_at', 'room_id', 'price'])
-                ->values(['site', $bookingDate->format('Y-m-d'), $roomId, $roomData['price']])
-                ->execute()
-            ;
-            $bookingDate->modify('+ 1 day');
-        }
 
         $message = '<div><strong>Номер: </strong>' . $roomData['title'] . '</div>';
         $message .= '<div><strong>Период бронирования: </strong>' . $arrivalAt->format('d.m.Y') . ' - ' . $departureAt->format('d.m.Y') . '</div>';
@@ -129,10 +131,21 @@ class Model_Reservation extends Kohana_Model
 
         for ($i = 0; $i < $limit; $i++) {
             foreach ($roomModel->findAll() as $room) {
-                $info = DB::select()
-                    ->from('reservations__summary_table')
-                    ->where('booking_at', '=', $firstDate->format('Y') . '-' . $firstDate->format('m') . '-' . $firstDate->format('d'))
-                    ->and_where('room_id', '=', $room['id'])
+                $info = DB::select('rr.*', 'r.title', ['rs.name', 'status_name'])
+                    ->from(['reservations__reservations', 'rr'])
+                    ->join(['rooms__rooms', 'r'])
+                    ->on('r.id', '=', 'rr.room_id')
+                    ->join(['reservations__statuses', 'rs'])
+                    ->on('rs.id', '=', 'rr.status_id')
+                    ->where('r.id', '=', $room['id'])
+                    ->and_where_open()
+                        ->where('rr.arrival_at', '=', $firstDate->format('Y') . '-' . $firstDate->format('m') . '-' . $firstDate->format('d'))
+                        ->or_where('rr.departure_at', '=', $firstDate->format('Y') . '-' . $firstDate->format('m') . '-' . $firstDate->format('d'))
+                        ->or_where_open()
+                            ->where('rr.arrival_at', '<', $firstDate->format('Y') . '-' . $firstDate->format('m') . '-' . $firstDate->format('d'))
+                            ->and_where('rr.departure_at', '>', $firstDate->format('Y') . '-' . $firstDate->format('m') . '-' . $firstDate->format('d'))
+                        ->or_where_close()
+                    ->and_where_close()
                     ->limit(1)
                     ->execute()
                     ->current()

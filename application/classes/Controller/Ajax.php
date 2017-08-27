@@ -123,7 +123,9 @@ class Controller_Ajax extends Controller
             (int)$this->request->post('adult'),
             (int)$this->request->post('childrenTo2'),
             (int)$this->request->post('childrenTo6'),
-            (int)$this->request->post('childrenTo12')
+            (int)$this->request->post('childrenTo12'),
+            $this->request->post('type'),
+            $this->request->post('price')
         );
 
         $this->response->body($body);

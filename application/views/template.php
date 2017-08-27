@@ -347,7 +347,7 @@ $nightCount = (round(($departureDate->getTimestamp() - $startDate->getTimestamp(
         </div>
     </div>
 </div>
-<script src="/public/js/scripts.js?v=6"></script>
+<script src="/public/js/scripts.js?v=7"></script>
 <script>
     $(document).ready(function () {
         writeNightCount(<?=$nightCount;?>, '');

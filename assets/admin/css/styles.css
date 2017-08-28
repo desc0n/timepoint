@@ -427,9 +427,24 @@ body {
 #summaryTableForm button {
     margin-top: 24px;
 }
-.summary-table tr td.alert-danger{
+.summary-table tr td.booking-ceil{
     cursor: pointer;
 }
-.summary-table tr td.alert-danger:hover{
+.color-legend{
+    height: 20px;
+}
+.summary-table tr td.success-booking-ceil,
+.success-color-legend{
+    background-color: #82c44f;
+}
+.summary-table tr td.success-booking-ceil:hover{
+    background-color: #adff61;
+}
+.summary-table tr td.canceled-booking-ceil,
+.canceled-color-legend{
+    background-color: #b80f35;
+}
+.summary-table tr td.active-booking-ceil,
+.active-color-legend{
     background-color: #0e90d2;
 }

@@ -148,4 +148,11 @@ class Controller_Ajax extends Controller
 
         $this->response->body(json_encode($data));
     }
+
+    public function action_canceled_booking()
+    {
+        $this->reservationModel->canceledBooking((int)$this->request->post('reservationId'));
+
+        $this->response->body(json_encode(['result' => 'success']));
+    }
 }

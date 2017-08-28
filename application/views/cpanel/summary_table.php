@@ -14,13 +14,24 @@ $firstDate = new DateTime(date('Y-m-d', strtotime(Arr::get($get, 'first_date', $
 
 $rooms = $roomModel->findAll(null, null);
 $selectionRooms = [];
+
 foreach ($rooms as $room) {
     $selectionRooms[$room['id']] = $room['title'];
 }
+
+$statusStyles = [1 => 'active', 2 => 'success', 3 => 'canceled'];
 ?>
 <div class="row">
     <div class="col-lg-12 form-group">
         <h3>Результирующая таблица</h3>
+    </div>
+    <div class="col-lg-12 form-group">
+        <strong>Значение цвета ячейки</strong>
+        <?foreach ($reservationModel->getStatuses() as $id=> $status) {?>
+        <div class="col-lg-12 form-group">
+            <div class="col-lg-1 color-legend <?=$statusStyles[$id];?>-color-legend"></div><div class="col-lg-11 text-left"> - <?=$status;?></div>
+        </div>
+        <?}?>
     </div>
     <div class="col-lg-12 form-group">
         <form id="summaryTableForm">
@@ -83,12 +94,14 @@ foreach ($rooms as $room) {
                             <?foreach ($monthItems as $day => $dayItems) {?>
                                 <?if($dayItems[$room['id']]) {?>
                                     <?
-                                    $popoverContent = '<div><strong>Стоимость номера: </strong>' . $dayItems[$room['id']]['price'] . ' руб.</div>';
+                                    $popoverContent = '<div><strong>Статус брони: </strong><i>' . $dayItems[$room['id']]['status_name'] . '</i></div>';
+                                    $popoverContent .= '<div><strong>Стоимость номера: </strong>' . $dayItems[$room['id']]['price'] . ' руб.</div>';
                                     $popoverContent .= '<div><strong>Клиент: </strong>имя: ' . $dayItems[$room['id']]['customer_name'] . ', тел.: ' . $dayItems[$room['id']]['customer_phone'] . '</div>';
                                     $popoverContent .= '<div><strong>Количество взрослых: </strong>' . $dayItems[$room['id']]['adult'] . '</div>';
                                     $popoverContent .= '<div><strong>Детей: </strong>' . $dayItems[$room['id']]['children_to_2'] . ' (до 2), ' . $dayItems[$room['id']]['children_to_6'] . ' (до 6), ' . $dayItems[$room['id']]['children_to_12'] . ' (до 12)</div>';
+                                    $popoverContent .= (int)$dayItems[$room['id']]['status_id'] === 1 ? "<br /><div><button class='btn btn-danger' onclick='canceledBooking(" . $dayItems[$room['id']]['id'] . ");'>Отменить бронирование</button></div>" : '';
                                     ?>
-                                    <td class="text-center alert-danger" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="right" data-original-title="Информация о бронировании"></td>
+                                    <td class="text-center booking-ceil <?=$statusStyles[$dayItems[$room['id']]['status_id']];?>-booking-ceil" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="right" data-original-title="Информация о бронировании"></td>
                                 <?} else {?>
                                     <td class="text-center alert-success"></td>
                                 <?}?>

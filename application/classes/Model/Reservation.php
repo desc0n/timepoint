@@ -127,6 +127,8 @@ class Model_Reservation extends Kohana_Model
         /** @var Model_Room $roomModel */
         $roomModel = Model::factory('Room');
 
+        $this->checkSuccess();
+
         $data = [];
         $firstDate = $firstDate ?: new DateTime();
 
@@ -159,5 +161,39 @@ class Model_Reservation extends Kohana_Model
         }
 
         return $data;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function canceledBooking($id)
+    {
+        DB::update('reservations__reservations')
+            ->set(['status_id' => 3])
+            ->where('id', '=', $id)
+            ->execute()
+        ;
+    }
+
+    /**
+     * @return array
+     */
+    public function getStatuses()
+    {
+        return DB::select()
+            ->from('reservations__statuses')
+            ->execute()
+            ->as_array('id', 'name')
+        ;
+    }
+
+    private function checkSuccess()
+    {
+        DB::update('reservations__reservations')
+            ->set(['status_id' => 2])
+            ->where('status_id', '=', 1)
+            ->and_where('departure_at', '<', DB::expr('NOW()'))
+            ->execute()
+        ;
     }
 }

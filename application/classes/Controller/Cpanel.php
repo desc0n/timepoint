@@ -347,9 +347,14 @@ class Controller_Cpanel extends Controller
 
         $template = $this->getBaseTemplate();
 
+        $today = new \DateTime();
+        $firstDate = new DateTime(date('Y-m-d', strtotime(Arr::get($this->request->query(), 'first_date', $today->format('d.m.Y')))));
+
+
         $template->content = View::factory('cpanel/summary_table')
-            ->set('summaryTableData', $reservationModel->getSummaryTableData())
+            ->set('summaryTableData', $reservationModel->getSummaryTableData($firstDate, Arr::get($this->request->query(), 'days_count', 30)))
             ->set('rooms', $roomModel->findAll())
+            ->set('get', $this->request->query())
         ;
         $this->response->body($template);
     }

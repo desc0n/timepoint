@@ -424,6 +424,9 @@ body {
 .remove-convenience-btn {
     cursor: pointer;
 }
+#summaryTableForm button {
+    margin-top: 24px;
+}
 .summary-table tr td.alert-danger{
     cursor: pointer;
 }

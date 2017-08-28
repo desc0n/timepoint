@@ -10,6 +10,7 @@ $calendarToday = clone $today;
 $calendarToday = $calendarToday->modify('- 1 month');
 $tomorrow = clone $today;
 $tomorrow->modify('+ 1 day');
+$firstDate = new DateTime(date('Y-m-d', strtotime(Arr::get($get, 'first_date', $today->format('d.m.Y')))));
 
 $rooms = $roomModel->findAll(null, null);
 $selectionRooms = [];
@@ -20,6 +21,26 @@ foreach ($rooms as $room) {
 <div class="row">
     <div class="col-lg-12 form-group">
         <h3>Результирующая таблица</h3>
+    </div>
+    <div class="col-lg-12 form-group">
+        <form id="summaryTableForm">
+            <div class="col-lg-5">
+                <label for="inputDaysCount">Количество дней</label>
+                <?=Form::select('days_count', [30 => 30, 60 => 60, 90 => 90], Arr::get($get, 'days_count', 30), ['id' => 'inputDaysCount', 'class' => 'form-control']);?>
+            </div>
+            <div class="col-lg-5">
+                <label for="firstDate">Начальная дата</label>
+                <div class='input-group date'>
+                    <input id="firstDate" name="first_date" type="text" value="<?=$firstDate->format('d.m.Y');?>" class="form-control"/>
+                    <span class="input-group-addon datepicker-toggler" data-target="firstDate">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <button class="btn btn-primary">Фильтровать</button>
+            </div>
+        </form>
     </div>
     <div class="col-lg-12 form-group">
         <table class="table table-bordered summary-table">
@@ -159,6 +180,11 @@ foreach ($rooms as $room) {
     });
     $('.datepicker-toggler').click(function() {
         $("#" + $(this).data('target')).focus();
+    });
+    $( function() {
+        $( "#firstDate").datepicker({
+            dateFormat: 'dd.mm.yy'
+        });
     });
 </script>
 <!--<script src="/public/assets/js/summary_table.js"></script>-->

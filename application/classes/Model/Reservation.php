@@ -118,18 +118,17 @@ class Model_Reservation extends Kohana_Model
     }
 
     /**
-     * @param int $dayDifferent
+     * @param DateTime $firstDate
      * @param int $limit
      * @return array
      */
-    public function getSummaryTableData($dayDifferent = 0, $limit = 30)
+    public function getSummaryTableData($firstDate = null, $limit = 30)
     {
         /** @var Model_Room $roomModel */
         $roomModel = Model::factory('Room');
 
         $data = [];
-        $today = new DateTime();
-        $firstDate = $today->modify($dayDifferent >= 0 ? '+ ' . $dayDifferent . ' day' : '- ' . abs($dayDifferent ). ' day');
+        $firstDate = $firstDate ?: new DateTime();
 
         for ($i = 0; $i < $limit; $i++) {
             foreach ($roomModel->findAll() as $room) {

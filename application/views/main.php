@@ -130,6 +130,7 @@ $nightCount = (round(($departureDate->getTimestamp() - $arrivalDate->getTimestam
     </div>
     <!-- modal -->
     <script>
+        moment.locale('ru');
         $('#daterange<?=$room['room']['id'];?>').daterangepicker({
             autoApply: true,
             opens: "center",

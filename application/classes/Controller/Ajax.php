@@ -11,12 +11,16 @@ class Controller_Ajax extends Controller
     /** @var  Model_Room */
     private $roomModel;
 
+    /** @var  Model_Admin */
+    private $adminModel;
+
     public function __construct(Request $request, Response $response)
     {
         parent::__construct($request, $response);
         $this->contentModel = Model::factory('Content');
         $this->reservationModel = Model::factory('Reservation');
         $this->roomModel = Model::factory('Room');
+        $this->adminModel = Model::factory('Admin');
     }
 
     public function action_remove_contact()
@@ -153,6 +157,12 @@ class Controller_Ajax extends Controller
     {
         $this->reservationModel->canceledBooking((int)$this->request->post('reservationId'));
 
+        $this->response->body(json_encode(['result' => 'success']));
+    }
+
+    public function action_change_password()
+    {
+        $this->adminModel->changePassword((int)$this->request->post('userId'), $this->request->post('password'));
         $this->response->body(json_encode(['result' => 'success']));
     }
 }

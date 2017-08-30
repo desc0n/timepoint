@@ -52,6 +52,7 @@
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
+                    <?if(Auth::instance()->logged_in('admin')) {?>
                     <li>
                         <a href="/cpanel/rooms_list"><i class="fa fa-list fa-fw"></i> Список номеров</a>
                     </li>
@@ -64,6 +65,10 @@
                     <li>
                         <a href="/cpanel/news_list"><i class="fa fa-newspaper-o fa-fw"></i> Список новостей</a>
                     </li>
+                    <li>
+                        <a href="/cpanel/registration"><i class="fa fa-user-plus fa-fw"></i> Добавление пользователя</a>
+                    </li>
+                    <?}?>
                     <li>
                         <a href="/cpanel/summary_table"><i class="fa fa-table fa-fw"></i> Результирующая таблица</a>
                     </li>

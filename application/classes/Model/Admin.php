@@ -66,5 +66,15 @@ class Model_Admin extends Kohana_Model
             ->execute()
         ;
     }
+
+    public function changePassword($userId, $password)
+    {
+        $hashPassword = Auth::instance()->hash($password);
+        DB::update('users')
+            ->set(['password' => $hashPassword])
+            ->where('id', '=', $userId)
+            ->execute()
+        ;
+    }
 }
 ?>

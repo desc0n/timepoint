@@ -4,7 +4,7 @@ class Controller_Cpanel extends Controller
 {
     public function getBaseTemplate()
     {
-        if (!Auth::instance()->logged_in('admin')) {
+        if (!Auth::instance()->logged_in('admin') && !Auth::instance()->logged_in('manager')) {
             HTTP::redirect('/cpanel/login');
         }
 
@@ -16,7 +16,7 @@ class Controller_Cpanel extends Controller
 
     public function action_index()
     {
-        if (!Auth::instance()->logged_in('admin')) {
+        if (!Auth::instance()->logged_in('admin') && !Auth::instance()->logged_in('manager')) {
             HTTP::redirect('/cpanel/login');
         }
 
@@ -37,7 +37,7 @@ class Controller_Cpanel extends Controller
     {
         if (!Auth::instance()->logged_in() && isset($_POST['login'])) {
             Auth::instance()->login($this->request->post('username'), $this->request->post('password'),true);
-            HTTP::redirect('/cpanel/rooms_list');
+            HTTP::redirect('/cpanel/summary_table');
         }
 
         $template = View::factory('cpanel/login')
@@ -59,10 +59,11 @@ class Controller_Cpanel extends Controller
     public function action_registration()
     {
         if (!Auth::instance()->logged_in('admin')) {
-            HTTP::redirect('/cpanel/login');
+            HTTP::redirect('/cpanel');
         }
 
-        $template = View::factory('cpanel/registration')
+        $template = $this->getBaseTemplate();
+        $template->content = View::factory('cpanel/registration')
             ->set('post', $this->request->post())
             ->set('error', '')
         ;
@@ -89,6 +90,7 @@ class Controller_Cpanel extends Controller
                 try {
                     $user->save();
                     $user->add("roles",ORM::factory("Role",1));
+                    $user->add("roles",ORM::factory("Role",3));
                 }
                 catch (ORM_Validation_Exception $e) {
                     $some_error = $e->errors('models');
@@ -111,7 +113,7 @@ class Controller_Cpanel extends Controller
                         }
                     }
                 } else {
-                    HTTP::redirect('/cpanel/rooms_list');
+                    HTTP::redirect($this->request->referrer());
                 }
             }
         }

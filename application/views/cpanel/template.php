@@ -19,7 +19,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.js"></script>
     <script src="/assets/bootstrap/js/bootstrap3-typeahead.js"></script>
-    <script src="/assets/admin/js/scripts.js?v=6"></script>
+    <script src="/assets/admin/js/scripts.js?v=7"></script>
     <script src="/assets/admin/js/holder.js"></script>
     <script src="/assets/admin/js/ckeditor/ckeditor.js"></script>
     <script src="/public/js/moment.js"></script>

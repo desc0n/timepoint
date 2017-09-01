@@ -1,4 +1,7 @@
 <?php
+/** @var Model_Reservation $reservationModel */
+$reservationModel = Model::factory('Reservation');
+
 $today = new \DateTime();
 $tomorrow = clone $today;
 $tomorrow->modify('+ 1 day');
@@ -13,11 +16,12 @@ $nightCount = (round(($departureDate->getTimestamp() - $arrivalDate->getTimestam
 <div class="rooms">
     <div class="rooms__wrapper">
         <?foreach ($rooms as $room) {?>
+            <?$price = $reservationModel->findRoomPriceByIdAndDate($room['room']['id'], $arrivalDate);?>
             <?$mainImg = !empty($room['room_imgs']) ? $room['room_imgs'][0]['src'] : null;?>
             <?$mainImg = !empty($room['room_main_img']) ? $room['room_main_img']['src'] : $mainImg;?>
         <div class="rooms__kind" style="background: url('/public/img/original/<?=$mainImg;?>');">
             <div class="rooms__kind-caption">
-                <div class="rooms__kind-caption-price"><?=($course && $currency === 'USD' ? round($room['room']['price'] / $course) . ' USD': $room['room']['price'] . ' ' . $templateWords['currency']['rub'])?></div>
+                <div class="rooms__kind-caption-price"><?=($course && $currency === 'USD' ? round($price / $course) . ' USD': $price . ' ' . $templateWords['currency']['rub'])?></div>
                 <button type="button" class="btn btn-primary rooms__kind-caption-action" data-toggle="modal" data-target="#roomModal<?=$room['room']['id'];?>"><?=$templateWords['main']['detail'];?></button>
             </div>
         </div>
@@ -25,6 +29,7 @@ $nightCount = (round(($departureDate->getTimestamp() - $arrivalDate->getTimestam
     </div>
 </div>
 <?foreach ($rooms as $room) {?>
+    <?$price = $reservationModel->findRoomPriceByIdAndDate($room['room']['id'], $arrivalDate);?>
     <!-- modal -->
     <div id="roomModal<?=$room['room']['id'];?>" class="modal fade modal-booking" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
         <div class="modal-dialog modal-lg" role="document">
@@ -61,7 +66,7 @@ $nightCount = (round(($departureDate->getTimestamp() - $arrivalDate->getTimestam
                         <div class="row">
                             <div class="modal-booking__desc col-lg-6 col-sm-12 col-xs-12 col-md-6">
                                 <legend><?=$templateWords['main']['cost'];?></legend>
-                                <h2 class="rooms__kind-caption-price"><?=($course && $currency === 'USD' ? round($room['room']['price'] / $course) . ' USD': $room['room']['price'] . ' ' . $templateWords['currency']['rub'])?></h2>
+                                <h2 class="rooms__kind-caption-price"><?=($course && $currency === 'USD' ? round($price / $course) . ' USD': $price . ' ' . $templateWords['currency']['rub'])?></h2>
                                 <legend><?=$templateWords['main']['rooms_comfort'];?></legend>
                                 <ul>
                                     <?foreach ($room['room_conveniences'] as $roomConvenience) {?>

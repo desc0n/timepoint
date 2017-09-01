@@ -336,7 +336,7 @@ class Model_Room extends Kohana_Model
      * @param DateTime|null $departureDate
      * @return array
      */
-    public function findRomsOnMainPage($guestsCount, \DateTime $arrivalDate = null, \DateTime $departureDate = null)
+    public function findRoomsOnMainPage($guestsCount, \DateTime $arrivalDate = null, \DateTime $departureDate = null)
     {
         $notReservationRooms = $this->findNotReservationRoomsByPeriod($arrivalDate, $departureDate);
 

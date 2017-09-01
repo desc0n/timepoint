@@ -136,7 +136,7 @@ class Model_Content extends Kohana_Model
                 return [
                     'content' => View::factory('main')
                         ->set('rooms',
-                            $roomModel->findRomsOnMainPage(
+                            $roomModel->findRoomsOnMainPage(
                                 (int)Arr::get($_GET, 'guest_count'),
                                 $queryArrivalDate === null ? null : new DateTime(date('Y-m-d H:i:s', strtotime($queryArrivalDate))),
                                 $queryDepartureDate === null ? null : new DateTime(date('Y-m-d H:i:s', strtotime($queryDepartureDate)))

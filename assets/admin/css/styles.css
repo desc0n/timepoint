@@ -446,5 +446,9 @@ body {
 }
 .summary-table tr td.active-booking-ceil,
 .active-color-legend{
-    background-color: #0e90d2;
+    background-color: #ecd20a;
+}
+.booking-price i{
+    font-size: 0.8em;
+    cursor: pointer;
 }

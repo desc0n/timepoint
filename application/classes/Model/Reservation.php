@@ -134,7 +134,23 @@ class Model_Reservation extends Kohana_Model
 
         for ($i = 0; $i < $limit; $i++) {
             foreach ($roomModel->findAll() as $room) {
-                $info = DB::select('rr.*', 'r.title', ['rs.name', 'status_name'])
+                $sqlDate = $firstDate->format('Y') . '-' . $firstDate->format('m') . '-' . $firstDate->format('d');
+                $info = DB::select(
+                        'rr.*',
+                        'r.title',
+                        ['rs.name', 'status_name'],
+                        [
+                            DB::expr(
+                                'IFNULL((' .
+                                DB::select('price')
+                                    ->from('reservations__reservation_prices')
+                                    ->where('room_id', '=', DB::expr('r.id'))
+                                    ->and_where('date_at', '=', $sqlDate)
+                                    ->limit(1) .
+                                '), r.price)'),
+                            'price'
+                        ]
+                    )
                     ->from(['reservations__reservations', 'rr'])
                     ->join(['rooms__rooms', 'r'])
                     ->on('r.id', '=', 'rr.room_id')
@@ -142,11 +158,11 @@ class Model_Reservation extends Kohana_Model
                     ->on('rs.id', '=', 'rr.status_id')
                     ->where('r.id', '=', $room['id'])
                     ->and_where_open()
-                        ->where('rr.arrival_at', '=', $firstDate->format('Y') . '-' . $firstDate->format('m') . '-' . $firstDate->format('d'))
-                        ->or_where('rr.departure_at', '=', $firstDate->format('Y') . '-' . $firstDate->format('m') . '-' . $firstDate->format('d'))
+                        ->where('rr.arrival_at', '=', $sqlDate)
+                        ->or_where('rr.departure_at', '=', $sqlDate)
                         ->or_where_open()
-                            ->where('rr.arrival_at', '<', $firstDate->format('Y') . '-' . $firstDate->format('m') . '-' . $firstDate->format('d'))
-                            ->and_where('rr.departure_at', '>', $firstDate->format('Y') . '-' . $firstDate->format('m') . '-' . $firstDate->format('d'))
+                            ->where('rr.arrival_at', '<', $sqlDate)
+                            ->and_where('rr.departure_at', '>', $sqlDate)
                         ->or_where_close()
                     ->and_where_close()
                     ->limit(1)
@@ -195,5 +211,57 @@ class Model_Reservation extends Kohana_Model
             ->and_where('departure_at', '<', DB::expr('NOW()'))
             ->execute()
         ;
+    }
+
+    /**
+     * @param int $id
+     * @param DateTime $dateTime
+     * @return int
+     */
+    public function findRoomPriceByIdAndDate($id, DateTime $dateTime)
+    {
+        $price = DB::select([
+            DB::expr('IFNULL(( ' .
+                DB::select('rp.price')
+                    ->from(['reservations__reservation_prices', 'rp'])
+                    ->where('rp.room_id', '=', $id)
+                    ->and_where('rp.date_at', '=', $dateTime->format('Y-m-d'))
+                    ->limit(1)
+            . '), rr.price)'), 'price'
+        ])
+            ->from(['rooms__rooms', 'rr'])
+            ->where('rr.id', '=', $id)
+            ->limit(1)
+            ->execute()
+            ->get('price')
+        ;
+
+        return (int)$price;
+    }
+
+    /**
+     * @param int $roomId
+     * @param DateTime $firstDate
+     * @param DateTime $lastDate
+     * @param int $price
+     */
+    public function setPrice($roomId, DateTime $firstDate, DateTime $lastDate, $price)
+    {
+        while ($firstDate <= $lastDate) {
+            DB::query(Database::INSERT,
+                'INSERT INTO reservations__reservation_prices (`room_id`, `price`, `date_at`) 
+                VALUES (:roomId, :price, :date)
+                ON DUPLICATE KEY UPDATE `price` = :price
+            ')
+                ->parameters([
+                    ':roomId' => $roomId,
+                    ':price' => $price,
+                    ':date' => $firstDate->format('Y-m-d')
+                ])
+                ->execute()
+            ;
+
+            $firstDate->modify('+ 1 day');
+        }
     }
 }

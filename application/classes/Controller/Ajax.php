@@ -165,4 +165,15 @@ class Controller_Ajax extends Controller
         $this->adminModel->changePassword((int)$this->request->post('userId'), $this->request->post('password'));
         $this->response->body(json_encode(['result' => 'success']));
     }
+
+    public function action_set_price()
+    {
+        $this->reservationModel->setPrice(
+            (int)$this->request->post('roomId'),
+            new DateTime($this->request->post('firstDate')),
+            new DateTime($this->request->post('lastDate')),
+            (int)$this->request->post('price')
+        );
+        $this->response->body(json_encode(['result' => 'success']));
+    }
 }

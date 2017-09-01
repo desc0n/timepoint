@@ -28,6 +28,7 @@ $statusStyles = [1 => 'active', 2 => 'success', 3 => 'canceled'];
     <div class="col-lg-12 form-group">
         <strong>Значение цвета ячейки</strong>
         <?foreach ($reservationModel->getStatuses() as $id=> $status) {?>
+            <?if($id === 2) continue;?>
         <div class="col-lg-12 form-group">
             <div class="col-lg-1 color-legend <?=$statusStyles[$id];?>-color-legend"></div><div class="col-lg-11 text-left"> - <?=$status;?></div>
         </div>
@@ -101,9 +102,11 @@ $statusStyles = [1 => 'active', 2 => 'success', 3 => 'canceled'];
                                     $popoverContent .= '<div><strong>Детей: </strong>' . $dayItems[$room['id']]['children_to_2'] . ' (до 2), ' . $dayItems[$room['id']]['children_to_6'] . ' (до 6), ' . $dayItems[$room['id']]['children_to_12'] . ' (до 12)</div>';
                                     $popoverContent .= (int)$dayItems[$room['id']]['status_id'] === 1 ? "<br /><div><button class='btn btn-danger' onclick='canceledBooking(" . $dayItems[$room['id']]['id'] . ");'>Отменить бронирование</button></div>" : '';
                                     ?>
-                                    <td class="text-center booking-ceil <?=$statusStyles[$dayItems[$room['id']]['status_id']];?>-booking-ceil" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="right" data-original-title="Информация о бронировании"></td>
+                                    <td class="text-center booking-ceil <?=$statusStyles[$dayItems[$room['id']]['status_id']];?>-booking-ceil" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="Информация о бронировании"></td>
                                 <?} else {?>
-                                    <td class="text-center alert-success"></td>
+                                    <td class="text-right alert-success booking-price">
+                                        <i class="fa fa-dollar" data-toggle="popover" data-html="true" data-trigger="hover" data-content="<strong><?=$reservationModel->findRoomPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day));?> руб.</strong>" data-placement="right" data-original-title="Информация о стоимости номера"></i>
+                                    </td>
                                 <?}?>
                             <?}?>
                         <?}?>
@@ -114,7 +117,7 @@ $statusStyles = [1 => 'active', 2 => 'success', 3 => 'canceled'];
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+    <div class="well col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <legend>Добавление бронирования</legend>
         <div class="form-group">
             <label for="inputType">Источник обращения</label>
@@ -175,14 +178,51 @@ $statusStyles = [1 => 'active', 2 => 'success', 3 => 'canceled'];
             <button type="button" class="btn btn-primary" onclick="reserveRoom();">Забронировать</button>
         </div>
     </div>
+    <?if(Auth::instance()->logged_in('admin')) {?>
+    <div class="well col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <legend>Назначение цен</legend>
+        <legend>Выбор номера</legend>
+        <div class="form-group">
+            <label for="inputRoomPrice">Список номеров</label>
+            <?=Form::select('', $selectionRooms, null, ['id' => 'inputRoomPrice', 'class' => 'form-control']);?>
+        </div>
+        <legend>Период цен</legend>
+        <div class="form-group">
+            <div class="form-group">
+                <div class='input-group date'>
+                    <input id="daterangePrice" type="text" value="<?=$today->format('d.m.Y');?> - <?=$tomorrow->format('d.m.Y');?>" class="form-control"/>
+                    <span class="input-group-addon datepicker-toggler" data-target="daterangePrice"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        <legend>Значение цены</legend>
+        <div class="form-group">
+            <label for="inputSetPrice">Стоимость номера</label>
+            <input type="text" class="form-control" id="inputSetPrice" placeholder="Стоимость номера">
+        </div>
+        <div class="form-group text-right">
+            <button type="button" class="btn btn-primary" onclick="setPrice();">Установить цену</button>
+        </div>
+    </div>
+    <?}?>
 </div>
 <div id="summary-table"></div>
 <script>
     function getMinDate() {
         return new Date(<?=$calendarToday->format('Y');?>, <?=$calendarToday->format('m');?>, <?=$calendarToday->format('d');?>);
     }
-    $('.summary-table tr td').popover();
+    $('.summary-table tr td.booking-ceil').popover();
+    $('.summary-table tr td i').popover();
     $('#daterange').daterangepicker({
+        autoApply: true,
+        opens: "center",
+        drops: "up",
+        locale: {
+            format: 'DD.MM.YYYY'
+        },
+        minDate: getMinDate()
+    });
+    $('#daterangePrice').daterangepicker({
         autoApply: true,
         opens: "center",
         drops: "up",

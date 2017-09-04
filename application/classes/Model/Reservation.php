@@ -215,28 +215,37 @@ class Model_Reservation extends Kohana_Model
 
     /**
      * @param int $id
-     * @param DateTime $dateTime
+     * @param DateTime $firstDate
+     * @param DateTime $lastDate
      * @return int
      */
-    public function findRoomPriceByIdAndDate($id, DateTime $dateTime)
+    public function findRoomPriceByIdAndDate($id, DateTime $firstDate, DateTime $lastDate)
     {
-        $price = DB::select([
-            DB::expr('IFNULL(( ' .
-                DB::select('rp.price')
-                    ->from(['reservations__reservation_prices', 'rp'])
-                    ->where('rp.room_id', '=', $id)
-                    ->and_where('rp.date_at', '=', $dateTime->format('Y-m-d'))
-                    ->limit(1)
-            . '), rr.price)'), 'price'
-        ])
-            ->from(['rooms__rooms', 'rr'])
-            ->where('rr.id', '=', $id)
-            ->limit(1)
-            ->execute()
-            ->get('price')
-        ;
+        /** @var Model_Room $roomModel */
+        $roomModel = Model::factory('Room');
 
-        return (int)$price;
+        $roomData = $roomModel->findById($id);
+        $price = (int)$roomData['price'];
+        $reservationPrice = 0;
+
+        while ($firstDate <= $lastDate) {
+            $reservationPriceData = DB::select()
+                ->from('reservations__reservation_prices')
+                ->where('room_id', '=', $id)
+                ->and_where('date_at', '=', $firstDate->format('Y-m-d'))
+                ->limit(1)
+                ->execute()
+                ->current()
+            ;
+
+            if ($reservationPriceData && (!$reservationPrice || (int)$reservationPriceData['price'] < $reservationPrice)) {
+                $reservationPrice = (int)$reservationPriceData['price'];
+            }
+
+            $firstDate->modify('+ 1 day');
+        }
+
+        return $reservationPrice ?: $price;
     }
 
     /**

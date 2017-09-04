@@ -105,7 +105,7 @@ $statusStyles = [1 => 'active', 2 => 'success', 3 => 'canceled'];
                                     <td class="text-center booking-ceil <?=$statusStyles[$dayItems[$room['id']]['status_id']];?>-booking-ceil booking-ceil-period-<?=$dayItems[$room['id']]['id'];?>" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="Информация о бронировании" onclick="showBookingPeriod(<?=$dayItems[$room['id']]['id'];?>, '<?=$statusStyles[$dayItems[$room['id']]['status_id']];?>')"></td>
                                 <?} else {?>
                                     <td class="text-right alert-success booking-price">
-                                        <i class="fa fa-dollar" data-toggle="popover" data-html="true" data-trigger="hover" data-content="<strong><?=$reservationModel->findRoomPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day));?> руб.</strong>" data-placement="right" data-original-title="Информация о стоимости номера"></i>
+                                        <i class="fa fa-dollar" data-toggle="popover" data-html="true" data-trigger="hover" data-content="<strong><?=$reservationModel->findRoomPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?> руб.</strong>" data-placement="right" data-original-title="Информация о стоимости номера"></i>
                                     </td>
                                 <?}?>
                             <?}?>

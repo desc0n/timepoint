@@ -20,6 +20,7 @@ foreach ($rooms as $room) {
 }
 
 $statusStyles = [1 => 'active', 2 => 'success', 3 => 'canceled'];
+$resources = ['site' => 'С', 'office' => 'З', 'booking' => 'Б'];
 ?>
 <div class="row">
     <div class="col-lg-12 form-group">
@@ -102,7 +103,9 @@ $statusStyles = [1 => 'active', 2 => 'success', 3 => 'canceled'];
                                     $popoverContent .= '<div><strong>Детей: </strong>' . $dayItems[$room['id']]['children_to_2'] . ' (до 2), ' . $dayItems[$room['id']]['children_to_6'] . ' (до 6), ' . $dayItems[$room['id']]['children_to_12'] . ' (до 12)</div>';
                                     $popoverContent .= (int)$dayItems[$room['id']]['status_id'] === 1 ? "<br /><div><button class='btn btn-danger btn-sm' onclick='canceledBooking(" . $dayItems[$room['id']]['id'] . ");'>Отменить <i class='fa fa-remove'></i></button> <button class='btn btn-success btn-sm' onclick='redactBooking(" . $dayItems[$room['id']]['id'] . ");'>Редактировать <i class='fa fa-pencil'></i></button></div>" : '';
                                     ?>
-                                    <td class="text-center booking-ceil <?=$statusStyles[$dayItems[$room['id']]['status_id']];?>-booking-ceil booking-ceil-period-<?=$dayItems[$room['id']]['id'];?>" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="Информация о бронировании" onclick="showBookingPeriod(<?=$dayItems[$room['id']]['id'];?>, '<?=$statusStyles[$dayItems[$room['id']]['status_id']];?>')"></td>
+                                    <td class="text-center booking-ceil <?=$statusStyles[$dayItems[$room['id']]['status_id']];?>-booking-ceil booking-ceil-period-<?=$dayItems[$room['id']]['id'];?>" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="Информация о бронировании" onclick="showBookingPeriod(<?=$dayItems[$room['id']]['id'];?>, '<?=$statusStyles[$dayItems[$room['id']]['status_id']];?>')">
+                                        <b><?=$resources[$dayItems[$room['id']]['type']];?></b>
+                                    </td>
                                 <?} else {?>
                                     <td class="text-right alert-success booking-price">
                                         <i class="fa fa-dollar" data-toggle="popover" data-html="true" data-trigger="hover" data-content="<strong><?=$reservationModel->findRoomPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?> руб.</strong>" data-placement="right" data-original-title="Информация о стоимости номера"></i>

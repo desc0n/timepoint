@@ -308,26 +308,26 @@ class Model_Room extends Kohana_Model
      */
     public function checkRoomReservationStatusByPeriod($roomId, DateTime $firstDate, DateTime $lastDate)
     {
-        return DB::select()
-            ->from('reservations__reservations')
-            ->where('room_id', '=', $roomId)
-            ->and_where('status_id', '=', 1)
-            ->and_where_open()
-                ->where_open()
-                    ->where('arrival_at', 'BETWEEN', [$firstDate->format('Y-m-d H:i:s'), $lastDate->format('Y-m-d H:i:s')])
-                    ->or_where('arrival_at', '=', $firstDate->format('Y-m-d H:i:s'))
-                    ->or_where('arrival_at', '=', $lastDate->format('Y-m-d H:i:s'))
-                ->where_close()
-                ->or_where_open()
-                    ->and_where('departure_at', 'BETWEEN', [$firstDate->format('Y-m-d H:i:s'), $lastDate->format('Y-m-d H:i:s')])
-                    ->or_where('departure_at', '=', $firstDate->format('Y-m-d H:i:s'))
-                    ->or_where('departure_at', '=', $lastDate->format('Y-m-d H:i:s'))
-                ->or_where_close()
-            ->and_where_close()
-            ->limit(1)
-            ->execute()
-            ->current()
-        ;
+        while ($firstDate <= $lastDate) {
+            $check = DB::select()
+                ->from('reservations__reservations')
+                ->where('room_id', '=', $roomId)
+                ->and_where('status_id', '=', 1)
+                ->where('arrival_at', '<=', $firstDate->format('Y-m-d H:i:s'))
+                ->and_where('departure_at', '>', $firstDate->format('Y-m-d H:i:s'))
+                ->limit(1)
+                ->execute()
+                ->current()
+            ;
+
+            if ($check) {
+                return true;
+            }
+
+            $firstDate->modify('+ 1 day');
+        }
+
+        return false;
     }
 
     /**

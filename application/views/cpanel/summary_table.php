@@ -154,7 +154,7 @@ $resources = ['site' => 'С', 'office' => 'З', 'booking' => 'Б'];
             <textarea id="inputComment" class="form-control" rows="3" placeholder="Комментарий к бронированию"></textarea>
         </div>
         <div class="form-group">
-            <label for="inputPrice">Стоимость номера</label>
+            <label for="inputPrice">Стоимость бронирования</label>
             <input type="text" class="form-control" id="inputPrice" placeholder="Стоимость номера">
         </div>
         <div class="form-group row">

@@ -455,17 +455,20 @@ class Model_Content extends Kohana_Model
     {
         $course = 0;
         $content = file_get_contents('http://www.cbr.ru/scripts/XML_daily.asp');
-        $xml = new SimpleXMLElement($content);
-        $json_string = json_encode($xml);
-        $currencyData = json_decode($json_string, TRUE);
 
-        if (!Arr::get($currencyData, 'Valute')) {
-            return $course;
-        }
+        if ($content) {
+            $xml = new SimpleXMLElement($content);
+            $json_string = json_encode($xml);
+            $currencyData = json_decode($json_string, TRUE);
 
-        foreach ($currencyData['Valute'] as $data) {
-            if ($data['CharCode'] === 'USD') {
-                $course = $data['Value'];
+            if (!Arr::get($currencyData, 'Valute')) {
+                return $course;
+            }
+
+            foreach ($currencyData['Valute'] as $data) {
+                if ($data['CharCode'] === 'USD') {
+                    $course = $data['Value'];
+                }
             }
         }
 

@@ -159,7 +159,6 @@ class Model_Reservation extends Kohana_Model
                     ->where('r.id', '=', $room['id'])
                     ->and_where_open()
                         ->where('rr.arrival_at', '=', $sqlDate)
-                        ->or_where('rr.departure_at', '=', $sqlDate)
                         ->or_where_open()
                             ->where('rr.arrival_at', '<', $sqlDate)
                             ->and_where('rr.departure_at', '>', $sqlDate)

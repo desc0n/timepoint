@@ -131,10 +131,10 @@ class Model_Reservation extends Kohana_Model
 
         $data = [];
         $firstTime = $firstTime ?: new DateTime();
+        $firstDate = clone $firstTime;
 
         for ($i = 0; $i < $limit; $i++) {
             foreach ($roomModel->findAll() as $room) {
-                $firstDate = clone $firstTime;
                 $sqlDate = $firstDate->format('Y') . '-' . $firstDate->format('m') . '-' . $firstDate->format('d');
                 $info = DB::select(
                         'rr.*',

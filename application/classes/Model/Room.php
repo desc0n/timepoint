@@ -276,16 +276,18 @@ class Model_Room extends Kohana_Model
     }
 
     /**
-     * @param DateTime|null $firstDate
-     * @param DateTime|null $lastDate
+     * @param DateTime|null $firstTime
+     * @param DateTime|null $lastTime
      * @return array
      */
-    public function findNotReservationRoomsByPeriod(\DateTime $firstDate = null, \DateTime $lastDate = null)
+    public function findNotReservationRoomsByPeriod(\DateTime $firstTime = null, \DateTime $lastTime = null)
     {
         $rooms = [];
         $allRooms = $this->findAll();
 
         foreach ($allRooms as $room) {
+            $firstDate = clone $firstTime;
+            $lastDate = clone $lastTime;
             $reservationRoom =
                 $firstDate === null || $lastDate === null
                 ? false

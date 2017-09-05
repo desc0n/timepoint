@@ -41,7 +41,7 @@ $calendarArrivalDate->modify('- 1 month');
 $calendarDepartureDate = clone $departureDate;
 $calendarDepartureDate->modify('- 1 month');
 $startDate = $arrivalDate < $today ? $today : $arrivalDate;
-$nightCount = (round(($departureDate->getTimestamp() - $startDate->getTimestamp()) / 86400) + 1);
+$nightCount = round(($departureDate->getTimestamp() - $startDate->getTimestamp()) / 86400);
 ?>
 <script>
     function getMinDate() {

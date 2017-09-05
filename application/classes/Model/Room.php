@@ -286,8 +286,8 @@ class Model_Room extends Kohana_Model
         $allRooms = $this->findAll();
 
         foreach ($allRooms as $room) {
-            $firstDate = clone $firstTime;
-            $lastDate = clone $lastTime;
+            $firstDate = $firstTime ? clone $firstTime : null;
+            $lastDate = $lastTime ? clone $lastTime : null;
             $reservationRoom =
                 $firstDate === null || $lastDate === null
                 ? false

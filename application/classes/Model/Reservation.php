@@ -118,11 +118,11 @@ class Model_Reservation extends Kohana_Model
     }
 
     /**
-     * @param DateTime $firstDate
+     * @param DateTime $firstTime
      * @param int $limit
      * @return array
      */
-    public function getSummaryTableData($firstDate = null, $limit = 30)
+    public function getSummaryTableData($firstTime = null, $limit = 30)
     {
         /** @var Model_Room $roomModel */
         $roomModel = Model::factory('Room');
@@ -130,10 +130,11 @@ class Model_Reservation extends Kohana_Model
         $this->checkSuccess();
 
         $data = [];
-        $firstDate = $firstDate ?: new DateTime();
+        $firstTime = $firstTime ?: new DateTime();
 
         for ($i = 0; $i < $limit; $i++) {
             foreach ($roomModel->findAll() as $room) {
+                $firstDate = clone $firstTime;
                 $sqlDate = $firstDate->format('Y') . '-' . $firstDate->format('m') . '-' . $firstDate->format('d');
                 $info = DB::select(
                         'rr.*',

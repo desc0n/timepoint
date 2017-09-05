@@ -5,7 +5,7 @@ class Model_Reservation extends Kohana_Model
     const ROW_LIMIT = 20;
     public $types = [
         'booking' => 'Booking',
-        'office' => 'Офис',
+        'office' => 'Телефон',
         'site' => 'Сайт',
     ];
 

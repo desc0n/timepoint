@@ -20,7 +20,7 @@ foreach ($rooms as $room) {
 }
 
 $statusStyles = [1 => 'active', 2 => 'success', 3 => 'canceled'];
-$resources = ['site' => 'С', 'office' => 'З', 'booking' => 'Б'];
+$resources = ['site' => 'С', 'office' => 'Т', 'booking' => 'Б'];
 ?>
 <div class="row">
     <div class="col-lg-12 form-group">

@@ -12,14 +12,14 @@
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/public/css/daterangepicker.css" >
-    <link rel="stylesheet" href="/assets/admin/css/styles.css?v=3" />
+    <link rel="stylesheet" href="/assets/admin/css/styles.css?v=4" />
     <link rel="stylesheet" href="/assets/bootstrap/css/font-awesome.css" />
     <!-- jQuery -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.js"></script>
     <script src="/assets/bootstrap/js/bootstrap3-typeahead.js"></script>
-    <script src="/assets/admin/js/scripts.js?v=10"></script>
+    <script src="/assets/admin/js/scripts.js?v=11"></script>
     <script src="/assets/admin/js/holder.js"></script>
     <script src="/assets/admin/js/ckeditor/ckeditor.js"></script>
     <script src="/public/js/moment.js"></script>

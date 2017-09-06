@@ -90,7 +90,19 @@ $resources = ['site' => 'С', 'office' => 'Т', 'booking' => 'Б'];
             </tr>
             <?foreach ($rooms as $room) {?>
                 <tr>
-                    <td><?=$room['title'];?></td>
+                    <td rowspan="3" class="room-title">
+                        <?=$room['title'];?>
+                        <i class="fa fa-chevron-circle-down pull-right show-details" data-room="<?=$room['id'];?>"></i>
+                    </td>
+                    <?foreach ($summaryTableData as $year => $yearItems) {?>
+                        <?foreach ($yearItems as $month => $monthItems) {?>
+                            <?foreach ($monthItems as $day => $dayItems) {?>
+                                <td class="text-center alert-info booking-hidden booking-hidden-<?=$room['id'];?>"><?=$day;?>.<?=$month;?></td>
+                            <?}?>
+                        <?}?>
+                    <?}?>
+                </tr>
+                <tr>
                     <?foreach ($summaryTableData as $year => $yearItems) {?>
                         <?foreach ($yearItems as $month => $monthItems) {?>
                             <?foreach ($monthItems as $day => $dayItems) {?>
@@ -109,6 +121,23 @@ $resources = ['site' => 'С', 'office' => 'Т', 'booking' => 'Б'];
                                 <?} else {?>
                                     <td class="text-right alert-success booking-price">
                                         <i class="fa fa-dollar" data-toggle="popover" data-html="true" data-trigger="hover" data-content="<strong><?=$reservationModel->findRoomPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?> руб.</strong>" data-placement="right" data-original-title="Информация о стоимости номера"></i>
+                                    </td>
+                                <?}?>
+                            <?}?>
+                        <?}?>
+                    <?}?>
+                </tr>
+                <tr>
+                    <?foreach ($summaryTableData as $year => $yearItems) {?>
+                        <?foreach ($yearItems as $month => $monthItems) {?>
+                            <?foreach ($monthItems as $day => $dayItems) {?>
+                                <?if($dayItems[$room['id']]) {?>
+                                    <td class="text-right alert-danger booking-hidden booking-hidden-<?=$room['id'];?>">
+                                        <?=$dayItems[$room['id']]['price'];?>
+                                    </td>
+                                <?} else {?>
+                                    <td class="text-right alert-danger booking-hidden booking-hidden-<?=$room['id'];?>">
+                                        <?=$reservationModel->findRoomPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?>
                                     </td>
                                 <?}?>
                             <?}?>

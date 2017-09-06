@@ -433,6 +433,12 @@ body {
 .color-legend{
     height: 20px;
 }
+.summary-table tr td.room-title{
+    font-size: 0.8em;
+}
+.summary-table tr td.room-title i{
+    cursor: pointer;
+}
 .summary-table tr td.success-booking-ceil,
 .success-color-legend{
     background-color: #82c44f;
@@ -451,4 +457,8 @@ body {
 .booking-price i{
     font-size: 0.8em;
     cursor: pointer;
+}
+.booking-hidden{
+    display: none;
+    font-size: 0.8em;
 }

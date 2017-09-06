@@ -310,7 +310,7 @@ class Model_Room extends Kohana_Model
      */
     public function checkRoomReservationStatusByPeriod($roomId, DateTime $firstDate, DateTime $lastDate)
     {
-        while ($firstDate <= $lastDate) {
+        while ($firstDate < $lastDate) {
             $check = DB::select()
                 ->from('reservations__reservations')
                 ->where('room_id', '=', $roomId)

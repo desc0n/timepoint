@@ -273,4 +273,57 @@ class Model_Reservation extends Kohana_Model
             $firstDate->modify('+ 1 day');
         }
     }
+
+    /**
+     * @param int $id
+     * @return array|false
+     */
+    public function findById($id)
+    {
+        return DB::select()
+            ->from('reservations__reservations')
+            ->where('id', '=', $id)
+            ->limit(1)
+            ->execute()
+            ->current()
+        ;
+    }
+
+    /**
+     * @param int $bookingId
+     * @param int $roomId
+     * @param string $phone
+     * @param string $name
+     * @param string $comment
+     * @param DateTime $arrivalAt
+     * @param DateTime $departureAt
+     * @param int $adult
+     * @param int $childrenTo2
+     * @param int $childrenTo6
+     * @param int $childrenTo12
+     * @param int $price
+     *
+     * @return void
+     */
+    public function changeBooking($bookingId, $roomId, \DateTime $arrivalAt, \DateTime $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12, $price)
+    {
+        DB::update('reservations__reservations')
+            ->set([
+                'customer_phone' => $phone,
+                'customer_name' => $name,
+                'customer_comment' => $comment,
+                'price' => $price,
+                'arrival_at' => $arrivalAt->format('Y-m-d 00:00:00'),
+                'departure_at' => $departureAt->format('Y-m-d 00:00:00'),
+                'adult' => $adult,
+                'children_to_2' => $childrenTo2,
+                'children_to_6' => $childrenTo6,
+                'children_to_12' => $childrenTo12
+            ])
+            ->where('id', '=', $bookingId)
+            ->execute()
+        ;
+
+        $this->setPrice($roomId, $arrivalAt, $departureAt, $price);
+    }
 }

@@ -113,7 +113,7 @@ $resources = ['site' => 'С', 'office' => 'Т', 'booking' => 'Б'];
                                     $popoverContent .= '<div><strong>Клиент: </strong>имя: ' . $dayItems[$room['id']]['customer_name'] . ', тел.: ' . $dayItems[$room['id']]['customer_phone'] . '</div>';
                                     $popoverContent .= '<div><strong>Количество взрослых: </strong>' . $dayItems[$room['id']]['adult'] . '</div>';
                                     $popoverContent .= '<div><strong>Детей: </strong>' . $dayItems[$room['id']]['children_to_2'] . ' (до 2), ' . $dayItems[$room['id']]['children_to_6'] . ' (до 6), ' . $dayItems[$room['id']]['children_to_12'] . ' (до 12)</div>';
-                                    $popoverContent .= (int)$dayItems[$room['id']]['status_id'] === 1 ? "<br /><div><button class='btn btn-danger btn-sm' onclick='canceledBooking(" . $dayItems[$room['id']]['id'] . ");'>Отменить <i class='fa fa-remove'></i></button> <button class='btn btn-success btn-sm' onclick='redactBooking(" . $dayItems[$room['id']]['id'] . ");'>Редактировать <i class='fa fa-pencil'></i></button></div>" : '';
+                                    $popoverContent .= (int)$dayItems[$room['id']]['status_id'] === 1 ? "<br /><div><button class='btn btn-danger btn-sm' onclick='canceledBooking(" . $dayItems[$room['id']]['id'] . ");'>Отменить <i class='fa fa-remove'></i></button> <button class='btn btn-success btn-sm' onclick='showRedactBookingForm(" . $dayItems[$room['id']]['id'] . ");'>Редактировать <i class='fa fa-pencil'></i></button></div>" : '';
                                     ?>
                                     <td class="text-center booking-ceil <?=$statusStyles[$dayItems[$room['id']]['status_id']];?>-booking-ceil booking-ceil-period-<?=$dayItems[$room['id']]['id'];?>" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="Информация о бронировании" onclick="showBookingPeriod(<?=$dayItems[$room['id']]['id'];?>, '<?=$statusStyles[$dayItems[$room['id']]['status_id']];?>')">
                                         <b><?=$resources[$dayItems[$room['id']]['type']];?></b>
@@ -237,6 +237,21 @@ $resources = ['site' => 'С', 'office' => 'Т', 'booking' => 'Б'];
         </div>
     </div>
     <?}?>
+</div>
+<div class="modal fade" id="redactBooking" tabindex="-1" role="dialog" aria-labelledby="redactBookingLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="redactBookingLabel">Редактирование бронирования</h4>
+            </div>
+            <div class="modal-body" id="redactBookingBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
 </div>
 <div id="summary-table"></div>
 <script>

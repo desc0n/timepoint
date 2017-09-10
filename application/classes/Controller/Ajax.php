@@ -115,6 +115,15 @@ class Controller_Ajax extends Controller
         $this->response->body($body);
     }
 
+    public function action_show_redact_booking_rorm()
+    {
+        $body = View::factory('cpanel/redact_booking')
+            ->set('bookingId', $this->request->post('bookingId'))
+        ;
+
+        $this->response->body($body);
+    }
+
     public function action_reserve_room()
     {
         $body = $this->reservationModel->addReservation(
@@ -138,9 +147,10 @@ class Controller_Ajax extends Controller
     public function action_check_room_reserve()
     {
         $check = $this->roomModel->checkRoomReservationStatusByPeriod(
-            $this->request->post('roomId'),
+            (int)$this->request->post('roomId'),
             new DateTime($this->request->post('arrivalDate')),
-            new DateTime($this->request->post('departureDate'))
+            new DateTime($this->request->post('departureDate')),
+            (int)$this->request->post('bookingId')
         );
 
         $this->response->body(!$check ? 'free' : 'busy');
@@ -176,4 +186,25 @@ class Controller_Ajax extends Controller
         );
         $this->response->body(json_encode(['result' => 'success']));
     }
+
+    public function action_change_booking()
+    {
+        $this->reservationModel->changeBooking(
+            (int)$this->request->post('bookingId'),
+            (int)$this->request->post('roomId'),
+            new DateTime($this->request->post('arrivalDate')),
+            new DateTime($this->request->post('departureDate')),
+            $this->request->post('phone'),
+            $this->request->post('name'),
+            preg_replace('/["\<\>]+/', '', $this->request->post('comment')),
+            (int)$this->request->post('adult'),
+            (int)$this->request->post('childrenTo2'),
+            (int)$this->request->post('childrenTo6'),
+            (int)$this->request->post('childrenTo12'),
+            $this->request->post('price')
+        );
+
+        $this->response->body(json_encode(['result' => 'success']));
+    }
+
 }

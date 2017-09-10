@@ -306,9 +306,10 @@ class Model_Room extends Kohana_Model
      * @param $roomId
      * @param DateTime $firstDate
      * @param DateTime $lastDate
+     * @param int $bookingId
      * @return mixed
      */
-    public function checkRoomReservationStatusByPeriod($roomId, DateTime $firstDate, DateTime $lastDate)
+    public function checkRoomReservationStatusByPeriod($roomId, DateTime $firstDate, DateTime $lastDate, $bookingId = null)
     {
         while ($firstDate < $lastDate) {
             $check = DB::select()
@@ -328,7 +329,7 @@ class Model_Room extends Kohana_Model
                 ->current()
             ;
 
-            if ($check) {
+            if ($check && (int)$check['id'] !== $bookingId) {
                 return true;
             }
 

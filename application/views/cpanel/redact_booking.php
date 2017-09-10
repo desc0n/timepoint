@@ -2,74 +2,70 @@
 /** @var Model_Reservation $reservationModel */
 $reservationModel = Model::factory('Reservation');
 
+/** @var Model_Content $contentModel */
+$contentModel = Model::factory('Content');
 
+$bookingData = $reservationModel->findById($bookingId);
+$templateWords = $contentModel->getTemplateWords('ru');
 ?>
-<legend><?=$templateWords['main']['booking_request'];?></legend>
 <div class="form-group">
-    <label for="inputPhone<?=$roomId;?>"><?=$templateWords['main']['phone'];?> *</label>
-    <input type="text" class="form-control" id="inputPhone<?=$roomId;?>" placeholder="<?=$templateWords['main']['specify_phone'];?> +79001234567">
+    <label for="inputChangePhone"><?=$templateWords['main']['phone'];?></label>
+    <input type="text" class="form-control" id="inputChangePhone" value="<?=$bookingData['customer_phone'];?>">
 </div>
 <div class="form-group">
-    <label for="inputName<?=$roomId;?>"><?=$templateWords['main']['name'];?> *</label>
-    <input type="text" class="form-control" id="inputName<?=$roomId;?>" placeholder="<?=$templateWords['main']['name'];?>">
+    <label for="inputChangeName"><?=$templateWords['main']['name'];?></label>
+    <input type="text" class="form-control" id="inputChangeName" value="<?=$bookingData['customer_name'];?>">
 </div>
 <div class="form-group">
-    <label for="inputComment<?=$roomId;?>"><?=$templateWords['main']['comment'];?></label>
-    <textarea id="inputComment<?=$roomId;?>" class="form-control" rows="3" placeholder="<?=$templateWords['main']['comment'];?>"></textarea>
+    <label for="inputChangeComment"><?=$templateWords['main']['comment'];?></label>
+    <textarea id="inputChangeComment" class="form-control" rows="3"><?=$bookingData['customer_comment'];?></textarea>
+</div>
+<div class="form-group">
+    <label for="inputChangePrice"><?=$templateWords['main']['price'];?></label>
+    <input type="text" class="form-control" id="inputChangePrice" value="<?=$bookingData['price'];?>">
 </div>
 <div class="form-group row">
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <label class="label-sm" for="inputAdult<?=$roomId;?>"><?=$templateWords['main']['adult'];?></label>
-        <input type="text" class="form-control" id="inputAdult<?=$roomId;?>" value="0">
+        <label class="label-sm" for="inputChangeAdult"><?=$templateWords['main']['adult'];?></label>
+        <input type="text" class="form-control" id="inputChangeAdult" value="<?=$bookingData['adult'];?>">
     </div>
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <label class="label-sm" for="inputChildrenTo12<?=$roomId;?>"><?=$templateWords['main']['children_12'];?></label>
-        <input type="text" class="form-control" id="inputChildrenTo12<?=$roomId;?>" value="0">
+        <label class="label-sm" for="inputChangeChildrenTo12"><?=$templateWords['main']['children_12'];?></label>
+        <input type="text" class="form-control" id="inputChangeChildrenTo12" value="<?=$bookingData['children_to_12'];?>">
     </div>
 </div>
 <div class="form-group row">
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <label class="label-sm" for="inputChildrenTo2<?=$roomId;?>"><?=$templateWords['main']['children_2'];?></label>
-        <input type="text" class="form-control" id="inputChildrenTo2<?=$roomId;?>" value="0">
+        <label class="label-sm" for="inputChangeChildrenTo2"><?=$templateWords['main']['children_2'];?></label>
+        <input type="text" class="form-control" id="inputChangeChildrenTo2" value="<?=$bookingData['children_to_2'];?>">
     </div>
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <label class="label-sm" for="inputChildrenTo6<?=$roomId;?>"><?=$templateWords['main']['children_6'];?></label>
-        <input type="text" class="form-control" id="inputChildrenTo6<?=$roomId;?>" value="0">
+        <label class="label-sm" for="inputChangeChildrenTo6"><?=$templateWords['main']['children_6'];?></label>
+        <input type="text" class="form-control" id="inputChangeChildrenTo6" value="<?=$bookingData['children_to_6'];?>">
     </div>
 </div>
-<div class="form-group text-right">
-    <button type="button" class="btn btn-primary" data-id="<?=$roomId;?>"><?=$templateWords['main']['book_a_room'];?></button>
-    <input type="hidden" id="notChecked<?=$roomId;?>" value="<?=(int)($queryArrivalDate !== null && $queryDepartureDate !== null);?>">
-</div>
-<legend><?=$templateWords['main']['booking_period'];?></legend>
 <div class="form-group">
     <div class="form-group">
         <div class='input-group date'>
-            <input id="daterange<?=$roomId;?>" type="text" value="<?=$arrivalDate->format('d.m.Y');?> - <?=$departureDate->format('d.m.Y');?>" class="form-control"/>
-            <span class="input-group-addon datepicker-toggler" data-target="daterange<?=$roomId;?>">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
+            <input id="inputChangePeriod" type="text" value="<?=date('d.m.Y', strtotime($bookingData['arrival_at']));?> - <?=date('d.m.Y', strtotime($bookingData['departure_at']));?>" class="form-control"/>
+            <span class="input-group-addon datepicker-toggler" data-target="inputChangePeriod"><i class="fa fa-calendar"></i></span>
         </div>
     </div>
+</div>
+<div class="form-group text-right">
+    <button type="button" class="btn btn-primary" onclick="changeBooking(<?=$bookingId;?>, <?=$bookingData['room_id'];?>)">Сохранить</button>
 </div>
 <!-- modal -->
 <script>
     moment.locale('ru');
-    $('#daterange<?=$roomId;?>').daterangepicker({
+    $('#inputChangePeriod').daterangepicker({
         autoApply: true,
         opens: "center",
         drops: "up",
         locale: {
             format: 'DD.MM.YYYY'
-        },
-        minDate: getMinDate(),
-        startDate: getStartDate(),
-        endDate: getEndDate()
-    })
-        .on('apply.daterangepicker', function(ev, picker) {
-            var dateDiff = picker.endDate - picker.startDate;
-            writeNightCount((Math.round(dateDiff / 86400000) - 1), <?=$roomId;?>);
-        });
+        }
+    });
     $('.datepicker-toggler').click(function() {
         $("#" + $(this).data('target')).focus();
     });

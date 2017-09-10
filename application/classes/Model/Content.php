@@ -42,6 +42,7 @@ class Model_Content extends Kohana_Model
                 'book_a_room' => 'Забронировать номер',
                 'booking_period' => 'Период бронирования',
                 'check' => 'Проверить',
+                'price' => 'Цена',
             ]
         ],
         'en' => [
@@ -80,6 +81,7 @@ class Model_Content extends Kohana_Model
                 'book_a_room' => 'Book a room',
                 'booking_period' => 'Booking period',
                 'check' => 'Check',
+                'price' => 'Price',
             ]
         ]
     ];
@@ -94,11 +96,13 @@ class Model_Content extends Kohana_Model
     }
 
     /**
+     * @param string $language
+     *
      * @return array
      */
-    public function getTemplateWords()
+    public function getTemplateWords($language)
     {
-        return $this->templateWords;
+        return $this->templateWords[$language];
     }
 
     /**

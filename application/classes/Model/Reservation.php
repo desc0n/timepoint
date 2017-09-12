@@ -36,6 +36,7 @@ class Model_Reservation extends Kohana_Model
         $roomData = $roomModel->findById($roomId);
 
         DB::insert('reservations__reservations', [
+                'order_id',
                 'type',
                 'room_id',
                 'customer_phone',
@@ -52,6 +53,7 @@ class Model_Reservation extends Kohana_Model
                 'created_at'
             ])
             ->values([
+                $this->getBookingOrder($roomId, $arrivalAt, $departureAt),
                 $type,
                 $roomId,
                 $phone,
@@ -252,6 +254,43 @@ class Model_Reservation extends Kohana_Model
      * @param int $roomId
      * @param DateTime $firstDate
      * @param DateTime $lastDate
+     * @return int
+     */
+    public function findAllPeriodPrice($roomId, DateTime $firstDate, DateTime $lastDate)
+    {
+        /** @var Model_Room $roomModel */
+        $roomModel = Model::factory('Room');
+
+        $roomData = $roomModel->findById($roomId);
+        $price = (int)$roomData['price'];
+        $amount = 0;
+
+        while ($firstDate < $lastDate) {
+            $reservationPriceData = DB::select()
+                ->from('reservations__reservation_prices')
+                ->where('room_id', '=', $roomId)
+                ->and_where('date_at', '=', $firstDate->format('Y-m-d'))
+                ->limit(1)
+                ->execute()
+                ->current()
+            ;
+
+            if ($reservationPriceData) {
+                $amount += (int)$reservationPriceData['price'];
+            } else {
+                $amount += $price;
+            }
+
+            $firstDate->modify('+ 1 day');
+        }
+
+        return $amount;
+    }
+
+    /**
+     * @param int $roomId
+     * @param DateTime $firstDate
+     * @param DateTime $lastDate
      * @param int $price
      */
     public function setPrice($roomId, DateTime $firstDate, DateTime $lastDate, $price)
@@ -309,6 +348,7 @@ class Model_Reservation extends Kohana_Model
     {
         DB::update('reservations__reservations')
             ->set([
+                'order_id' => $this->getBookingOrder($roomId, $arrivalAt, $departureAt),
                 'customer_phone' => $phone,
                 'customer_name' => $name,
                 'customer_comment' => $comment,
@@ -325,5 +365,58 @@ class Model_Reservation extends Kohana_Model
         ;
 
         $this->setPrice($roomId, $arrivalAt, $departureAt, $price);
+    }
+
+    public function getBookingAmount($bookingId)
+    {
+        $bookingData = $this->findById($bookingId);
+        return $this->findAllPeriodPrice((int)$bookingData['room_id'], new DateTime($bookingData['arrival_at']), new DateTime($bookingData['departure_at']));
+    }
+
+    /**
+     * @param int $roomId
+     * @param DateTime $arrivalAt
+     * @param DateTime $departureAt
+     * @return string
+     */
+    public function getBookingOrder($roomId, DateTime $arrivalAt, DateTime $departureAt)
+    {
+        return md5($roomId . $arrivalAt->format('Y-m-d H:i:s') . $departureAt->format('Y-m-d H:i:s'));
+    }
+
+    /**
+     * @param string $orderId
+     *
+     * @return array|false
+     */
+    public function getAcquiringOrderData($orderId) {
+        return DB::select()
+            ->from('reservations__acquiring_data')
+            ->where('order_id', '=', $orderId)
+            ->limit(1)
+            ->execute()
+            ->current()
+        ;
+    }
+
+    /**
+     * @param string $orderId
+     * @param string $acquiringOrderId
+     *
+     */
+    public function setAcquiringOrderData($orderId, $acquiringOrderId) {
+        DB::query(Database::INSERT,
+            '
+                  INSERT INTO reservations__acquiring_data (`order_id`, `acquiring_order_id`)
+                  VALUES(:orderId, :acquiringOrderId)
+                  ON DUPLICATE KEY UPDATE `acquiring_order_id` = :acquiringOrderId
+                '
+        )
+            ->parameters([
+                ':orderId' => $orderId,
+                ':acquiringOrderId' => $acquiringOrderId
+            ])
+            ->execute()
+        ;
     }
 }

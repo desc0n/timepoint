@@ -351,6 +351,13 @@ $nightCount = round(($departureDate->getTimestamp() - $startDate->getTimestamp()
 <script>
     $(document).ready(function () {
         writeNightCount(<?=$nightCount;?>, '');
+        <?if(isset($payment)){?>
+        <?if($payment === 'success') {?>
+        showNotificationModal('Оплата поступила. Номер успешно забронирован!', 'success');
+        <?} else{?>
+        showNotificationModal('Ошибка оплаты. Номер не забронирован!', 'danger');
+        <?}?>
+        <?}?>
     });
 </script>
 </body>

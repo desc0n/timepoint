@@ -139,6 +139,12 @@ Route::set('news', 'news')
 		'action'     => 'news',
 	])
 ;
+Route::set('payment_form', 'payment_form')
+	->defaults([
+		'controller' => 'index',
+		'action'     => 'payment_form',
+	])
+;
 
 Route::set('page', 'page/<slug>',[
 	'slug' =>'[0-9a-z_]+',

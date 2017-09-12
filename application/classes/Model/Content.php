@@ -478,4 +478,116 @@ class Model_Content extends Kohana_Model
 
         return $course;
     }
+
+    /**
+     * @param int $roomId
+     * @param DateTime $arrivalAt
+     * @param DateTime $departureAt
+     * @param string $phone
+     * @param string $name
+     * @param string $comment
+     * @param string $adult
+     * @param string $childrenTo2
+     * @param string $childrenTo6
+     * @param string $childrenTo12
+     *
+     * @return string
+     */
+    public function getPayedForm(
+        $roomId,
+        DateTime $arrivalAt,
+        DateTime $departureAt,
+        $phone,
+        $name,
+        $comment,
+        $adult,
+        $childrenTo2,
+        $childrenTo6,
+        $childrenTo12
+        )
+    {
+        /** @var Model_Reservation $reservationModel */
+        $reservationModel = Model::factory('Reservation');
+
+        $acquiringData = $reservationModel->getAcquiringOrderData($reservationModel->getBookingOrder($roomId, $arrivalAt, $departureAt));
+
+        if($acquiringData) {
+            return 'https://3dsec.sberbank.ru/payment/merchants/vladpoint/payment_ru.html?mdOrder=' . $acquiringData['acquiring_order_id'];
+        }
+
+        $apiContent = $this->registerOrder($roomId, $arrivalAt, $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12);
+
+        if (!$apiContent) {
+            return null;
+        }
+
+        $reservationModel->setAcquiringOrderData($reservationModel->getBookingOrder($roomId, $arrivalAt, $departureAt), $apiContent['orderId']);
+        return 'https://3dsec.sberbank.ru/payment/merchants/vladpoint/payment_ru.html?mdOrder=' . $apiContent['orderId'];
+    }
+
+    public function registerOrder($roomId, DateTime $arrivalAt, DateTime $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12)
+    {
+        /** @var Model_Reservation $reservationModel */
+        $reservationModel = Model::factory('Reservation');
+
+        $variables = [
+            'amount' => $reservationModel->findAllPeriodPrice($roomId, $arrivalAt, $departureAt) * 100,
+            'currency' => '',
+            'language' => 'ru',
+            'description' => '# ' . $roomId,
+            'orderNumber' => $reservationModel->getBookingOrder($roomId, $arrivalAt, $departureAt),
+            'jsonParams' => json_encode(['roomId' => $roomId, 'arrivalAt' => $arrivalAt->format('Y-m-d H:i:s'), 'departureAt' => $departureAt->format('Y-m-d H:i:s'), 'phone' => $phone, 'name' => $name, 'comment' => $comment, 'adult' => $adult, 'childrenTo2' => $childrenTo2, 'childrenTo6' => $childrenTo6, 'childrenTo12' => $childrenTo12])
+        ];
+        $response = $this->getSberbankRequest('https://3dsec.sberbank.ru/payment/rest/register.do', $variables);
+
+        return $response === null ? null : json_decode($response, true);
+    }
+
+    /**
+     * @param string $orderId
+     * @return mixed|null
+     */
+    public function getOrderStatusExtended($orderId)
+    {
+        $variables = [
+            'orderId' => $orderId,
+        ];
+        $response = $this->getSberbankRequest('https://3dsec.sberbank.ru/payment/rest/getOrderStatusExtended.do', $variables);
+
+        return $response === null ? null : json_decode($response, true);
+    }
+
+    public function getSberbankRequest($url, array $variables)
+    {
+        $arguments = [
+            'returnUrl' => 'http://' . $_SERVER['HTTP_HOST'] . '/?booking=success',
+            'userName' => 'vladpoint-api',
+            'password' => 'vladpoint'
+        ];
+
+        $params = $arguments + $variables;
+
+        return $this->getCurlContent('GET', $url, $params);
+    }
+
+    public function getCurlContent($method, $url, $params)
+    {
+        $query = http_build_query($params);
+
+        if ($method === 'POST') {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $query);
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+            $content = curl_exec ($ch);
+            curl_close($ch);
+
+            return $content;
+        }
+
+        $url .= '?' . $query;
+
+        return file_get_contents($url);
+    }
 }

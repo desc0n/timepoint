@@ -7,7 +7,23 @@
         <button class="btn" onclick="notPayedReserveRoom();">Забронировать без оплаты</button>
     </div>
     <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <?if(Auth::instance()->logged_in('admin')){?>
+        <form method="post" action="/payment_form">
+            <input type="hidden" name="roomId" value="<?=$roomId;?>">
+            <input type="hidden" name="arrivalDate" value="<?=$arrivalDate;?>">
+            <input type="hidden" name="departureDate" value="<?=$departureDate;?>">
+            <input type="hidden" name="phone" value="<?=$phone;?>">
+            <input type="hidden" name="name" value="<?=$name;?>">
+            <input type="hidden" name="comment" value="<?=$comment;?>">
+            <input type="hidden" name="adult" value="<?=$adult;?>">
+            <input type="hidden" name="childrenTo2" value="<?=$childrenTo2;?>">
+            <input type="hidden" name="childrenTo6" value="<?=$childrenTo6;?>">
+            <input type="hidden" name="childrenTo12" value="<?=$childrenTo12;?>">
+            <button class="btn btn-primary">Забронировать с оплатой</button>
+        </form>
+        <?} else {?>
         <button class="btn btn-primary">Забронировать с оплатой</button>
+        <?}?>
     </div>
 </div>
 <div id="reserveRoomData">

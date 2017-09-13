@@ -311,16 +311,19 @@ class Model_Room extends Kohana_Model
      */
     public function checkRoomReservationStatusByPeriod($roomId, DateTime $firstDate, DateTime $lastDate, $bookingId = null)
     {
-        while ($firstDate < $lastDate) {
+        $firstTime = clone $firstDate;
+        $lastTime = clone $lastDate;
+
+        while ($firstTime < $lastTime) {
             $check = DB::select()
                 ->from('reservations__reservations')
                 ->where('room_id', '=', $roomId)
                 ->and_where('status_id', '=', 1)
                 ->and_where_open()
-                    ->where('arrival_at', '<=', $firstDate->format('Y-m-d H:i:s'))
-                    ->and_where('departure_at', '>', $firstDate->format('Y-m-d H:i:s'))
+                    ->where('arrival_at', '<=', $firstTime->format('Y-m-d H:i:s'))
+                    ->and_where('departure_at', '>', $firstTime->format('Y-m-d H:i:s'))
                     ->or_where_open()
-                        ->where('arrival_at', '=', $firstDate->format('Y-m-d H:i:s'))
+                        ->where('arrival_at', '=', $firstTime->format('Y-m-d H:i:s'))
                         ->and_where('departure_at', '=', DB::expr('arrival_at'))
                     ->or_where_close()
                 ->and_where_close()
@@ -333,7 +336,7 @@ class Model_Room extends Kohana_Model
                 return true;
             }
 
-            $firstDate->modify('+ 1 day');
+            $firstTime->modify('+ 1 day');
         }
 
         return false;

@@ -229,12 +229,14 @@ class Model_Reservation extends Kohana_Model
         $roomData = $roomModel->findById($id);
         $price = (int)$roomData['price'];
         $reservationPrice = 0;
+        $firstTime = clone $firstDate;
+        $lastTime = clone $lastDate;
 
-        while ($firstDate <= $lastDate) {
+        while ($firstTime <= $lastTime) {
             $reservationPriceData = DB::select()
                 ->from('reservations__reservation_prices')
                 ->where('room_id', '=', $id)
-                ->and_where('date_at', '=', $firstDate->format('Y-m-d'))
+                ->and_where('date_at', '=', $firstTime->format('Y-m-d'))
                 ->limit(1)
                 ->execute()
                 ->current()
@@ -244,7 +246,7 @@ class Model_Reservation extends Kohana_Model
                 $reservationPrice = (int)$reservationPriceData['price'];
             }
 
-            $firstDate->modify('+ 1 day');
+            $firstTime->modify('+ 1 day');
         }
 
         return $reservationPrice ?: $price;
@@ -264,12 +266,14 @@ class Model_Reservation extends Kohana_Model
         $roomData = $roomModel->findById($roomId);
         $price = (int)$roomData['price'];
         $amount = 0;
+        $firstTime = clone $firstDate;
+        $lastTime = clone $lastDate;
 
-        while ($firstDate < $lastDate) {
+        while ($firstTime < $lastTime) {
             $reservationPriceData = DB::select()
                 ->from('reservations__reservation_prices')
                 ->where('room_id', '=', $roomId)
-                ->and_where('date_at', '=', $firstDate->format('Y-m-d'))
+                ->and_where('date_at', '=', $firstTime->format('Y-m-d'))
                 ->limit(1)
                 ->execute()
                 ->current()
@@ -281,7 +285,7 @@ class Model_Reservation extends Kohana_Model
                 $amount += $price;
             }
 
-            $firstDate->modify('+ 1 day');
+            $firstTime->modify('+ 1 day');
         }
 
         return $amount;
@@ -295,7 +299,10 @@ class Model_Reservation extends Kohana_Model
      */
     public function setPrice($roomId, DateTime $firstDate, DateTime $lastDate, $price)
     {
-        while ($firstDate <= $lastDate) {
+        $firstTime = clone $firstDate;
+        $lastTime = clone $lastDate;
+
+        while ($firstTime <= $lastTime) {
             DB::query(Database::INSERT,
                 'INSERT INTO reservations__reservation_prices (`room_id`, `price`, `date_at`) 
                 VALUES (:roomId, :price, :date)
@@ -304,12 +311,12 @@ class Model_Reservation extends Kohana_Model
                 ->parameters([
                     ':roomId' => $roomId,
                     ':price' => $price,
-                    ':date' => $firstDate->format('Y-m-d')
+                    ':date' => $firstTime->format('Y-m-d')
                 ])
                 ->execute()
             ;
 
-            $firstDate->modify('+ 1 day');
+            $firstTime->modify('+ 1 day');
         }
     }
 

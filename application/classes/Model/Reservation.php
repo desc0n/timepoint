@@ -376,7 +376,7 @@ class Model_Reservation extends Kohana_Model
             ->execute()
         ;
 
-        $this->setPrice($roomId, $arrivalAt, $departureAt, $price);
+        //$this->setPrice($roomId, $arrivalAt, $departureAt, $price);
     }
 
     public function getBookingAmount($bookingId)

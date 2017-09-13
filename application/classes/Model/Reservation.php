@@ -263,11 +263,16 @@ class Model_Reservation extends Kohana_Model
         /** @var Model_Room $roomModel */
         $roomModel = Model::factory('Room');
 
+        $firstTime = clone $firstDate;
+        $lastTime = clone $lastDate;
+
+        if ($firstTime->getTimestamp() === $lastTime->getTimestamp()) {
+            return $this->findRoomPriceByIdAndDate($roomId, $firstDate, $lastDate);
+        }
+
         $roomData = $roomModel->findById($roomId);
         $price = (int)$roomData['price'];
         $amount = 0;
-        $firstTime = clone $firstDate;
-        $lastTime = clone $lastDate;
 
         while ($firstTime < $lastTime) {
             $reservationPriceData = DB::select()

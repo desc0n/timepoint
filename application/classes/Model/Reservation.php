@@ -142,6 +142,7 @@ class Model_Reservation extends Kohana_Model
                         'rr.*',
                         'r.title',
                         ['rs.name', 'status_name'],
+                        ['rr.price', 'booking_price'],
                         [
                             DB::expr(
                                 'IFNULL((' .

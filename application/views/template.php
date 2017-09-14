@@ -10,7 +10,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/public/css/daterangepicker.css" >
-    <link rel="stylesheet" href="/public/css/styles.css?v=10" >
+    <link rel="stylesheet" href="/public/css/styles.css?v=11" >
     <link rel="stylesheet" href="/assets/bootstrap/css/font-awesome.css" >
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -75,9 +75,9 @@ $nightCount = round(($departureDate->getTimestamp() - $startDate->getTimestamp()
                     <li class="nav-item">
                         <a class="nav-link" href="/news"><?=$templateWords['menu']['news'];?></a>
                     </li>
-<!--                    <li class="nav-item">-->
-<!--                        <a class="nav-link" href="#">Контакты</a>-->
-<!--                    </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/info"><?=$templateWords['menu']['info'];?></a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="dropdown1" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="true">RU</a>
@@ -276,6 +276,9 @@ $nightCount = round(($departureDate->getTimestamp() - $startDate->getTimestamp()
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/news"><?=$templateWords['menu']['news'];?></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/info"><?=$templateWords['menu']['info'];?></a>
                                 </li>
                             </ul>
                         </div>

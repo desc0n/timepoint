@@ -139,6 +139,12 @@ Route::set('news', 'news')
 		'action'     => 'news',
 	])
 ;
+Route::set('info', 'info')
+	->defaults([
+		'controller' => 'index',
+		'action'     => 'info',
+	])
+;
 Route::set('payment_form', 'payment_form')
 	->defaults([
 		'controller' => 'index',

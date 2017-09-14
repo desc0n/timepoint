@@ -79,6 +79,19 @@ class Controller_Index extends Controller
 		$this->response->body($template);
 	}
 
+	public function action_info()
+	{
+        /** @var $contentModel Model_Content */
+        $contentModel = Model::factory('Content');
+
+        View::set_global('title', 'Информация');
+        View::set_global('rootPage', 'info');
+
+		$template = $contentModel->getBaseTemplate('info', 'ru');
+
+		$this->response->body($template);
+	}
+
 	public function action_payment_form()
 	{
         /** @var $contentModel Model_Content */

@@ -13,6 +13,7 @@ class Model_Content extends Kohana_Model
             'menu' => [
                 'rooms_and_prices' => 'Номера и цены',
                 'news' => 'Новости',
+                'info' => 'Информация',
             ],
             'filter' => [
                 'booking' => 'Бронирование',
@@ -52,6 +53,7 @@ class Model_Content extends Kohana_Model
             'menu' => [
                 'rooms_and_prices' => 'Rooms and prices',
                 'news' => 'News',
+                'info' => 'Info',
             ],
             'filter' => [
                 'booking' => 'Booking',
@@ -157,6 +159,11 @@ class Model_Content extends Kohana_Model
                 return [
                     'content' => View::factory('news')
                         ->set('newsList', $this->getNewsList())
+                ];
+            case 'info':
+                return [
+                    'content' => View::factory('info')
+                        ->set('templateWords', $this->templateWords[$language])
                 ];
             default:
                 return DB::select()

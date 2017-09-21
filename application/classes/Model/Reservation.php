@@ -451,7 +451,7 @@ class Model_Reservation extends Kohana_Model
     {
         return DB::select()
             ->from('reservations__reservations')
-            ->where('orderId', '=', $orderId)
+            ->where('order_id', '=', $orderId)
             ->limit(1)
             ->execute()
             ->current()

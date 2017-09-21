@@ -181,7 +181,9 @@ class Model_Reservation extends Kohana_Model
                     ->current()
                 ;
 
-                $data[$firstDate->format('Y')][$firstDate->format('m')][$firstDate->format('d')][$room['id']] = $info;
+                if ($info) {
+                    $data[$firstDate->format('Y')][$firstDate->format('m')][$firstDate->format('d')][$room['id']] = $info;
+                }
             }
 
             $firstDate->modify('+ 1 day');

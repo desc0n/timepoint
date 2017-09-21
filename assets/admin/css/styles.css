@@ -458,6 +458,9 @@ body {
     font-size: 0.8em;
     cursor: pointer;
 }
+.booking-price-change{
+    cursor: pointer;
+}
 .booking-hidden{
     display: none;
     font-size: 0.8em;

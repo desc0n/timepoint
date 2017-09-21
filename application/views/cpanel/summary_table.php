@@ -136,13 +136,24 @@ $weekDays = [0 => 'вс', 1 => 'пн', 2 => 'вт', 3 => 'ср', 4 => 'чт', 5 
                     <?foreach ($summaryTableData as $year => $yearItems) {?>
                         <?foreach ($yearItems as $month => $monthItems) {?>
                             <?foreach ($monthItems as $day => $dayItems) {?>
-                                <?if($dayItems[$room['id']]) {?>
-                                    <td class="text-right alert-danger booking-hidden booking-hidden-<?=$room['id'];?>">
-                                        <?=$dayItems[$room['id']]['price'];?>
-                                    </td>
+                                <?$price = $dayItems[$room['id']] ? $dayItems[$room['id']]['price'] : $reservationModel->findRoomPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?>
+                                <?if(Auth::instance()->logged_in('admin')) {?>
+                                <?
+                                $popoverTitle = 'Изменение стоимости номера';
+                                $popoverContent = "<div class='booking-data-popover'>";
+                                $popoverContent .= "<div><div class='input-group'>";
+                                $popoverContent .= "<input id='newRoomPrice" . $room['id'] . "' type='text' value='" . $price . "' class='form-control'>";
+                                $popoverContent .= "<span class='input-group-btn'><button class='btn btn-success' onclick='changeRoomPrice(" . $room['id'] . ");'><i class='glyphicon glyphicon-ok'></i></button></span>";
+                                $popoverContent .= '</div></div>';
+                                $popoverContent .= "<input type='hidden' id='newRoomPriceDate" . $room['id'] . "' value='" . $year . "-" . $month . "-" . $day . "'>";
+                                $popoverContent .= '</div>';
+                                ?>
+                                <td class="text-right alert-danger booking-hidden booking-hidden-<?=$room['id'];?>">
+                                    <div class="booking-price-change" data-trigger="click" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="<?=$popoverTitle;?>"><?=$price;?></div>
+                                </td>
                                 <?} else {?>
                                     <td class="text-right alert-danger booking-hidden booking-hidden-<?=$room['id'];?>">
-                                        <?=$reservationModel->findRoomPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?>
+                                        <?=$price;?>
                                     </td>
                                 <?}?>
                             <?}?>
@@ -265,6 +276,7 @@ $weekDays = [0 => 'вс', 1 => 'пн', 2 => 'вт', 3 => 'ср', 4 => 'чт', 5 
     }
     $('.summary-table tr td.booking-ceil').popover();
     $('.summary-table tr td i').popover();
+    $('.summary-table tr td .booking-price-change').popover();
     $('#daterange').daterangepicker({
         autoApply: true,
         opens: "center",

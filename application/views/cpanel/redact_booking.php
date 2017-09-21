@@ -9,6 +9,10 @@ $bookingData = $reservationModel->findById($bookingId);
 $templateWords = $contentModel->getTemplateWords('ru');
 ?>
 <div class="form-group">
+    <label for="inputType">Источник обращения</label>
+    <?=Form::select('', $reservationModel->types, $bookingData['type'], ['id' => 'inputChangeType', 'class' => 'form-control']);?>
+</div>
+<div class="form-group">
     <label for="inputChangePhone"><?=$templateWords['main']['phone'];?></label>
     <input type="text" class="form-control" id="inputChangePhone" value="<?=$bookingData['customer_phone'];?>">
 </div>

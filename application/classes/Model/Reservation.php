@@ -34,6 +34,14 @@ class Model_Reservation extends Kohana_Model
         $roomModel = Model::factory('Room');
 
         $roomData = $roomModel->findById($roomId);
+        $orderId = $this->getBookingOrder($roomId, $arrivalAt, $departureAt);
+
+        $issetBooking = $this->findBookingByOrderId($orderId);
+
+        if ($issetBooking) {
+            $this->changeBooking((int)$issetBooking['id'], $roomId, $arrivalAt, $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12, $price, $type);
+            return json_encode(['result' => 'success']);
+        }
 
         DB::insert('reservations__reservations', [
                 'order_id',
@@ -53,7 +61,7 @@ class Model_Reservation extends Kohana_Model
                 'created_at'
             ])
             ->values([
-                $this->getBookingOrder($roomId, $arrivalAt, $departureAt),
+                $orderId,
                 $type,
                 $roomId,
                 $phone,
@@ -354,10 +362,11 @@ class Model_Reservation extends Kohana_Model
      * @param int $childrenTo6
      * @param int $childrenTo12
      * @param int $price
+     * @param string $type
      *
      * @return void
      */
-    public function changeBooking($bookingId, $roomId, \DateTime $arrivalAt, \DateTime $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12, $price)
+    public function changeBooking($bookingId, $roomId, \DateTime $arrivalAt, \DateTime $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12, $price, $type)
     {
         DB::update('reservations__reservations')
             ->set([
@@ -371,7 +380,8 @@ class Model_Reservation extends Kohana_Model
                 'adult' => $adult,
                 'children_to_2' => $childrenTo2,
                 'children_to_6' => $childrenTo6,
-                'children_to_12' => $childrenTo12
+                'children_to_12' => $childrenTo12,
+                'type' => $type
             ])
             ->where('id', '=', $bookingId)
             ->execute()
@@ -430,6 +440,21 @@ class Model_Reservation extends Kohana_Model
                 ':acquiringOrderId' => $acquiringOrderId
             ])
             ->execute()
+        ;
+    }
+
+    /**
+     * @param string $orderId
+     * @return false|array
+     */
+    public function findBookingByOrderId($orderId)
+    {
+        return DB::select()
+            ->from('reservations__reservations')
+            ->where('orderId', '=', $orderId)
+            ->limit(1)
+            ->execute()
+            ->current()
         ;
     }
 }

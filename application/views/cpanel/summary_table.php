@@ -107,7 +107,7 @@ $weekDays = [0 => 'вс', 1 => 'пн', 2 => 'вт', 3 => 'ср', 4 => 'чт', 5 
                     <?foreach ($summaryTableData as $year => $yearItems) {?>
                         <?foreach ($yearItems as $month => $monthItems) {?>
                             <?foreach ($monthItems as $day => $dayItems) {?>
-                                <?if($dayItems[$room['id']]) {?>
+                                <?if(empty($dayItems[$room['id']])) {?>
                                     <?
                                     $popoverTitle = 'Информация о бронировании c ' . date('d.m', strtotime($dayItems[$room['id']]['arrival_at'])) . ' по ' . date('d.m', strtotime($dayItems[$room['id']]['departure_at']));
                                     $popoverContent = "<div class='booking-data-popover'>";

@@ -62,7 +62,7 @@ class Model_Reservation extends Kohana_Model
             ])
             ->values([
                 $orderId,
-                $type,
+                empty($type) ? 'site' : $type,
                 $roomId,
                 $phone,
                 $name,

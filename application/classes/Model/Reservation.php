@@ -363,14 +363,16 @@ class Model_Reservation extends Kohana_Model
      * @param int $childrenTo12
      * @param int $price
      * @param string $type
+     * @param int $statusId
      *
      * @return void
      */
-    public function changeBooking($bookingId, $roomId, \DateTime $arrivalAt, \DateTime $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12, $price, $type)
+    public function changeBooking($bookingId, $roomId, \DateTime $arrivalAt, \DateTime $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12, $price, $type, $statusId = 1)
     {
         DB::update('reservations__reservations')
             ->set([
                 'order_id' => $this->getBookingOrder($roomId, $arrivalAt, $departureAt),
+                'status_id' => $statusId,
                 'customer_phone' => $phone,
                 'customer_name' => $name,
                 'customer_comment' => $comment,

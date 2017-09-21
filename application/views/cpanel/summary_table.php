@@ -137,7 +137,7 @@ $weekDays = [0 => 'вс', 1 => 'пн', 2 => 'вт', 3 => 'ср', 4 => 'чт', 5 
                     <?foreach ($summaryTableData as $year => $yearItems) {?>
                         <?foreach ($yearItems as $month => $monthItems) {?>
                             <?foreach ($monthItems as $day => $dayItems) {?>
-                                <?$price = $dayItems[$room['id']] ? $dayItems[$room['id']]['price'] : $reservationModel->findRoomPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?>
+                                <?$price = !empty($dayItems[$room['id']]) ? $dayItems[$room['id']]['price'] : $reservationModel->findRoomPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?>
                                 <?if(Auth::instance()->logged_in('admin')) {?>
                                 <?
                                 $popoverTitle = 'Изменение стоимости номера';

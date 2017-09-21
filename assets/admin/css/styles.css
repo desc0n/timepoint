@@ -468,3 +468,7 @@ body {
 .booking-data-popover{
     font-size: 0.9em;
 }
+.popover{
+    width: 400px!important;
+    max-width: 400px!important;
+}

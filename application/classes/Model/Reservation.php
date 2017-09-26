@@ -22,10 +22,11 @@ class Model_Reservation extends Kohana_Model
      * @param int $childrenTo12
      * @param string $type
      * @param int $price
+     * @param bool $payedStatus
      *
      * @return string
      */
-    public function addReservation($roomId, \DateTime $arrivalAt, \DateTime $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12, $type, $price = null)
+    public function addReservation($roomId, \DateTime $arrivalAt, \DateTime $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12, $type, $price = null, $payedStatus = false)
     {
         /** @var Model_Mail $mailModel */
         $mailModel = Model::factory('Mail');
@@ -54,6 +55,7 @@ class Model_Reservation extends Kohana_Model
                 'arrival_at',
                 'departure_at',
                 'status_id',
+                'payed',
                 'adult',
                 'children_to_2',
                 'children_to_6',
@@ -71,6 +73,7 @@ class Model_Reservation extends Kohana_Model
                 $arrivalAt->format('Y-m-d H:i:s'),
                 $departureAt->format('Y-m-d H:i:s'),
                 1,
+                $payedStatus,
                 $adult,
                 $childrenTo2,
                 $childrenTo6,
@@ -82,6 +85,7 @@ class Model_Reservation extends Kohana_Model
 
         if($type === 'site') {
             $message = '<div><strong>Номер: </strong>' . $roomData['title'] . '</div>';
+            $message .= '<div><strong>Статус оплаченности: </strong>' . ($payedStatus ? 'оплачено' : 'не оплачено') . '</div>';
             $message .= '<div><strong>Период бронирования: </strong>' . $arrivalAt->format('d.m.Y') . ' - ' . $departureAt->format('d.m.Y') . '</div>';
             $message .= '<div><strong>Клиент: </strong>' . $name . '</div>';
             $message .= '<div><strong>Номер телефона: </strong>' . $phone . '</div>';

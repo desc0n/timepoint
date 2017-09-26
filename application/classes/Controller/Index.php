@@ -54,7 +54,8 @@ class Controller_Index extends Controller
                     $childrenTo6,
                     $childrenTo12,
                     'site',
-                    $amount
+                    $amount,
+                    true
                 );
 
                 View::set_global('payment', 'success');

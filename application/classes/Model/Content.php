@@ -516,20 +516,21 @@ class Model_Content extends Kohana_Model
         /** @var Model_Reservation $reservationModel */
         $reservationModel = Model::factory('Reservation');
 
-        $acquiringData = $reservationModel->getAcquiringOrderData($reservationModel->getBookingOrder($roomId, $arrivalAt, $departureAt));
+        $link = 'https://securepayments.sberbank.ru/payment/merchants/rbs/payment_ru.html?mdOrder=';
+        $acquiringData = $reservationModel->getAcquiringOrderData($reservationModel->getBookingOrder($roomId, $phone, $arrivalAt, $departureAt));
 
         if($acquiringData) {
-            return 'https://3dsec.sberbank.ru/payment/merchants/vladpoint/payment_ru.html?mdOrder=' . $acquiringData['acquiring_order_id'];
+            return $link . $acquiringData['acquiring_order_id'];
         }
 
         $apiContent = $this->registerOrder($roomId, $arrivalAt, $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12);
 
-        if (!$apiContent) {
+        if (!$apiContent || !empty($apiContent['errorCode'])) {
             return null;
         }
 
-        $reservationModel->setAcquiringOrderData($reservationModel->getBookingOrder($roomId, $arrivalAt, $departureAt), $apiContent['orderId']);
-        return 'https://3dsec.sberbank.ru/payment/merchants/vladpoint/payment_ru.html?mdOrder=' . $apiContent['orderId'];
+        $reservationModel->setAcquiringOrderData($reservationModel->getBookingOrder($roomId, $phone, $arrivalAt, $departureAt), $apiContent['orderId']);
+        return $link . $apiContent['orderId'];
     }
 
     public function registerOrder($roomId, DateTime $arrivalAt, DateTime $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12)
@@ -542,10 +543,10 @@ class Model_Content extends Kohana_Model
             'currency' => '',
             'language' => 'ru',
             'description' => '# ' . $roomId,
-            'orderNumber' => $reservationModel->getBookingOrder($roomId, $arrivalAt, $departureAt),
+            'orderNumber' => $reservationModel->getBookingOrder($roomId, $phone, $arrivalAt, $departureAt),
             'jsonParams' => json_encode(['roomId' => $roomId, 'arrivalAt' => $arrivalAt->format('Y-m-d H:i:s'), 'departureAt' => $departureAt->format('Y-m-d H:i:s'), 'phone' => $phone, 'name' => $name, 'comment' => $comment, 'adult' => $adult, 'childrenTo2' => $childrenTo2, 'childrenTo6' => $childrenTo6, 'childrenTo12' => $childrenTo12])
         ];
-        $response = $this->getSberbankRequest('https://3dsec.sberbank.ru/payment/rest/register.do', $variables);
+        $response = $this->getSberbankRequest('https://securepayments.sberbank.ru/payment/rest/register.do', $variables);
 
         return $response === null ? null : json_decode($response, true);
     }
@@ -559,7 +560,7 @@ class Model_Content extends Kohana_Model
         $variables = [
             'orderId' => $orderId,
         ];
-        $response = $this->getSberbankRequest('https://3dsec.sberbank.ru/payment/rest/getOrderStatusExtended.do', $variables);
+        $response = $this->getSberbankRequest('https://securepayments.sberbank.ru/payment/rest/getOrderStatusExtended.do', $variables);
 
         return $response === null ? null : json_decode($response, true);
     }
@@ -569,7 +570,8 @@ class Model_Content extends Kohana_Model
         $arguments = [
             'returnUrl' => 'http://' . $_SERVER['HTTP_HOST'] . '/?booking=success',
             'userName' => 'vladpoint-api',
-            'password' => 'vladpoint'
+            'password' => 'k190dX+gKUlM',
+            'token' => 'tg0apdfacf1smq3ut0lfnu868l'
         ];
 
         $params = $arguments + $variables;

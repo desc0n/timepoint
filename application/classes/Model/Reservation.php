@@ -34,7 +34,7 @@ class Model_Reservation extends Kohana_Model
         $roomModel = Model::factory('Room');
 
         $roomData = $roomModel->findById($roomId);
-        $orderId = $this->getBookingOrder($roomId, $arrivalAt, $departureAt);
+        $orderId = $this->getBookingOrder($roomId, $phone, $arrivalAt, $departureAt);
 
         $issetBooking = $this->findBookingByOrderId($orderId);
 
@@ -371,7 +371,7 @@ class Model_Reservation extends Kohana_Model
     {
         DB::update('reservations__reservations')
             ->set([
-                'order_id' => $this->getBookingOrder($roomId, $arrivalAt, $departureAt),
+                'order_id' => $this->getBookingOrder($roomId, $phone, $arrivalAt, $departureAt),
                 'status_id' => $statusId,
                 'customer_phone' => $phone,
                 'customer_name' => $name,
@@ -400,13 +400,14 @@ class Model_Reservation extends Kohana_Model
 
     /**
      * @param int $roomId
+     * @param string $phone
      * @param DateTime $arrivalAt
      * @param DateTime $departureAt
      * @return string
      */
-    public function getBookingOrder($roomId, DateTime $arrivalAt, DateTime $departureAt)
+    public function getBookingOrder($roomId, $phone, DateTime $arrivalAt, DateTime $departureAt)
     {
-        return md5($roomId . $arrivalAt->format('Y-m-d H:i:s') . $departureAt->format('Y-m-d H:i:s'));
+        return md5($roomId . $phone . $arrivalAt->format('Y-m-d H:i:s') . $departureAt->format('Y-m-d H:i:s'));
     }
 
     /**

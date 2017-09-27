@@ -134,8 +134,13 @@ class Model_Content extends Kohana_Model
         /** @var $roomModel Model_Room */
         $roomModel = Model::factory('Room');
 
+        $today = new \DateTime();
         $queryArrivalDate = Arr::get($_GET, 'arrival_date');
+        $arrivalDate = $queryArrivalDate === null ? null : new DateTime(date('Y-m-d H:i:s', strtotime($queryArrivalDate)));
         $queryDepartureDate = Arr::get($_GET, 'departure_date');
+        $departureDate = $queryDepartureDate === null ? null : new DateTime(date('Y-m-d H:i:s', strtotime($queryDepartureDate)));
+        $startDate = $arrivalDate < $today ? $today : $arrivalDate;
+        $endDate = $departureDate < $today ? $today : $departureDate;
 
         switch ($slug) {
             case 'main':
@@ -144,13 +149,13 @@ class Model_Content extends Kohana_Model
                         ->set('rooms',
                             $roomModel->findRoomsOnMainPage(
                                 (int)Arr::get($_GET, 'guest_count'),
-                                $queryArrivalDate === null ? null : new DateTime(date('Y-m-d H:i:s', strtotime($queryArrivalDate))),
-                                $queryDepartureDate === null ? null : new DateTime(date('Y-m-d H:i:s', strtotime($queryDepartureDate)))
+                                $startDate,
+                                $endDate
                             )
                         )
                         ->set('conveniencesList', $roomModel->getConveniences())
-                        ->set('queryArrivalDate', $queryArrivalDate)
-                        ->set('queryDepartureDate', $queryDepartureDate)
+                        ->set('queryArrivalDate', $startDate->format('d.m.Y'))
+                        ->set('queryDepartureDate', $endDate->format('d.m.Y'))
                         ->set('course', $this->getCurrencyCourse())
                         ->set('currency', mb_strtoupper(Arr::get($_GET, 'currency', 'rub')))
                         ->set('templateWords', $this->templateWords[$language])

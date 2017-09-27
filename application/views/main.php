@@ -114,7 +114,7 @@ $nightCount = (round(($departureDate->getTimestamp() - $arrivalDate->getTimestam
                                 </div>
                                 <div class="form-group text-right">
                                     <button type="button" class="btn btn-primary reserve-room-btn" data-id="<?=$room['room']['id'];?>"><?=$templateWords['main']['book_a_room'];?></button>
-                                    <input type="hidden" id="notChecked<?=$room['room']['id'];?>" value="<?=(int)($queryArrivalDate !== null && $queryDepartureDate !== null);?>">
+                                    <input type="hidden" id="notChecked<?=$room['room']['id'];?>" value="<?=(int)($queryArrivalDate !== null && $queryDepartureDate !== null && $queryArrivalDate !== $queryDepartureDate);?>">
                                 </div>
                                 <legend><?=$templateWords['main']['booking_period'];?></legend>
                                 <div class="form-group">

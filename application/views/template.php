@@ -36,12 +36,13 @@ $tomorrow = clone $today;
 $tomorrow->modify('+ 1 day');
 $arrivalDate = new DateTime(date('Y-m-d', strtotime(Arr::get($get, 'arrival_date', $today->format('d.m.Y')))));
 $departureDate = new DateTime(date('Y-m-d', strtotime(Arr::get($get, 'departure_date', $tomorrow->format('d.m.Y')))));
-$calendarArrivalDate = clone $arrivalDate;
-$calendarArrivalDate->modify('- 1 month');
-$calendarDepartureDate = clone $departureDate;
-$calendarDepartureDate->modify('- 1 month');
 $startDate = $arrivalDate < $today ? $today : $arrivalDate;
-$nightCount = round(($departureDate->getTimestamp() - $startDate->getTimestamp()) / 86400);
+$endDate = $departureDate < $today ? $today : $departureDate;
+$nightCount = round(($endDate->getTimestamp() - $startDate->getTimestamp()) / 86400);
+$calendarArrivalDate = clone $startDate;
+$calendarArrivalDate->modify('- 1 month');
+$calendarDepartureDate = clone $endDate;
+$calendarDepartureDate->modify('- 1 month');
 ?>
 <script>
     function getMinDate() {

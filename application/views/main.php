@@ -7,11 +7,13 @@ $tomorrow = clone $today;
 $tomorrow->modify('+ 1 day');
 $arrivalDate = $queryArrivalDate === null ? $today : new DateTime(date('Y-m-d', strtotime($queryArrivalDate)));
 $departureDate = $queryDepartureDate === null ? $tomorrow : new DateTime(date('Y-m-d', strtotime($queryDepartureDate)));
-$calendarArrivalDate = clone $arrivalDate;
+$startDate = $arrivalDate < $today ? $today : $arrivalDate;
+$endDate = $departureDate < $today ? $today : $departureDate;
+$nightCount = round(($endDate->getTimestamp() - $startDate->getTimestamp()) / 86400);
+$calendarArrivalDate = clone $startDate;
 $calendarArrivalDate->modify('- 1 month');
-$calendarDepartureDate = clone $departureDate;
+$calendarDepartureDate = clone $endDate;
 $calendarDepartureDate->modify('- 1 month');
-$nightCount = (round(($departureDate->getTimestamp() - $arrivalDate->getTimestamp()) / 86400));
 ?>
 <div class="rooms">
     <div class="rooms__wrapper">

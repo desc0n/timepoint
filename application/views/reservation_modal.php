@@ -14,6 +14,7 @@
             <input type="hidden" name="departureDate" value="<?=$departureDate;?>">
             <input type="hidden" name="phone" value="<?=$phone;?>">
             <input type="hidden" name="name" value="<?=$name;?>">
+            <input type="hidden" name="email" value="<?=$email;?>">
             <input type="hidden" name="comment" value="<?=$comment;?>">
             <input type="hidden" name="adult" value="<?=$adult;?>">
             <input type="hidden" name="childrenTo2" value="<?=$childrenTo2;?>">
@@ -32,6 +33,7 @@
     <input type="hidden" id="departureDate" value="<?=$departureDate;?>">
     <input type="hidden" id="customerPhone" value="<?=$phone;?>">
     <input type="hidden" id="customerName" value="<?=$name;?>">
+    <input type="hidden" id="customerEmail" value="<?=$email;?>">
     <input type="hidden" id="customerComment" value="<?=$comment;?>">
     <input type="hidden" id="adult" value="<?=$adult;?>">
     <input type="hidden" id="childrenTo2" value="<?=$childrenTo2;?>">

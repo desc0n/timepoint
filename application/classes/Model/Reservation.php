@@ -13,6 +13,7 @@ class Model_Reservation extends Kohana_Model
      * @param int $roomId
      * @param string $phone
      * @param string $name
+     * @param string $email
      * @param string $comment
      * @param DateTime $arrivalAt
      * @param DateTime $departureAt
@@ -26,7 +27,7 @@ class Model_Reservation extends Kohana_Model
      *
      * @return string
      */
-    public function addReservation($roomId, \DateTime $arrivalAt, \DateTime $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12, $type, $price = null, $payedStatus = false)
+    public function addReservation($roomId, \DateTime $arrivalAt, \DateTime $departureAt, $phone, $name, $email, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12, $type, $price = null, $payedStatus = false)
     {
         /** @var Model_Mail $mailModel */
         $mailModel = Model::factory('Mail');
@@ -50,6 +51,7 @@ class Model_Reservation extends Kohana_Model
                 'room_id',
                 'customer_phone',
                 'customer_name',
+                'customer_email',
                 'customer_comment',
                 'price',
                 'arrival_at',
@@ -68,6 +70,7 @@ class Model_Reservation extends Kohana_Model
                 $roomId,
                 $phone,
                 $name,
+                $email,
                 $comment,
                 $price ?: $roomData['price'],
                 $arrivalAt->format('Y-m-d H:i:s'),

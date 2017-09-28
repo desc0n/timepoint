@@ -58,36 +58,37 @@ function reserveRoom(roomId) {
         showNotificationModal('Проверьте возможность забронировать в нужный период', 'danger');
         return;
     }
-    if(formIsValid(roomId) === 'errorName') {
+    var validFormResult = formIsValid(roomId);
+    if(validFormResult === 'errorName') {
         showNotificationModal('Заполните поле Имя!', 'danger');
         return;
-    } else if(formIsValid(roomId) === 'errorPhone') {
+    } else if(validFormResult === 'errorPhone') {
         showNotificationModal('Некорректно указан номер телефона!', 'danger');
+        return;
+    } else if(validFormResult === 'errorEmail') {
+        showNotificationModal('Некорректно указан email!', 'danger');
         return;
     }
     var dates = getDates(roomId);
-    $.ajax({url: '/ajax/show_reserve_modal', type: 'POST', data: {roomId: roomId, phone: $('#inputPhone' + roomId).val(), name: $('#inputName' + roomId).val(), comment: $('#inputComment' + roomId).val(), arrivalDate: dates[0], departureDate: dates[1], adult: $('#inputAdult' + roomId).val(), childrenTo2: $('#inputChildrenTo2' + roomId).val(), childrenTo6: $('#inputChildrenTo6' + roomId).val(), childrenTo12: $('#inputChildrenTo12' + roomId).val()}, async: true}).done(function (html) {$('#reservationModal .modal-body').html(html);$('#reservationModal').modal('toggle');});
+    $.ajax({url: '/ajax/show_reserve_modal', type: 'POST', data: {roomId: roomId, phone: $('#inputPhone' + roomId).val(), name: $('#inputName' + roomId).val(), email: $('#inputEmail' + roomId).val(), comment: $('#inputComment' + roomId).val(), arrivalDate: dates[0], departureDate: dates[1], adult: $('#inputAdult' + roomId).val(), childrenTo2: $('#inputChildrenTo2' + roomId).val(), childrenTo6: $('#inputChildrenTo6' + roomId).val(), childrenTo12: $('#inputChildrenTo12' + roomId).val()}, async: true}).done(function (html) {$('#reservationModal .modal-body').html(html);$('#reservationModal').modal('toggle');});
 }
 function formIsValid(roomId) {
-    var phoneReg = /\+7[\d]{10}/;
-    var phone = $('#inputPhone' + roomId).val();
-    if(!phoneReg.test(phone)) {
-        return 'errorPhone';
-    }
-    if($('#inputName' + roomId).val() === '') {
-        return 'errorName';
-    }
+    if(checkPhone($('#inputPhone' + roomId).val()) === 0) {return 'errorPhone';}
+    if(checkEmail($('#inputEmail' + roomId).val()) === 0) {return 'errorEmail';}
+    if($('#inputName' + roomId).val() === '') {return 'errorName';}
     return 'valid';
 }
+function checkPhone(phone) {return parseInt($.ajax({type: 'POST', url: '/ajax/check_phone', async: false, data : {phone:phone}}).responseText);}
+function checkEmail(email) {return parseInt($.ajax({type: 'POST', url: '/ajax/check_email', async: false, data : {email:email}}).responseText);}
 function showNotificationModal(text, style) {
     var html = '<div class="alert alert-' + style + '">' + text + '</div>';
     $('#notificationModal .modal-body').html(html);
     $('#notificationModal').modal('toggle');
 }
-function checkRoomReserve(roomId) {var dates = getDates(roomId);if(dates[0]===dates[1] || new Date(dates[0]) > new Date(dates[1])){showNotificationModal('Некорректно выбран период.', 'danger');$('#notChecked' + roomId).val(0);return;}$.ajax({url: '/ajax/check_room_reserve', type: 'POST', data: {roomId: roomId, arrivalDate: dates[0], departureDate: dates[1]}, async: true}).done(function (response) {if(response === 'free') {showNotificationModal('Бронирование номера доступно.', 'success');$('#notChecked' + roomId).val(1);}else{showNotificationModal('Бронирование номера не доступно.', 'danger');$('#notChecked' + roomId).val(0);}});}
+function checkRoomReserve(roomId){var dates = getDates(roomId);if(dates[0]===dates[1] || new Date(dates[0]) > new Date(dates[1])){showNotificationModal('Некорректно выбран период.', 'danger');$('#notChecked' + roomId).val(0);return;}$.ajax({url: '/ajax/check_room_reserve', type: 'POST', data: {roomId: roomId, arrivalDate: dates[0], departureDate: dates[1]}, async: true}).done(function (response) {if(response === 'free') {showNotificationModal('Бронирование номера доступно.', 'success');$('#notChecked' + roomId).val(1);}else{showNotificationModal('Бронирование номера не доступно.', 'danger');$('#notChecked' + roomId).val(0);}});}
 function notPayedReserveRoom() {
     var roomId = $('#reserveRoomData > #reserveRoomId').val();
-    $.ajax({url: '/ajax/reserve_room', type: 'POST', data: {roomId: roomId, phone: $('#reserveRoomData > #customerPhone').val(), name: $('#reserveRoomData > #customerName').val(), comment: $('#reserveRoomData > #customerComment').val(),arrivalDate: $('#reserveRoomData > #arrivalDate').val(), departureDate: $('#reserveRoomData > #departureDate').val(), adult: $('#reserveRoomData > #adult').val(), childrenTo2: $('#reserveRoomData > #childrenTo2').val(), childrenTo6: $('#reserveRoomData > #childrenTo6').val(), childrenTo12: $('#reserveRoomData > #childrenTo12').val(), type: 'site'}, async: true}).done(function () {$('#reservationModal').modal('toggle');showNotificationModal('Номер успешно забронирован!', 'success');$('#notChecked' + roomId).val(0);});
+    $.ajax({url: '/ajax/reserve_room', type: 'POST', data: {roomId: roomId, phone: $('#reserveRoomData > #customerPhone').val(), name: $('#reserveRoomData > #customerName').val(), email: $('#reserveRoomData > #customerEmail').val(), comment: $('#reserveRoomData > #customerComment').val(),arrivalDate: $('#reserveRoomData > #arrivalDate').val(), departureDate: $('#reserveRoomData > #departureDate').val(), adult: $('#reserveRoomData > #adult').val(), childrenTo2: $('#reserveRoomData > #childrenTo2').val(), childrenTo6: $('#reserveRoomData > #childrenTo6').val(), childrenTo12: $('#reserveRoomData > #childrenTo12').val(), type: 'site'}, async: true}).done(function () {$('#reservationModal').modal('toggle');showNotificationModal('Номер успешно забронирован!', 'success');$('#notChecked' + roomId).val(0);});
 }
 function getDates(roomId){var dateRange = $('#daterange' + roomId).val();return dates = dateRange.split(' - ');}
 function filterRooms() {var dates = getDates('');$('input[name="arrival_date"]').val(dates[0]);$('input[name="departure_date"]').val(dates[1]);$('#filter_form').submit();}

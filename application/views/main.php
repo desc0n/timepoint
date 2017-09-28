@@ -91,6 +91,10 @@ $calendarDepartureDate->modify('- 1 month');
                                     <input type="text" class="form-control" id="inputName<?=$room['room']['id'];?>" placeholder="<?=$templateWords['main']['name'];?>">
                                 </div>
                                 <div class="form-group">
+                                    <label for="inputEmail<?=$room['room']['id'];?>"><?=$templateWords['main']['email'];?> *</label>
+                                    <input type="text" class="form-control" id="inputEmail<?=$room['room']['id'];?>" placeholder="<?=$templateWords['main']['email'];?>">
+                                </div>
+                                <div class="form-group">
                                     <label for="inputComment<?=$room['room']['id'];?>"><?=$templateWords['main']['comment'];?></label>
                                     <textarea id="inputComment<?=$room['room']['id'];?>" class="form-control" rows="3" placeholder="<?=$templateWords['main']['comment'];?>"></textarea>
                                 </div>

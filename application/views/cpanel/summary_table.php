@@ -212,12 +212,16 @@ $pricesRooms = [];
         </div>
         <legend>Данные о бронировании</legend>
         <div class="form-group">
-            <label for="inputPhone">Телефон клиента *</label>
+            <label for="inputPhone">Телефон клиента</label>
             <input type="text" class="form-control" id="inputPhone" placeholder="Телефон клиента в формате +79001234567">
         </div>
         <div class="form-group">
-            <label for="inputName">Имя клиента *</label>
+            <label for="inputName">Имя клиента</label>
             <input type="text" class="form-control" id="inputName" placeholder="Имя клиента">
+        </div>
+        <div class="form-group">
+            <label for="inputEmail">Email</label>
+            <input type="text" class="form-control" id="inputEmail" placeholder="Email">
         </div>
         <div class="form-group">
             <label for="inputComment">Комментарий к бронированию</label>

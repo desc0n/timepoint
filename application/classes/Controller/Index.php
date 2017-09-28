@@ -23,6 +23,7 @@ class Controller_Index extends Controller
                 $departureDate = null;
                 $phone = null;
                 $name = null;
+                $email = '';
                 $comment = '';
                 $adult = 0;
                 $childrenTo2 = 0;
@@ -35,6 +36,7 @@ class Controller_Index extends Controller
                     if ($value['name'] === 'departureAt') $departureDate = new DateTime($value['value']);
                     if ($value['name'] === 'phone') $phone = $value['value'];
                     if ($value['name'] === 'name') $name = $value['value'];
+                    if ($value['name'] === 'email') $email = $value['value'];
                     if ($value['name'] === 'comment') $comment = $value['value'];
                     if ($value['name'] === 'adult') $adult = $value['value'];
                     if ($value['name'] === 'childrenTo2') $childrenTo2 = $value['value'];
@@ -48,6 +50,7 @@ class Controller_Index extends Controller
                     $departureDate,
                     $phone,
                     $name,
+                    $email,
                     $comment,
                     $adult,
                     $childrenTo2,

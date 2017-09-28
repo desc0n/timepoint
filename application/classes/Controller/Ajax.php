@@ -105,6 +105,7 @@ class Controller_Ajax extends Controller
             ->set('departureDate', date('Y-m-d', strtotime($this->request->post('departureDate'))))
             ->set('phone', $this->request->post('phone'))
             ->set('name', $this->request->post('name'))
+            ->set('email', $this->request->post('email'))
             ->set('comment', preg_replace('/["\<\>]+/', '', $this->request->post('comment')))
             ->set('adult', $this->request->post('adult'))
             ->set('childrenTo2', $this->request->post('childrenTo2'))
@@ -132,6 +133,7 @@ class Controller_Ajax extends Controller
             new DateTime($this->request->post('departureDate')),
             $this->request->post('phone'),
             $this->request->post('name'),
+            $this->request->post('email'),
             preg_replace('/["\<\>]+/', '', $this->request->post('comment')),
             (int)$this->request->post('adult'),
             (int)$this->request->post('childrenTo2'),
@@ -206,5 +208,15 @@ class Controller_Ajax extends Controller
         );
 
         $this->response->body(json_encode(['result' => 'success']));
+    }
+
+    public function action_check_phone()
+    {
+        $this->response->body((int)preg_match('/^\+[0-9]{11}+$/', $this->request->post('phone')));
+    }
+
+    public function action_check_email()
+    {
+        $this->response->body((int)preg_match('/^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/', $this->request->post('email')));
     }
 }

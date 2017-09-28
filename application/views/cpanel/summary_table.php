@@ -22,6 +22,8 @@ foreach ($rooms as $room) {
 $statusStyles = [1 => 'active', 2 => 'success', 3 => 'canceled'];
 $resources = ['site' => 'С', 'office' => 'Т', 'booking' => 'Б'];
 $weekDays = [0 => 'вс', 1 => 'пн', 2 => 'вт', 3 => 'ср', 4 => 'чт', 5 => 'пт', 6 => 'сб'];
+$pricesDays = [];
+$pricesRooms = [];
 ?>
 <div class="row">
     <div class="col-lg-12 form-group">
@@ -59,7 +61,10 @@ $weekDays = [0 => 'вс', 1 => 'пн', 2 => 'вт', 3 => 'ср', 4 => 'чт', 5 
     <div class="col-lg-12 form-group">
         <table class="table table-bordered summary-table">
             <tr>
-                <td rowspan="3">Номера</td>
+                <td rowspan="3" class="room-title">
+                    Номера
+                    <i class="fa fa-chevron-circle-down pull-right show-details" data-room="all"></i>
+                </td>
                 <?
                 $yearColspan = 0;
 
@@ -72,6 +77,7 @@ $weekDays = [0 => 'вс', 1 => 'пн', 2 => 'вт', 3 => 'ср', 4 => 'чт', 5 
                 foreach ($summaryTableData as $year => $yearItems) {?>
                     <td class="text-center" colspan="<?=$yearColspan;?>"><?=$year;?></td>
                 <?}?>
+                <td rowspan="3" class="booking-hidden"></td>
             </tr>
             <tr>
                 <?foreach ($summaryTableData as $year => $yearItems) {?>
@@ -102,6 +108,7 @@ $weekDays = [0 => 'вс', 1 => 'пн', 2 => 'вт', 3 => 'ср', 4 => 'чт', 5 
                             <?}?>
                         <?}?>
                     <?}?>
+                    <td rowspan="2" class="booking-hidden booking-hidden-<?=$room['id'];?>"></td>
                 </tr>
                 <tr>
                     <?foreach ($summaryTableData as $year => $yearItems) {?>
@@ -159,11 +166,26 @@ $weekDays = [0 => 'вс', 1 => 'пн', 2 => 'вт', 3 => 'ср', 4 => 'чт', 5 
                                         <?=$price;?>
                                     </td>
                                 <?}?>
+                                <?$pricesDays[$year . '-' . $month . '-' . $day] = isset($pricesDays[$year . '-' . $month . '-' . $day]) ? $pricesDays[$year . '-' . $month . '-' . $day] + $price : $price;?>
+                                <?$pricesRooms[$room['id']] = isset($pricesRooms[$room['id']]) ? $pricesRooms[$room['id']] + $price : $price;?>
                             <?}?>
                         <?}?>
                     <?}?>
+                    <td class="booking-hidden booking-hidden-<?=$room['id'];?>"><?=$pricesRooms[$room['id']];?></td>
                 </tr>
             <?}?>
+            <tr>
+                <td class="booking-hidden">Итого</td>
+                <?foreach ($summaryTableData as $year => $yearItems) {?>
+                    <?foreach ($yearItems as $month => $monthItems) {?>
+                        <?foreach ($monthItems as $day => $dayItems) {?>
+                            <td class="booking-hidden">
+                                <?=$pricesDays[$year . '-' . $month . '-' . $day];?>
+                            </td>
+                        <?}?>
+                    <?}?>
+                <?}?>
+            </tr>
         </table>
     </div>
 </div>

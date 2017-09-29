@@ -59,17 +59,18 @@ function reserveRoom(roomId) {
         return;
     }
     var validFormResult = formIsValid(roomId);
-    if(validFormResult === 'errorName') {
-        showNotificationModal('Заполните поле Имя!', 'danger');
-        return;
-    } else if(validFormResult === 'errorPhone') {
-        showNotificationModal('Некорректно указан номер телефона!', 'danger');
-        return;
-    } else if(validFormResult === 'errorEmail') {
-        showNotificationModal('Некорректно указан email!', 'danger');
-        return;
-    }
     var dates = getDates(roomId);
+
+    if(validFormResult === 'errorName') {
+        showNotificationModal('Заполните поле Имя!', 'danger');return;
+    } else if(validFormResult === 'errorPhone') {
+        showNotificationModal('Некорректно указан номер телефона!', 'danger');return;
+    } else if(validFormResult === 'errorEmail') {
+        showNotificationModal('Некорректно указан email!', 'danger');return;
+    } else if(dates[0] === dates[1]) {
+        showNotificationModal('Некорректно выбран период.', 'danger');$('#notChecked' + roomId).val(0);return;
+    }
+
     $.ajax({url: '/ajax/show_reserve_modal', type: 'POST', data: {roomId: roomId, phone: $('#inputPhone' + roomId).val(), name: $('#inputName' + roomId).val(), email: $('#inputEmail' + roomId).val(), comment: $('#inputComment' + roomId).val(), arrivalDate: dates[0], departureDate: dates[1], adult: $('#inputAdult' + roomId).val(), childrenTo2: $('#inputChildrenTo2' + roomId).val(), childrenTo6: $('#inputChildrenTo6' + roomId).val(), childrenTo12: $('#inputChildrenTo12' + roomId).val()}, async: true}).done(function (html) {$('#reservationModal .modal-body').html(html);$('#reservationModal').modal('toggle');});
 }
 function formIsValid(roomId) {

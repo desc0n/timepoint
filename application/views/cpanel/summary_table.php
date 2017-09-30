@@ -5,6 +5,7 @@ $reservationModel = Model::factory('Reservation');
 /** @var Model_Room $roomModel */
 $roomModel = Model::factory('Room');
 
+$adminRole = Auth::instance()->logged_in('admin');
 $today = new \DateTime();
 $calendarToday = clone $today;
 $calendarToday = $calendarToday->modify('- 1 month');
@@ -77,7 +78,9 @@ $pricesRooms = [];
                 foreach ($summaryTableData as $year => $yearItems) {?>
                     <td class="text-center" colspan="<?=$yearColspan;?>"><?=$year;?></td>
                 <?}?>
+                <?if($adminRole){?>
                 <td rowspan="3" class="booking-hidden"></td>
+                <?}?>
             </tr>
             <tr>
                 <?foreach ($summaryTableData as $year => $yearItems) {?>
@@ -147,7 +150,7 @@ $pricesRooms = [];
                         <?foreach ($yearItems as $month => $monthItems) {?>
                             <?foreach ($monthItems as $day => $dayItems) {?>
                                 <?$price = !empty($dayItems[$room['id']]) ? $dayItems[$room['id']]['price'] : $reservationModel->findRoomPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?>
-                                <?if(Auth::instance()->logged_in('admin')) {?>
+                                <?if($adminRole) {?>
                                 <?
                                 $popoverTitle = 'Изменение стоимости номера';
                                 $popoverContent = "<div class='booking-data-popover'>";
@@ -171,9 +174,13 @@ $pricesRooms = [];
                             <?}?>
                         <?}?>
                     <?}?>
+                    <?if($adminRole){?>
                     <td class="booking-hidden booking-hidden-<?=$room['id'];?>"><?=$pricesRooms[$room['id']];?></td>
+                    <?}?>
                 </tr>
             <?}?>
+            <?if($adminRole){?>
+            <?$amount = 0;?>
             <tr>
                 <td class="booking-hidden">Итого</td>
                 <?foreach ($summaryTableData as $year => $yearItems) {?>
@@ -181,11 +188,14 @@ $pricesRooms = [];
                         <?foreach ($monthItems as $day => $dayItems) {?>
                             <td class="booking-hidden">
                                 <?=$pricesDays[$year . '-' . $month . '-' . $day];?>
+                                <?$amount += $pricesDays[$year . '-' . $month . '-' . $day];?>
                             </td>
                         <?}?>
                     <?}?>
                 <?}?>
+                <td><?=$amount;?></td>
             </tr>
+            <?}?>
         </table>
     </div>
 </div>
@@ -255,7 +265,7 @@ $pricesRooms = [];
             <button type="button" class="btn btn-primary" onclick="reserveRoom();">Забронировать</button>
         </div>
     </div>
-    <?if(Auth::instance()->logged_in('admin')) {?>
+    <?if($adminRole) {?>
     <div class="well col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <legend>Назначение цен</legend>
         <legend>Выбор номера</legend>

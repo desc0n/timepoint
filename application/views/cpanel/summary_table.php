@@ -193,7 +193,7 @@ $pricesRooms = [];
                         <?}?>
                     <?}?>
                 <?}?>
-                <td><?=$amount;?></td>
+                <td class="booking-hidden"><?=$amount;?></td>
             </tr>
             <?}?>
         </table>

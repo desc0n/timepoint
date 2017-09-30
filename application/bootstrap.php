@@ -160,6 +160,14 @@ Route::set('page', 'page/<slug>',[
 		'action'     => 'page',
 	])
 ;
+Route::set('canceled_booking', 'canceled_booking/<orderId>',[
+	'slug' =>'[0-9a-z_]+',
+])
+	->defaults([
+		'controller' => 'index',
+		'action'     => 'canceled_booking',
+	])
+;
 
 Route::set('default', '(<controller>(/<action>(/<id>)))',array('id' =>'[0-9a-z_]+'))
 	->defaults(array(

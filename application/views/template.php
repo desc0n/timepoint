@@ -362,6 +362,13 @@ $calendarDepartureDate->modify('- 1 month');
         showNotificationModal('Ошибка оплаты. Номер не забронирован!', 'danger');
         <?}?>
         <?}?>
+        <?if(isset($paymentReturn)){?>
+        <?if($paymentReturn === 'success') {?>
+        showNotificationModal('Бронирование отменено. Ожидайте возврат денежных средств на карту!', 'success');
+        <?} else{?>
+        showNotificationModal('Ошибка отмены бронирования. Попробуйте повторить отмену или свяжитесь с администратором отеля!', 'danger');
+        <?}?>
+        <?}?>
     });
 </script>
 </body>

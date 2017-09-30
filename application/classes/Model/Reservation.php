@@ -9,6 +9,11 @@ class Model_Reservation extends Kohana_Model
         'site' => 'Сайт',
     ];
 
+    public function __construct()
+    {
+        date_default_timezone_set('Asia/Vladivostok');
+    }
+
     /**
      * @param int $roomId
      * @param string $phone
@@ -92,6 +97,7 @@ class Model_Reservation extends Kohana_Model
             $message .= '<div><strong>Период бронирования: </strong>' . $arrivalAt->format('d.m.Y') . ' - ' . $departureAt->format('d.m.Y') . '</div>';
             $message .= '<div><strong>Клиент: </strong>' . $name . '</div>';
             $message .= '<div><strong>Номер телефона: </strong>' . $phone . '</div>';
+            $message .= '<div><strong>E-mail: </strong>' . $email . '</div>';
             $message .= '<div><strong>Взрослых: </strong>' . $adult . '</div>';
             $message .= '<div><strong>Детей до 2 лет: </strong>' . $childrenTo2 . '</div>';
             $message .= '<div><strong>Детей до 6 лет: </strong>' . $childrenTo6 . '</div>';
@@ -100,6 +106,22 @@ class Model_Reservation extends Kohana_Model
             $mailModel->send('site@vladpointhotel.ru', 'descon@bk.ru', 'Запрос на бронирование', $message);
             $mailModel->send('site@vladpointhotel.ru', 'vladpointhotel@mail.ru', 'Запрос на бронирование', $message);
             $mailModel->send('site@vladpointhotel.ru', 'pvr2569@mail.ru', 'Запрос на бронирование', $message);
+
+            $message = '<div><h3>Здравствуйте. Спасибо, что выбрали наш отель.</h3></div>';
+            $message .= '<div><h4>Детали Вашего бронирования:</h4></div><br /><br />';
+            $message .= '<div><strong>Номер: </strong>' . $roomData['title'] . '</div>';
+            $message .= '<div><strong>Статус оплаченности: </strong>' . ($payedStatus ? 'оплачено' : 'не оплачено') . '</div>';
+            $message .= '<div><strong>Период бронирования: </strong>' . $arrivalAt->format('d.m.Y') . ' - ' . $departureAt->format('d.m.Y') . '</div>';
+            $message .= '<div><strong>Клиент: </strong>' . $name . '</div>';
+            $message .= '<div><strong>Номер телефона: </strong>' . $phone . '</div>';
+            $message .= '<div><strong>Взрослых: </strong>' . $adult . '</div>';
+            $message .= '<div><strong>Детей до 2 лет: </strong>' . $childrenTo2 . '</div>';
+            $message .= '<div><strong>Детей до 6 лет: </strong>' . $childrenTo6 . '</div>';
+            $message .= '<div><strong>Детей до 12 лет: </strong>' . $childrenTo12 . '</div>';
+            $message .= '<div><strong>Комментарий: </strong>' . $comment . '</div><br /><br />';
+            $message .= '<div><strong>Для отмены бронирования, перейдите по ссылке: </strong><a href="http://' . $_SERVER['HTTP_HOST'] . '/canceled_booking/' . $orderId . '">http://' . $_SERVER['HTTP_HOST'] . '/canceled_booking/' . $orderId . '</a></div><br /><br />';
+            $mailModel->send('site@vladpointhotel.ru', 'descon@bk.ru', 'Запрос на бронирование', $message);
+            $mailModel->send('site@vladpointhotel.ru', $email, 'Информация о бронировании', $message);
         }
 
         return json_encode(['result' => 'success']);
@@ -435,19 +457,21 @@ class Model_Reservation extends Kohana_Model
     /**
      * @param string $orderId
      * @param string $acquiringOrderId
+     * @param int $amount
      *
      */
-    public function setAcquiringOrderData($orderId, $acquiringOrderId) {
+    public function setAcquiringOrderData($orderId, $acquiringOrderId, $amount) {
         DB::query(Database::INSERT,
             '
-                  INSERT INTO reservations__acquiring_data (`order_id`, `acquiring_order_id`)
-                  VALUES(:orderId, :acquiringOrderId)
-                  ON DUPLICATE KEY UPDATE `acquiring_order_id` = :acquiringOrderId
+                  INSERT INTO reservations__acquiring_data (`order_id`, `acquiring_order_id`, `amount`)
+                  VALUES(:orderId, :acquiringOrderId, :amount)
+                  ON DUPLICATE KEY UPDATE `acquiring_order_id` = :acquiringOrderId, `amount` = :amount
                 '
         )
             ->parameters([
                 ':orderId' => $orderId,
-                ':acquiringOrderId' => $acquiringOrderId
+                ':acquiringOrderId' => $acquiringOrderId,
+                ':amount' => $amount
             ])
             ->execute()
         ;
@@ -466,5 +490,43 @@ class Model_Reservation extends Kohana_Model
             ->execute()
             ->current()
         ;
+    }
+
+    /**
+     * @param string $orderId
+     * @return string
+     */
+    public function returnPayment($orderId)
+    {
+        /** @var $contentModel Model_Content */
+        $contentModel = Model::factory('Content');
+
+        $now = new DateTime();
+        $check2Hours = clone $now;
+        $check2Hours->modify('-2 hour');
+        $check7Days = clone $now;
+        $check7Days->modify('+7 day');
+        $bookingData = $this->findBookingByOrderId($orderId);
+        $acquiringOrderData = $this->getAcquiringOrderData($orderId);
+        $createdAt = new DateTime($bookingData['created_at']);
+        $arrivalAt = new DateTime($bookingData['arrival_at']);
+        $amount = $acquiringOrderData['amount'];
+
+        if ($check7Days > $arrivalAt && $check2Hours > $createdAt) {
+            $amount = $acquiringOrderData['amount'] / 2;
+        }
+
+        $response = $contentModel->refundOrder($acquiringOrderData['acquiring_order_id'], (int)$amount);
+        if ((int)Arr::get($response, 'errorCode') === 0){
+            DB::update('reservations__acquiring_data')
+                ->set(['status' => 'returned'])
+                ->where('order_id', '=', $orderId)
+                ->execute()
+            ;
+
+            return 'success';
+        }
+
+        return 'fail';
     }
 }

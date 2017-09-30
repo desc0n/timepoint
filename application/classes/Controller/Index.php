@@ -2,19 +2,38 @@
 
 class Controller_Index extends Controller
 {
+    /** @var Model_Content */
+    private $contentModel;
+
+    /** @var  Model_Reservation */
+    private $reservationModel;
+
+    /** @var  Model_Room */
+    private $roomModel;
+
+    /** @var  Model_Admin */
+    private $adminModel;
+
+    public function __construct(Request $request, Response $response)
+    {
+        parent::__construct($request, $response);
+        $this->contentModel = Model::factory('Content');
+        $this->reservationModel = Model::factory('Reservation');
+        $this->roomModel = Model::factory('Room');
+        $this->adminModel = Model::factory('Admin');
+    }
+
 	public function action_index()
 	{
-        /** @var $contentModel Model_Content */
-        $contentModel = Model::factory('Content');
-
-        /** @var Model_Reservation $reservationModel */
-        $reservationModel = Model::factory('Reservation');
-
         View::set_global('title', 'Главная');
         View::set_global('rootPage', 'main');
 
+        if($this->request->query('paymentReturn')) {
+            View::set_global('paymentReturn', $this->request->query('paymentReturn'));
+        }
+
         if ($this->request->query('booking') === 'success' && $this->request->query('orderId')) {
-            $extendedStatus = $contentModel->getOrderStatusExtended($this->request->query('orderId'));
+            $extendedStatus = $this->contentModel->getOrderStatusExtended($this->request->query('orderId'));
 
             if ((int)Arr::get($extendedStatus, 'errorCode') === 0 && (int)Arr::get($extendedStatus, 'actionCode') === 0) {
                 $amount = $extendedStatus['amount'] / 100;
@@ -44,7 +63,7 @@ class Controller_Index extends Controller
                     if ($value['name'] === 'childrenTo12') $childrenTo12 = $value['value'];
                 }
 
-                $reservationModel->addReservation(
+                $this->reservationModel->addReservation(
                     $roomId,
                     $arrivalDate,
                     $departureDate,
@@ -65,7 +84,7 @@ class Controller_Index extends Controller
             }
         }
 
-		$template = $contentModel->getBaseTemplate('main', 'ru');
+		$template = $this->contentModel->getBaseTemplate('main', 'ru');
         
 		$this->response->body($template);
 	}
@@ -78,7 +97,7 @@ class Controller_Index extends Controller
         View::set_global('title', 'Новости');
         View::set_global('rootPage', 'news');
 
-		$template = $contentModel->getBaseTemplate('news', 'ru');
+		$template = $this->contentModel->getBaseTemplate('news', 'ru');
 
 		$this->response->body($template);
 	}
@@ -91,17 +110,14 @@ class Controller_Index extends Controller
         View::set_global('title', 'Информация');
         View::set_global('rootPage', 'info');
 
-		$template = $contentModel->getBaseTemplate('info', 'ru');
+		$template = $this->contentModel->getBaseTemplate('info', 'ru');
 
 		$this->response->body($template);
 	}
 
 	public function action_payment_form()
 	{
-        /** @var $contentModel Model_Content */
-        $contentModel = Model::factory('Content');
-
-        $formUrl = $contentModel->getPayedForm(
+        $formUrl = $this->contentModel->getPayedForm(
             (int)$this->request->post('roomId'),
             new DateTime($this->request->post('arrivalDate')),
             new DateTime($this->request->post('departureDate')),
@@ -114,5 +130,22 @@ class Controller_Index extends Controller
             (int)$this->request->post('childrenTo12')
         );
         HTTP::redirect($formUrl ?: '/?booking=fail');
+	}
+
+	public function action_canceled_booking()
+	{
+        $orderId = $this->request->param('orderId');
+        $bookingData = $this->reservationModel->findBookingByOrderId($orderId);
+        $link = '/';
+
+        if ($bookingData) {
+            $this->reservationModel->canceledBooking((int)$bookingData['id']);
+            $acquiringOrderData = $this->reservationModel->getAcquiringOrderData($orderId);
+
+            if ($acquiringOrderData && $acquiringOrderData['status'] === 'completed') {
+                $link = '/?paymentReturn=' . $this->reservationModel->returnPayment($orderId);
+            }
+        }
+        HTTP::redirect($link);
 	}
 }

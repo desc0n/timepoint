@@ -8,8 +8,9 @@ class Model_Admin extends Kohana_Model
 
 	private $user_id;
 
-	public function __construct()
-	{
+    public function __construct()
+    {
+        date_default_timezone_set('Asia/Vladivostok');
 		if (Auth::instance()->logged_in()) {
 			$this->user_id = Auth::instance()->get_user()->id;
 		} else {

@@ -26,6 +26,7 @@ class Model_Mail extends Kohana_Model
 
     public function __construct()
     {
+        date_default_timezone_set('Asia/Vladivostok');
         $this->options = Arr::get(Kohana::$config->load('email')->as_array(), 'options', []);
     }
 

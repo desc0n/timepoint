@@ -9,6 +9,11 @@ class Model_Room extends Kohana_Model
 
     public $roomsGuests = [1 => 1, 2 => 2, 3 => 3, 4 => 4];
 
+    public function __construct()
+    {
+        date_default_timezone_set('Asia/Vladivostok');
+    }
+
     /**
      * @param int $page
      * @param int $limit

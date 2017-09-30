@@ -91,6 +91,11 @@ class Model_Content extends Kohana_Model
     ];
     private $contactTypes = ['address' => 'Адрес', 'phone' => 'Телефон', 'email' => 'E-mail'];
 
+    public function __construct()
+    {
+        date_default_timezone_set('Asia/Vladivostok');
+    }
+
     /**
      * @return array
      */
@@ -536,7 +541,7 @@ class Model_Content extends Kohana_Model
             return null;
         }
 
-        $reservationModel->setAcquiringOrderData($reservationModel->getBookingOrder($roomId, $phone, $arrivalAt, $departureAt), $apiContent['orderId']);
+        $reservationModel->setAcquiringOrderData($reservationModel->getBookingOrder($roomId, $phone, $arrivalAt, $departureAt), $apiContent['orderId'], (int)($reservationModel->findAllPeriodPrice($roomId, $arrivalAt, $departureAt) * 100));
         return $link . $apiContent['orderId'];
     }
 
@@ -568,6 +573,22 @@ class Model_Content extends Kohana_Model
             'orderId' => $orderId,
         ];
         $response = $this->getSberbankRequest('https://securepayments.sberbank.ru/payment/rest/getOrderStatusExtended.do', $variables);
+
+        return $response === null ? null : json_decode($response, true);
+    }
+
+    /**
+     * @param string $orderId
+     * @param int $amount
+     * @return mixed|null
+     */
+    public function refundOrder($orderId, $amount)
+    {
+        $variables = [
+            'orderId' => $orderId,
+            'amount' => $amount,
+        ];
+        $response = $this->getSberbankRequest('https://securepayments.sberbank.ru/payment/rest/refund.do', $variables);
 
         return $response === null ? null : json_decode($response, true);
     }

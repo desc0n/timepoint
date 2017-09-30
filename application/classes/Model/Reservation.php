@@ -190,6 +190,17 @@ class Model_Reservation extends Kohana_Model
                                     ->limit(1) .
                                 '), r.price)'),
                             'price'
+                        ],
+                        [
+                            DB::expr(
+                                'IFNULL((' .
+                                DB::select('manager_price')
+                                    ->from('reservations__reservation_prices')
+                                    ->where('room_id', '=', DB::expr('r.id'))
+                                    ->and_where('date_at', '=', $sqlDate)
+                                    ->limit(1) .
+                                '), r.price)'),
+                            'manager_price'
                         ]
                     )
                     ->from(['reservations__reservations', 'rr'])
@@ -350,6 +361,35 @@ class Model_Reservation extends Kohana_Model
                 'INSERT INTO reservations__reservation_prices (`room_id`, `price`, `date_at`) 
                 VALUES (:roomId, :price, :date)
                 ON DUPLICATE KEY UPDATE `price` = :price
+            ')
+                ->parameters([
+                    ':roomId' => $roomId,
+                    ':price' => $price,
+                    ':date' => $firstTime->format('Y-m-d')
+                ])
+                ->execute()
+            ;
+
+            $firstTime->modify('+ 1 day');
+        }
+    }
+
+    /**
+     * @param int $roomId
+     * @param DateTime $firstDate
+     * @param DateTime $lastDate
+     * @param int $price
+     */
+    public function setManagerPrice($roomId, DateTime $firstDate, DateTime $lastDate, $price)
+    {
+        $firstTime = clone $firstDate;
+        $lastTime = clone $lastDate;
+
+        while ($firstTime <= $lastTime) {
+            DB::query(Database::INSERT,
+                'INSERT INTO reservations__reservation_prices (`room_id`, `manager_price`, `date_at`) 
+                VALUES (:roomId, :price, :date)
+                ON DUPLICATE KEY UPDATE `manager_price` = :price
             ')
                 ->parameters([
                     ':roomId' => $roomId,

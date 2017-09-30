@@ -189,6 +189,17 @@ class Controller_Ajax extends Controller
         $this->response->body(json_encode(['result' => 'success']));
     }
 
+    public function action_set_manager_price()
+    {
+        $this->reservationModel->setManagerPrice(
+            (int)$this->request->post('roomId'),
+            new DateTime($this->request->post('firstDate')),
+            new DateTime($this->request->post('lastDate')),
+            (int)$this->request->post('price')
+        );
+        $this->response->body(json_encode(['result' => 'success']));
+    }
+
     public function action_change_booking()
     {
         $this->reservationModel->changeBooking(

@@ -23,7 +23,9 @@ foreach ($rooms as $room) {
 $statusStyles = [1 => 'active', 2 => 'success', 3 => 'canceled'];
 $resources = ['site' => 'С', 'office' => 'Т', 'booking' => 'Б'];
 $weekDays = [0 => 'вс', 1 => 'пн', 2 => 'вт', 3 => 'ср', 4 => 'чт', 5 => 'пт', 6 => 'сб'];
+$managerPricesDays = [];
 $pricesDays = [];
+$managerPricesRooms = [];
 $pricesRooms = [];
 ?>
 <div class="row">
@@ -100,7 +102,7 @@ $pricesRooms = [];
             </tr>
             <?foreach ($rooms as $room) {?>
                 <tr>
-                    <td rowspan="3" class="room-title">
+                    <td rowspan="4" class="room-title">
                         <?=$room['title'];?>
                         <i class="fa fa-chevron-circle-down pull-right show-details" data-room="<?=$room['id'];?>"></i>
                     </td>
@@ -144,6 +146,31 @@ $pricesRooms = [];
                             <?}?>
                         <?}?>
                     <?}?>
+                </tr>
+                <tr>
+                    <?foreach ($summaryTableData as $year => $yearItems) {?>
+                        <?foreach ($yearItems as $month => $monthItems) {?>
+                            <?foreach ($monthItems as $day => $dayItems) {?>
+                                <?$managerPrice = !empty($dayItems[$room['id']]) ? ((int)$dayItems[$room['id']]['manager_price'] ?: $dayItems[$room['id']]['price']) : $reservationModel->findRoomPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?>
+                                <?
+                                $popoverTitle = 'Изменение стоимости номера';
+                                $popoverContent = "<div class='booking-data-popover'>";
+                                $popoverContent .= "<div><div class='input-group'>";
+                                $popoverContent .= "<input id='newRoomManagerPrice" . $room['id'] . "' type='text' value='" . $managerPrice . "' class='form-control'>";
+                                $popoverContent .= "<span class='input-group-btn'><button class='btn btn-success' onclick='changeRoomManagerPrice(" . $room['id'] . ");'><i class='glyphicon glyphicon-ok'></i></button></span>";
+                                $popoverContent .= '</div></div>';
+                                $popoverContent .= "<input type='hidden' id='newRoomManagerPriceDate" . $room['id'] . "' value='" . $year . "-" . $month . "-" . $day . "'>";
+                                $popoverContent .= '</div>';
+                                ?>
+                                <td class="text-right alert-danger booking-hidden booking-hidden-<?=$room['id'];?>">
+                                    <div class="booking-price-change" data-trigger="click" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="<?=$popoverTitle;?>"><?=$managerPrice;?></div>
+                                </td>
+                                <?$managerPricesDays[$year . '-' . $month . '-' . $day] = isset($managerPricesDays[$year . '-' . $month . '-' . $day]) ? $managerPricesDays[$year . '-' . $month . '-' . $day] + $managerPrice : $managerPrice;?>
+                                <?$managerPricesRooms[$room['id']] = isset($managerPricesRooms[$room['id']]) ? $managerPricesRooms[$room['id']] + $managerPrice : $managerPrice;?>
+                            <?}?>
+                        <?}?>
+                    <?}?>
+                    <td class="booking-hidden booking-hidden-<?=$room['id'];?>"><?=$managerPricesRooms[$room['id']];?></td>
                 </tr>
                 <tr>
                     <?foreach ($summaryTableData as $year => $yearItems) {?>

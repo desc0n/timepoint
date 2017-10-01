@@ -91,9 +91,13 @@ class Model_Content extends Kohana_Model
     ];
     private $contactTypes = ['address' => 'Адрес', 'phone' => 'Телефон', 'email' => 'E-mail'];
 
+    /** @var array  */
+    private $acquiringSettings;
+
     public function __construct()
     {
         date_default_timezone_set('Asia/Vladivostok');
+        $this->acquiringSettings = Kohana::$config->load('acquiring')->as_array();
     }
 
     /**
@@ -597,9 +601,9 @@ class Model_Content extends Kohana_Model
     {
         $arguments = [
             'returnUrl' => 'http://' . $_SERVER['HTTP_HOST'] . '/?booking=success',
-            'userName' => 'vladpoint-api',
-            'password' => 'k190dX+gKUlM',
-            'token' => 'tg0apdfacf1smq3ut0lfnu868l'
+            'userName' => $this->acquiringSettings['userName'],
+            'password' => $this->acquiringSettings['password'],
+            'token' => $this->acquiringSettings['token']
         ];
 
         $params = $arguments + $variables;

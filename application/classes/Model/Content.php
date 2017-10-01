@@ -508,6 +508,7 @@ class Model_Content extends Kohana_Model
      * @param DateTime $departureAt
      * @param string $phone
      * @param string $name
+     * @param string $email
      * @param string $comment
      * @param string $adult
      * @param string $childrenTo2
@@ -522,6 +523,7 @@ class Model_Content extends Kohana_Model
         DateTime $departureAt,
         $phone,
         $name,
+        $email,
         $comment,
         $adult,
         $childrenTo2,
@@ -539,7 +541,7 @@ class Model_Content extends Kohana_Model
             return $link . $acquiringData['acquiring_order_id'];
         }
 
-        $apiContent = $this->registerOrder($roomId, $arrivalAt, $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12);
+        $apiContent = $this->registerOrder($roomId, $arrivalAt, $departureAt, $phone, $name, $email, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12);
 
         if (!$apiContent || !empty($apiContent['errorCode'])) {
             return null;
@@ -549,7 +551,7 @@ class Model_Content extends Kohana_Model
         return $link . $apiContent['orderId'];
     }
 
-    public function registerOrder($roomId, DateTime $arrivalAt, DateTime $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12)
+    public function registerOrder($roomId, DateTime $arrivalAt, DateTime $departureAt, $phone, $name, $email, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12)
     {
         /** @var Model_Reservation $reservationModel */
         $reservationModel = Model::factory('Reservation');
@@ -560,7 +562,7 @@ class Model_Content extends Kohana_Model
             'language' => 'ru',
             'description' => '# ' . $roomId,
             'orderNumber' => $reservationModel->getBookingOrder($roomId, $phone, $arrivalAt, $departureAt),
-            'jsonParams' => json_encode(['roomId' => $roomId, 'arrivalAt' => $arrivalAt->format('Y-m-d H:i:s'), 'departureAt' => $departureAt->format('Y-m-d H:i:s'), 'phone' => $phone, 'name' => $name, 'comment' => $comment, 'adult' => $adult, 'childrenTo2' => $childrenTo2, 'childrenTo6' => $childrenTo6, 'childrenTo12' => $childrenTo12])
+            'jsonParams' => json_encode(['roomId' => $roomId, 'arrivalAt' => $arrivalAt->format('Y-m-d H:i:s'), 'departureAt' => $departureAt->format('Y-m-d H:i:s'), 'phone' => $phone, 'name' => $name, 'email' => $email, 'comment' => $comment, 'adult' => $adult, 'childrenTo2' => $childrenTo2, 'childrenTo6' => $childrenTo6, 'childrenTo12' => $childrenTo12])
         ];
         $response = $this->getSberbankRequest('https://securepayments.sberbank.ru/payment/rest/register.do', $variables);
 

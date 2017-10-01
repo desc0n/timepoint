@@ -123,6 +123,7 @@ class Controller_Index extends Controller
             new DateTime($this->request->post('departureDate')),
             $this->request->post('phone'),
             $this->request->post('name'),
+            $this->request->post('email'),
             preg_replace('/["\<\>]+/', '', $this->request->post('comment')),
             (int)$this->request->post('adult'),
             (int)$this->request->post('childrenTo2'),

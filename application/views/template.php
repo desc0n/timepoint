@@ -351,7 +351,7 @@ $calendarDepartureDate->modify('- 1 month');
         </div>
     </div>
 </div>
-<script src="/public/js/scripts.js?v=290920172118"></script>
+<script src="/public/js/scripts.js?v=011020172055"></script>
 <script>
     $(document).ready(function () {
         writeNightCount(<?=$nightCount;?>, '');

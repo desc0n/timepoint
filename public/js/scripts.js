@@ -43,6 +43,9 @@ $(document).ready(function () {
     $('.datepicker-toggler').click(function() {
         $("#" + $(this).data('target')).focus();
     });
+    $('#notificationModal').on('hidden.bs.modal', function (e) {
+        $('.modal').css('overflow-y', 'auto');
+    })
 });
 
 function changeMapSrc(src) {

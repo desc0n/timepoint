@@ -302,6 +302,43 @@ class Model_Reservation extends Kohana_Model
     }
 
     /**
+     * @param int $id
+     * @param DateTime $firstDate
+     * @param DateTime $lastDate
+     * @return int
+     */
+    public function findRoomManagerPriceByIdAndDate($id, DateTime $firstDate, DateTime $lastDate)
+    {
+        /** @var Model_Room $roomModel */
+        $roomModel = Model::factory('Room');
+
+        $roomData = $roomModel->findById($id);
+        $price = (int)$roomData['price'];
+        $reservationPrice = 0;
+        $firstTime = clone $firstDate;
+        $lastTime = clone $lastDate;
+
+        while ($firstTime <= $lastTime) {
+            $reservationPriceData = DB::select(DB::expr('IF(manager_price = 0, price, manager_price) as manager_price'))
+                ->from('reservations__reservation_prices')
+                ->where('room_id', '=', $id)
+                ->and_where('date_at', '=', $firstTime->format('Y-m-d'))
+                ->limit(1)
+                ->execute()
+                ->current()
+            ;
+
+            if ($reservationPriceData && (!$reservationPrice || (int)$reservationPriceData['manager_price'] < $reservationPrice)) {
+                $reservationPrice = (int)$reservationPriceData['manager_price'];
+            }
+
+            $firstTime->modify('+ 1 day');
+        }
+
+        return $reservationPrice ?: $price;
+    }
+
+    /**
      * @param int $roomId
      * @param DateTime $firstDate
      * @param DateTime $lastDate

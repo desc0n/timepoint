@@ -472,3 +472,9 @@ body {
     width: 400px!important;
     max-width: 400px!important;
 }
+.manager-prices{
+    background-color: #e0f4fe;
+}
+.manager-prices div{
+    color: #000;
+}

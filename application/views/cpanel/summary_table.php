@@ -12,6 +12,7 @@ $calendarToday = $calendarToday->modify('- 1 month');
 $tomorrow = clone $today;
 $tomorrow->modify('+ 1 day');
 $firstDate = new DateTime(date('Y-m-d', strtotime(Arr::get($get, 'first_date', $today->format('d.m.Y')))));
+$lastDate = new DateTime(date('Y-m-d', strtotime(Arr::get($get, 'last_date', $today->format('d.m.Y')))));
 
 $rooms = $roomModel->findAll(null, null);
 $selectionRooms = [];
@@ -44,14 +45,19 @@ $pricesRooms = [];
     <div class="col-lg-12 form-group">
         <form id="summaryTableForm">
             <div class="col-lg-5">
-                <label for="inputDaysCount">Количество дней</label>
-                <?=Form::select('days_count', [30 => 30, 60 => 60, 90 => 90], Arr::get($get, 'days_count', 30), ['id' => 'inputDaysCount', 'class' => 'form-control']);?>
-            </div>
-            <div class="col-lg-5">
                 <label for="firstDate">Начальная дата</label>
                 <div class='input-group date'>
                     <input id="firstDate" name="first_date" type="text" value="<?=$firstDate->format('d.m.Y');?>" class="form-control"/>
                     <span class="input-group-addon datepicker-toggler" data-target="firstDate">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <label for="lastDate">Конечная дата</label>
+                <div class='input-group date'>
+                    <input id="lastDate" name="last_date" type="text" value="<?=$lastDate->format('d.m.Y');?>" class="form-control"/>
+                    <span class="input-group-addon datepicker-toggler" data-target="lastDate">
                         <i class="fa fa-calendar"></i>
                     </span>
                 </div>
@@ -151,7 +157,7 @@ $pricesRooms = [];
                     <?foreach ($summaryTableData as $year => $yearItems) {?>
                         <?foreach ($yearItems as $month => $monthItems) {?>
                             <?foreach ($monthItems as $day => $dayItems) {?>
-                                <?$managerPrice = !empty($dayItems[$room['id']]) ? ((int)$dayItems[$room['id']]['manager_price'] ?: $dayItems[$room['id']]['price']) : $reservationModel->findRoomPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?>
+                                <?$managerPrice = !empty($dayItems[$room['id']]) ? ((int)$dayItems[$room['id']]['manager_price'] ?: $dayItems[$room['id']]['price']) : $reservationModel->findRoomManagerPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?>
                                 <?
                                 $popoverTitle = 'Изменение стоимости номера';
                                 $popoverContent = "<div class='booking-data-popover'>";
@@ -162,15 +168,17 @@ $pricesRooms = [];
                                 $popoverContent .= "<input type='hidden' id='newRoomManagerPriceDate" . $room['id'] . "' value='" . $year . "-" . $month . "-" . $day . "'>";
                                 $popoverContent .= '</div>';
                                 ?>
-                                <td class="text-right alert-danger booking-hidden booking-hidden-<?=$room['id'];?>">
-                                    <div class="booking-price-change" data-trigger="click" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="<?=$popoverTitle;?>"><?=$managerPrice;?></div>
+                                <td class="text-right manager-prices booking-hidden booking-hidden-<?=$room['id'];?>">
+                                    <div id="bookingManagerPriceChange<?=$year;?>-<?=$month;?>-<?=$day;?>" class="booking-price-change" data-trigger="click" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="<?=$popoverTitle;?>"><?=$managerPrice;?></div>
                                 </td>
                                 <?$managerPricesDays[$year . '-' . $month . '-' . $day] = isset($managerPricesDays[$year . '-' . $month . '-' . $day]) ? $managerPricesDays[$year . '-' . $month . '-' . $day] + $managerPrice : $managerPrice;?>
                                 <?$managerPricesRooms[$room['id']] = isset($managerPricesRooms[$room['id']]) ? $managerPricesRooms[$room['id']] + $managerPrice : $managerPrice;?>
                             <?}?>
                         <?}?>
                     <?}?>
+                    <?if($adminRole){?>
                     <td class="booking-hidden booking-hidden-<?=$room['id'];?>"><?=$managerPricesRooms[$room['id']];?></td>
+                    <?}?>
                 </tr>
                 <tr>
                     <?foreach ($summaryTableData as $year => $yearItems) {?>
@@ -189,7 +197,7 @@ $pricesRooms = [];
                                 $popoverContent .= '</div>';
                                 ?>
                                 <td class="text-right alert-danger booking-hidden booking-hidden-<?=$room['id'];?>">
-                                    <div class="booking-price-change" data-trigger="click" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="<?=$popoverTitle;?>"><?=$price;?></div>
+                                    <div id="bookingPriceChange<?=$year;?>-<?=$month;?>-<?=$day;?>" class="booking-price-change" data-trigger="click" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="<?=$popoverTitle;?>"><?=$price;?></div>
                                 </td>
                                 <?} else {?>
                                     <td class="text-right alert-danger booking-hidden booking-hidden-<?=$room['id'];?>">
@@ -206,10 +214,24 @@ $pricesRooms = [];
                     <?}?>
                 </tr>
             <?}?>
-            <?if($adminRole){?>
             <?$amount = 0;?>
+            <?$managerAmount = 0;?>
             <tr>
-                <td class="booking-hidden">Итого</td>
+                <td class="booking-hidden" <?=($adminRole ? 'rowspan="2"' : null);?>>Итого</td>
+                <?foreach ($summaryTableData as $year => $yearItems) {?>
+                    <?foreach ($yearItems as $month => $monthItems) {?>
+                        <?foreach ($monthItems as $day => $dayItems) {?>
+                            <td class="booking-hidden manager-prices">
+                                <div><?=$managerPricesDays[$year . '-' . $month . '-' . $day];?></div>
+                                <?$managerAmount += $managerPricesDays[$year . '-' . $month . '-' . $day];?>
+                            </td>
+                        <?}?>
+                    <?}?>
+                <?}?>
+                <td class="booking-hidden"><?=$managerAmount;?></td>
+                <?if($adminRole){?>
+            </tr>
+            <tr>
                 <?foreach ($summaryTableData as $year => $yearItems) {?>
                     <?foreach ($yearItems as $month => $monthItems) {?>
                         <?foreach ($monthItems as $day => $dayItems) {?>
@@ -220,9 +242,9 @@ $pricesRooms = [];
                         <?}?>
                     <?}?>
                 <?}?>
-                <td class="booking-hidden"><?=$amount;?></td>
+                <td class="booking-hidden alert-danger"><?=$amount;?></td>
+                <?}?>
             </tr>
-            <?}?>
         </table>
     </div>
 </div>
@@ -366,6 +388,9 @@ $pricesRooms = [];
     });
     $( function() {
         $( "#firstDate").datepicker({
+            dateFormat: 'dd.mm.yy'
+        });
+        $( "#lastDate").datepicker({
             dateFormat: 'dd.mm.yy'
         });
     });

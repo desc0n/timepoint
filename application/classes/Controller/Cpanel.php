@@ -351,10 +351,11 @@ class Controller_Cpanel extends Controller
 
         $today = new \DateTime();
         $firstDate = new DateTime(date('Y-m-d', strtotime(Arr::get($this->request->query(), 'first_date', $today->format('d.m.Y')))));
-
+        $lastDate = new DateTime(date('Y-m-d', strtotime(Arr::get($this->request->query(), 'last_date', $today->format('d.m.Y')))));
+        $daysCount = round(($lastDate->getTimestamp() - $firstDate->getTimestamp()) / 86400) + 1;
 
         $template->content = View::factory('cpanel/summary_table')
-            ->set('summaryTableData', $reservationModel->getSummaryTableData($firstDate, Arr::get($this->request->query(), 'days_count', 30)))
+            ->set('summaryTableData', $reservationModel->getSummaryTableData($firstDate, $daysCount))
             ->set('rooms', $roomModel->findAll())
             ->set('get', $this->request->query())
         ;

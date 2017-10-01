@@ -578,6 +578,9 @@ class Model_Reservation extends Kohana_Model
         /** @var $contentModel Model_Content */
         $contentModel = Model::factory('Content');
 
+        /** @var Model_Mail $mailModel */
+        $mailModel = Model::factory('Mail');
+
         $now = new DateTime();
         $check2Hours = clone $now;
         $check2Hours->modify('-2 hour');
@@ -587,6 +590,7 @@ class Model_Reservation extends Kohana_Model
         $acquiringOrderData = $this->getAcquiringOrderData($orderId);
         $createdAt = new DateTime($bookingData['created_at']);
         $arrivalAt = new DateTime($bookingData['arrival_at']);
+        $departureAt = new DateTime($bookingData['departure_at']);
         $amount = $acquiringOrderData['amount'];
 
         if ($check7Days > $arrivalAt && $check2Hours > $createdAt) {
@@ -600,6 +604,13 @@ class Model_Reservation extends Kohana_Model
                 ->where('order_id', '=', $orderId)
                 ->execute()
             ;
+
+            $message = '<div><strong>Номер #' . $bookingData['room_id'] . '</strong></div>';
+            $message .= '<div><strong>Период бронирования: </strong>' . $arrivalAt->format('d.m.Y') . ' - ' . $departureAt->format('d.m.Y') . '</div>';
+            $message .= '<div><strong>Клиент: </strong>' . $bookingData['customer_name'] . '</div>';
+            $message .= '<div><strong>Номер телефона: </strong>' . $bookingData['customer_phone'] . '</div>';
+            $mailModel->send('site@vladpointhotel.ru', 'descon@bk.ru', 'Отмена бронирования', $message);
+            $mailModel->send('site@vladpointhotel.ru', 'pvr2569@mail.ru', 'Отмена бронирования', $message);
 
             return 'success';
         }

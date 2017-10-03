@@ -531,11 +531,11 @@ class Model_Content extends Kohana_Model
         $childrenTo12
         )
     {
-        /** @var Model_Reservation $reservationModel */
-        $reservationModel = Model::factory('Reservation');
+        /** @var Model_Booking $bookingModel */
+        $bookingModel = Model::factory('Booking');
 
         $link = 'https://securepayments.sberbank.ru/payment/merchants/rbs/payment_ru.html?mdOrder=';
-        $acquiringData = $reservationModel->getAcquiringOrderData($reservationModel->getBookingOrder($roomId, $phone, $arrivalAt, $departureAt));
+        $acquiringData = $bookingModel->getAcquiringOrderData($bookingModel->getBookingOrder($roomId, $phone, $arrivalAt, $departureAt));
 
         if($acquiringData) {
             return $link . $acquiringData['acquiring_order_id'];
@@ -547,21 +547,21 @@ class Model_Content extends Kohana_Model
             return null;
         }
 
-        $reservationModel->setAcquiringOrderData($reservationModel->getBookingOrder($roomId, $phone, $arrivalAt, $departureAt), $apiContent['orderId'], (int)($reservationModel->findAllPeriodPrice($roomId, $arrivalAt, $departureAt) * 100));
+        $bookingModel->setAcquiringOrderData($bookingModel->getBookingOrder($roomId, $phone, $arrivalAt, $departureAt), $apiContent['orderId'], (int)($bookingModel->findAllPeriodPrice($roomId, $arrivalAt, $departureAt) * 100));
         return $link . $apiContent['orderId'];
     }
 
     public function registerOrder($roomId, DateTime $arrivalAt, DateTime $departureAt, $phone, $name, $email, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12)
     {
-        /** @var Model_Reservation $reservationModel */
-        $reservationModel = Model::factory('Reservation');
+        /** @var Model_Booking $bookingModel */
+        $bookingModel = Model::factory('Booking');
 
         $variables = [
-            'amount' => $reservationModel->findAllPeriodPrice($roomId, $arrivalAt, $departureAt) * 100,
+            'amount' => $bookingModel->findAllPeriodPrice($roomId, $arrivalAt, $departureAt) * 100,
             'currency' => '',
             'language' => 'ru',
             'description' => '# ' . $roomId,
-            'orderNumber' => $reservationModel->getBookingOrder($roomId, $phone, $arrivalAt, $departureAt),
+            'orderNumber' => $bookingModel->getBookingOrder($roomId, $phone, $arrivalAt, $departureAt),
             'jsonParams' => json_encode(['roomId' => $roomId, 'arrivalAt' => $arrivalAt->format('Y-m-d H:i:s'), 'departureAt' => $departureAt->format('Y-m-d H:i:s'), 'phone' => $phone, 'name' => $name, 'email' => $email, 'comment' => $comment, 'adult' => $adult, 'childrenTo2' => $childrenTo2, 'childrenTo6' => $childrenTo6, 'childrenTo12' => $childrenTo12])
         ];
         $response = $this->getSberbankRequest('https://securepayments.sberbank.ru/payment/rest/register.do', $variables);

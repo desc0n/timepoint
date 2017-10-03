@@ -1,6 +1,6 @@
 <?php
-/** @var $reservationModel Model_Reservation */
-$reservationModel = Model::factory('Reservation');
+/** @var $bookingModel Model_Booking */
+$bookingModel = Model::factory('Booking');
 ?>
 <div class="row">
     <div class="col-lg-12">
@@ -31,7 +31,7 @@ $reservationModel = Model::factory('Reservation');
             <?foreach ($listData as $data) {?>
                 <tr>
                     <td><?=$data['title'];?></td>
-                    <td><?=$reservationModel->formatDate($data['arrival_at']);?> - <?=$reservationModel->formatDate($data['departure_at']);?></td>
+                    <td><?=$bookingModel->formatDate($data['arrival_at']);?> - <?=$bookingModel->formatDate($data['departure_at']);?></td>
                     <td><?=((boolean)$data['payed'] ? 'оплачено' : 'не оплачено');?></td>
                     <td><?=$data['customer_name'];?></td>
                     <td><?=$data['customer_phone'];?></td>

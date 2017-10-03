@@ -5,8 +5,8 @@ class Controller_Index extends Controller
     /** @var Model_Content */
     private $contentModel;
 
-    /** @var  Model_Reservation */
-    private $reservationModel;
+    /** @var  Model_Booking */
+    private $bookingModel;
 
     /** @var  Model_Room */
     private $roomModel;
@@ -18,7 +18,7 @@ class Controller_Index extends Controller
     {
         parent::__construct($request, $response);
         $this->contentModel = Model::factory('Content');
-        $this->reservationModel = Model::factory('Reservation');
+        $this->bookingModel = Model::factory('Booking');
         $this->roomModel = Model::factory('Room');
         $this->adminModel = Model::factory('Admin');
     }
@@ -63,7 +63,7 @@ class Controller_Index extends Controller
                     if ($value['name'] === 'childrenTo12') $childrenTo12 = $value['value'];
                 }
 
-                $this->reservationModel->addReservation(
+                $this->bookingModel->addReservation(
                     $roomId,
                     $arrivalDate,
                     $departureDate,
@@ -136,15 +136,15 @@ class Controller_Index extends Controller
 	public function action_canceled_booking()
 	{
         $orderId = $this->request->param('orderId');
-        $bookingData = $this->reservationModel->findBookingByOrderId($orderId);
+        $bookingData = $this->bookingModel->findBookingByOrderId($orderId);
         $link = '/';
 
         if ($bookingData) {
-            $this->reservationModel->canceledBooking((int)$bookingData['id']);
-            $acquiringOrderData = $this->reservationModel->getAcquiringOrderData($orderId);
+            $this->bookingModel->canceledBooking((int)$bookingData['id']);
+            $acquiringOrderData = $this->bookingModel->getAcquiringOrderData($orderId);
 
             if ($acquiringOrderData && $acquiringOrderData['status'] === 'completed') {
-                $link = '/?paymentReturn=' . $this->reservationModel->returnPayment($orderId);
+                $link = '/?paymentReturn=' . $this->bookingModel->returnPayment($orderId);
             }
         }
         HTTP::redirect($link);

@@ -5,8 +5,8 @@ class Controller_Ajax extends Controller
     /** @var Model_Content */
     private $contentModel;
 
-    /** @var  Model_Reservation */
-    private $reservationModel;
+    /** @var  Model_Booking */
+    private $bookingModel;
 
     /** @var  Model_Room */
     private $roomModel;
@@ -18,7 +18,7 @@ class Controller_Ajax extends Controller
     {
         parent::__construct($request, $response);
         $this->contentModel = Model::factory('Content');
-        $this->reservationModel = Model::factory('Reservation');
+        $this->bookingModel = Model::factory('Booking');
         $this->roomModel = Model::factory('Room');
         $this->adminModel = Model::factory('Admin');
     }
@@ -127,7 +127,7 @@ class Controller_Ajax extends Controller
 
     public function action_reserve_room()
     {
-        $body = $this->reservationModel->addReservation(
+        $body = $this->bookingModel->addReservation(
             (int)$this->request->post('roomId'),
             new DateTime($this->request->post('arrivalDate')),
             new DateTime($this->request->post('departureDate')),
@@ -160,14 +160,14 @@ class Controller_Ajax extends Controller
 
     public function action_get_summary_table_data()
     {
-        $data = $this->reservationModel->getSummaryTableData();
+        $data = $this->bookingModel->getSummaryTableData();
 
         $this->response->body(json_encode($data));
     }
 
     public function action_canceled_booking()
     {
-        $this->reservationModel->canceledBooking((int)$this->request->post('reservationId'));
+        $this->bookingModel->canceledBooking((int)$this->request->post('reservationId'));
 
         $this->response->body(json_encode(['result' => 'success']));
     }
@@ -180,7 +180,7 @@ class Controller_Ajax extends Controller
 
     public function action_set_price()
     {
-        $this->reservationModel->setPrice(
+        $this->bookingModel->setPrice(
             (int)$this->request->post('roomId'),
             new DateTime($this->request->post('firstDate')),
             new DateTime($this->request->post('lastDate')),
@@ -191,7 +191,7 @@ class Controller_Ajax extends Controller
 
     public function action_set_manager_price()
     {
-        $this->reservationModel->setManagerPrice(
+        $this->bookingModel->setManagerPrice(
             (int)$this->request->post('roomId'),
             new DateTime($this->request->post('firstDate')),
             new DateTime($this->request->post('lastDate')),
@@ -202,7 +202,7 @@ class Controller_Ajax extends Controller
 
     public function action_change_booking()
     {
-        $this->reservationModel->changeBooking(
+        $this->bookingModel->changeBooking(
             (int)$this->request->post('bookingId'),
             (int)$this->request->post('roomId'),
             new DateTime($this->request->post('arrivalDate')),

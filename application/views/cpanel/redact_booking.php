@@ -1,23 +1,23 @@
 <?php
-/** @var Model_Reservation $reservationModel */
-$reservationModel = Model::factory('Reservation');
+/** @var Model_Booking $bookingModel */
+$bookingModel = Model::factory('Booking');
 
 /** @var Model_Content $contentModel */
 $contentModel = Model::factory('Content');
 
-$bookingData = $reservationModel->findById($bookingId);
+$bookingData = $bookingModel->findById($bookingId);
 $templateWords = $contentModel->getTemplateWords('ru');
 ?>
 <div class="form-group">
     <label for="inputType">Источник обращения</label>
-    <?=Form::select('', $reservationModel->types, $bookingData['type'], ['id' => 'inputChangeType', 'class' => 'form-control']);?>
+    <?=Form::select('', $bookingModel->types, $bookingData['type'], ['id' => 'inputChangeType', 'class' => 'form-control']);?>
 </div>
 <div class="form-group">
-    <label for="inputChangePhone"><?=$templateWords['main']['phone'];?></label>
+    <label for="inputChangePhone">Телефон клиента</label>
     <input type="text" class="form-control" id="inputChangePhone" value="<?=$bookingData['customer_phone'];?>">
 </div>
 <div class="form-group">
-    <label for="inputChangeName"><?=$templateWords['main']['name'];?></label>
+    <label for="inputChangeName">Имя клиента</label>
     <input type="text" class="form-control" id="inputChangeName" value="<?=$bookingData['customer_name'];?>">
 </div>
 <div class="form-group">
@@ -26,7 +26,7 @@ $templateWords = $contentModel->getTemplateWords('ru');
 </div>
 <div class="form-group">
     <label for="inputChangePrice"><?=$templateWords['main']['price'];?></label>
-    <input type="text" class="form-control" id="inputChangePrice" value="<?=$bookingData['price'];?>">
+    <input type="text" class="form-control" id="inputChangePrice" value="<?=$bookingData['price'];?>" readonly>
 </div>
 <div class="form-group row">
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">

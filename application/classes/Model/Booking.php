@@ -1,6 +1,9 @@
 <?php
 
-class Model_Reservation extends Kohana_Model
+/**
+ * Class Model_Booking
+ */
+class Model_Booking extends Kohana_Model
 {
     const ROW_LIMIT = 20;
     public $types = [
@@ -243,12 +246,21 @@ class Model_Reservation extends Kohana_Model
     }
 
     /**
+     * @param bool|string $showed
+     *
      * @return array
      */
-    public function getStatuses()
+    public function getStatuses($showed = 'all')
     {
-        return DB::select()
+        $query = DB::select()
             ->from('reservations__statuses')
+        ;
+
+        if ($showed !== 'all') {
+            $query = $query->where('showed', '=', $showed);
+        }
+
+        return $query
             ->execute()
             ->as_array('id', 'name')
         ;

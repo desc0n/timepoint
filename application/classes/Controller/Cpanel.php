@@ -228,13 +228,13 @@ class Controller_Cpanel extends Controller
 
     public function action_reservations_list()
     {
-        /** @var $reservationModel Model_Reservation */
-        $reservationModel = Model::factory('Reservation');
+        /** @var $bookingModel Model_Booking */
+        $bookingModel = Model::factory('Booking');
 
         $template = $this->getBaseTemplate();
 
         $template->content = View::factory('cpanel/reservations_list')
-            ->set('listData', $reservationModel->getList(Arr::get($this->request->query(), 'page', 1)))
+            ->set('listData', $bookingModel->getList(Arr::get($this->request->query(), 'page', 1)))
         ;
 
         $this->response->body($template);
@@ -344,8 +344,8 @@ class Controller_Cpanel extends Controller
         /** @var $roomModel Model_Room */
         $roomModel = Model::factory('Room');
 
-        /** @var $reservationModel Model_Reservation */
-        $reservationModel = Model::factory('Reservation');
+        /** @var $bookingModel Model_Booking */
+        $bookingModel = Model::factory('Booking');
 
         $template = $this->getBaseTemplate();
 
@@ -355,7 +355,7 @@ class Controller_Cpanel extends Controller
         $daysCount = round(($lastDate->getTimestamp() - $firstDate->getTimestamp()) / 86400) + 1;
 
         $template->content = View::factory('cpanel/summary_table')
-            ->set('summaryTableData', $reservationModel->getSummaryTableData($firstDate, $daysCount))
+            ->set('summaryTableData', $bookingModel->getSummaryTableData($firstDate, $daysCount))
             ->set('rooms', $roomModel->findAll())
             ->set('get', $this->request->query())
         ;

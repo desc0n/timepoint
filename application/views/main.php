@@ -1,6 +1,6 @@
 <?php
-/** @var Model_Reservation $reservationModel */
-$reservationModel = Model::factory('Reservation');
+/** @var Model_Booking $bookingModel */
+$bookingModel = Model::factory('Booking');
 
 $today = new \DateTime();
 $tomorrow = clone $today;
@@ -20,7 +20,7 @@ $calendarDepartureDate->modify('- 1 month');
         <?foreach ($rooms as $room) {?>
             <?$firstDate = clone $arrivalDate;?>
             <?$lastDate = clone $departureDate;?>
-            <?$price = $reservationModel->findRoomPriceByIdAndDate($room['room']['id'], $firstDate, $lastDate);?>
+            <?$price = $bookingModel->findRoomPriceByIdAndDate($room['room']['id'], $firstDate, $lastDate);?>
             <?$mainImg = !empty($room['room_imgs']) ? $room['room_imgs'][0]['src'] : null;?>
             <?$mainImg = !empty($room['room_main_img']) ? $room['room_main_img']['src'] : $mainImg;?>
         <div class="rooms__kind" style="background: url('/public/img/original/<?=$mainImg;?>');">
@@ -35,7 +35,7 @@ $calendarDepartureDate->modify('- 1 month');
 <?foreach ($rooms as $room) {?>
     <?$firstDate = clone $arrivalDate;?>
     <?$lastDate = clone $departureDate;?>
-    <?$price = $reservationModel->findRoomPriceByIdAndDate($room['room']['id'], $firstDate, $lastDate);?>
+    <?$price = $bookingModel->findRoomPriceByIdAndDate($room['room']['id'], $firstDate, $lastDate);?>
     <!-- modal -->
     <div id="roomModal<?=$room['room']['id'];?>" class="modal fade modal-booking" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
         <div class="modal-dialog modal-lg" role="document">

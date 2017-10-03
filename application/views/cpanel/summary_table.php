@@ -1,6 +1,6 @@
 <?php
-/** @var Model_Reservation $reservationModel */
-$reservationModel = Model::factory('Reservation');
+/** @var Model_Booking $bookingModel */
+$bookingModel = Model::factory('Booking');
 
 /** @var Model_Room $roomModel */
 $roomModel = Model::factory('Room');
@@ -21,7 +21,7 @@ foreach ($rooms as $room) {
     $selectionRooms[$room['id']] = $room['title'];
 }
 
-$statusStyles = [1 => 'active', 2 => 'success', 3 => 'canceled'];
+$statusStyles = [1 => 'active', 2 => 'success', 3 => 'canceled', 4 => 'active', 5 => 'active', 6 => 'active', 7 => 'active'];
 $resources = ['site' => 'С', 'office' => 'Т', 'booking' => 'Б'];
 $weekDays = [0 => 'вс', 1 => 'пн', 2 => 'вт', 3 => 'ср', 4 => 'чт', 5 => 'пт', 6 => 'сб'];
 $managerPricesDays = [];
@@ -35,8 +35,7 @@ $pricesRooms = [];
     </div>
     <div class="col-lg-12 form-group">
         <strong>Значение цвета ячейки</strong>
-        <?foreach ($reservationModel->getStatuses() as $id=> $status) {?>
-            <?if($id === 2) continue;?>
+        <?foreach ($bookingModel->getStatuses(1) as $id=> $status) {?>
         <div class="col-lg-12 form-group">
             <div class="col-lg-1 color-legend <?=$statusStyles[$id];?>-color-legend"></div><div class="col-lg-11 text-left"> - <?=$status;?></div>
         </div>
@@ -146,7 +145,7 @@ $pricesRooms = [];
                                     </td>
                                 <?} else {?>
                                     <td class="text-right alert-success booking-price">
-                                        <i class="fa fa-dollar" data-toggle="popover" data-html="true" data-trigger="hover" data-content="<strong><?=$reservationModel->findRoomPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?> руб.</strong>" data-placement="right" data-original-title="Информация о стоимости номера"></i>
+                                        <i class="fa fa-dollar" data-toggle="popover" data-html="true" data-trigger="hover" data-content="<strong><?=$bookingModel->findRoomPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?> руб.</strong>" data-placement="right" data-original-title="Информация о стоимости номера"></i>
                                     </td>
                                 <?}?>
                             <?}?>
@@ -157,7 +156,7 @@ $pricesRooms = [];
                     <?foreach ($summaryTableData as $year => $yearItems) {?>
                         <?foreach ($yearItems as $month => $monthItems) {?>
                             <?foreach ($monthItems as $day => $dayItems) {?>
-                                <?$managerPrice = !empty($dayItems[$room['id']]) ? ((int)$dayItems[$room['id']]['manager_price'] ?: $dayItems[$room['id']]['price']) : $reservationModel->findRoomManagerPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?>
+                                <?$managerPrice = !empty($dayItems[$room['id']]) ? ((int)$dayItems[$room['id']]['manager_price'] ?: $dayItems[$room['id']]['price']) : $bookingModel->findRoomManagerPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?>
                                 <?
                                 $popoverTitle = 'Изменение стоимости номера';
                                 $popoverContent = "<div class='booking-data-popover'>";
@@ -184,7 +183,7 @@ $pricesRooms = [];
                     <?foreach ($summaryTableData as $year => $yearItems) {?>
                         <?foreach ($yearItems as $month => $monthItems) {?>
                             <?foreach ($monthItems as $day => $dayItems) {?>
-                                <?$price = !empty($dayItems[$room['id']]) ? $dayItems[$room['id']]['price'] : $reservationModel->findRoomPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?>
+                                <?$price = !empty($dayItems[$room['id']]) ? $dayItems[$room['id']]['price'] : $bookingModel->findRoomPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?>
                                 <?if($adminRole) {?>
                                 <?
                                 $popoverTitle = 'Изменение стоимости номера';
@@ -253,7 +252,7 @@ $pricesRooms = [];
         <legend>Добавление бронирования</legend>
         <div class="form-group">
             <label for="inputType">Источник обращения</label>
-            <?=Form::select('', $reservationModel->types, null, ['id' => 'inputType', 'class' => 'form-control']);?>
+            <?=Form::select('', $bookingModel->types, null, ['id' => 'inputType', 'class' => 'form-control']);?>
         </div>
         <legend>Выбор номера</legend>
         <div class="form-group">

@@ -83,7 +83,7 @@ class Model_Booking extends Kohana_Model
                 $price ?: $roomData['price'],
                 $arrivalAt->format('Y-m-d H:i:s'),
                 $departureAt->format('Y-m-d H:i:s'),
-                1,
+                $payedStatus ? 6 : 4,
                 $payedStatus,
                 $adult,
                 $childrenTo2,

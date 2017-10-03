@@ -130,7 +130,6 @@ $pricesRooms = [];
                                     $popoverTitle = 'Информация о бронировании c ' . date('d.m', strtotime($dayItems[$room['id']]['arrival_at'])) . ' по ' . date('d.m', strtotime($dayItems[$room['id']]['departure_at']));
                                     $popoverContent = "<div class='booking-data-popover'>";
                                     $popoverContent .= '<div><strong>Статус брони: </strong><i>' . $dayItems[$room['id']]['status_name'] . '</i></div>';
-                                    $popoverContent .= '<div><strong>Статус оплаченности: </strong><i>' . ($dayItems[$room['id']]['payed'] ? 'оплачено' : 'не оплачено') . '</i></div>';
                                     $popoverContent .= '<div><strong>Стоимость номера: </strong>' . $dayItems[$room['id']]['price'] . ' руб.</div>';
                                     $popoverContent .= '<div><strong>Стоимость бронирования: </strong>' . $dayItems[$room['id']]['booking_price'] . ' руб.</div>';
                                     $popoverContent .= '<div><strong>Клиент: </strong>имя: ' . $dayItems[$room['id']]['customer_name'] . ', тел.: ' . $dayItems[$room['id']]['customer_phone'] . '</div>';

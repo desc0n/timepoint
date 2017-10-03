@@ -49,7 +49,7 @@ class Model_Booking extends Kohana_Model
         $issetBooking = $this->findBookingByOrderId($orderId);
 
         if ($issetBooking) {
-            $this->changeBooking((int)$issetBooking['id'], $roomId, $arrivalAt, $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12, $price, $type);
+            $this->changeBooking((int)$issetBooking['id'], $roomId, $arrivalAt, $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12, $price, $type,$payedStatus ? 6 : 4);
             return json_encode(['result' => 'success']);
         }
 
@@ -506,8 +506,6 @@ class Model_Booking extends Kohana_Model
             ->where('id', '=', $bookingId)
             ->execute()
         ;
-
-        //$this->setPrice($roomId, $arrivalAt, $departureAt, $price);
     }
 
     public function getBookingAmount($bookingId)

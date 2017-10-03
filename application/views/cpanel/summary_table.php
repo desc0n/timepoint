@@ -130,13 +130,12 @@ $pricesRooms = [];
                                     $popoverTitle = 'Информация о бронировании c ' . date('d.m', strtotime($dayItems[$room['id']]['arrival_at'])) . ' по ' . date('d.m', strtotime($dayItems[$room['id']]['departure_at']));
                                     $popoverContent = "<div class='booking-data-popover'>";
                                     $popoverContent .= '<div><strong>Статус брони: </strong><i>' . $dayItems[$room['id']]['status_name'] . '</i></div>';
-                                    $popoverContent .= '<div><strong>Стоимость номера: </strong>' . $dayItems[$room['id']]['price'] . ' руб.</div>';
                                     $popoverContent .= '<div><strong>Стоимость бронирования: </strong>' . $dayItems[$room['id']]['booking_price'] . ' руб.</div>';
                                     $popoverContent .= '<div><strong>Клиент: </strong>имя: ' . $dayItems[$room['id']]['customer_name'] . ', тел.: ' . $dayItems[$room['id']]['customer_phone'] . '</div>';
                                     $popoverContent .= '<div><strong>Количество взрослых: </strong>' . $dayItems[$room['id']]['adult'] . '</div>';
                                     $popoverContent .= '<div><strong>Детей: </strong>' . $dayItems[$room['id']]['children_to_2'] . ' (до 2), ' . $dayItems[$room['id']]['children_to_6'] . ' (до 6), ' . $dayItems[$room['id']]['children_to_12'] . ' (до 12)</div>';
                                     $popoverContent .= '<div><strong>Комментарий: </strong>' . str_replace('"', '', $dayItems[$room['id']]['customer_comment']) . '</div>';
-                                    $popoverContent .= (int)$dayItems[$room['id']]['status_id'] === 1 ? "<br /><div class='text-right'>" . $canceledButton . " <button class='btn btn-success btn-sm' onclick='showRedactBookingForm(" . $dayItems[$room['id']]['id'] . ");'>Редактировать <i class='fa fa-pencil'></i></button></div>" : '';
+                                    $popoverContent .= !in_array((int)$dayItems[$room['id']]['status_id'], [2,3], true) ? "<br /><div class='text-right'>" . $canceledButton . " <button class='btn btn-success btn-sm' onclick='showRedactBookingForm(" . $dayItems[$room['id']]['id'] . ");'>Редактировать <i class='fa fa-pencil'></i></button></div>" : '';
                                     $popoverContent .= '</div>';
                                     ?>
                                     <td class="text-center booking-ceil <?=$statusStyles[$dayItems[$room['id']]['status_id']];?>-booking-ceil booking-ceil-period-<?=$dayItems[$room['id']]['id'];?>" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="<?=$popoverTitle;?>" onclick="showBookingPeriod(<?=$dayItems[$room['id']]['id'];?>, '<?=$statusStyles[$dayItems[$room['id']]['status_id']];?>')">

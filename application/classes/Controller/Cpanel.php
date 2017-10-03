@@ -354,7 +354,7 @@ class Controller_Cpanel extends Controller
         $lastDateDefault->modify('+29 day');
 
         $firstDate = new DateTime(date('Y-m-d', strtotime(Arr::get($this->request->query(), 'first_date', $today->format('d.m.Y')))));
-        $lastDate = empty($this->request->query('last_date')) ? $lastDateDefault : new DateTime(date('Y-m-d', strtotime($this->request->query('last_date'), $today->format('d.m.Y'))));
+        $lastDate = empty($this->request->query('last_date')) ? $lastDateDefault : new DateTime(date('Y-m-d', strtotime($this->request->query('last_date'))));
         $daysCount = empty($this->request->query('days_count')) ? round(($lastDate->getTimestamp() - $firstDate->getTimestamp()) / 86400) + 1 : $this->request->query('days_count');
 
         $template->content = View::factory('cpanel/summary_table')

@@ -350,9 +350,12 @@ class Controller_Cpanel extends Controller
         $template = $this->getBaseTemplate();
 
         $today = new \DateTime();
+        $lastDateDefault = clone $today;
+        $lastDateDefault->modify('+29 day');
+
         $firstDate = new DateTime(date('Y-m-d', strtotime(Arr::get($this->request->query(), 'first_date', $today->format('d.m.Y')))));
-        $lastDate = new DateTime(date('Y-m-d', strtotime(Arr::get($this->request->query(), 'last_date', $today->format('d.m.Y')))));
-        $daysCount = round(($lastDate->getTimestamp() - $firstDate->getTimestamp()) / 86400) + 1;
+        $lastDate = empty($this->request->query('last_date')) ? $lastDateDefault : new DateTime(date('Y-m-d', strtotime($this->request->query('last_date'), $today->format('d.m.Y'))));
+        $daysCount = empty($this->request->query('days_count')) ? round(($lastDate->getTimestamp() - $firstDate->getTimestamp()) / 86400) + 1 : $this->request->query('days_count');
 
         $template->content = View::factory('cpanel/summary_table')
             ->set('summaryTableData', $bookingModel->getSummaryTableData($firstDate, $daysCount))

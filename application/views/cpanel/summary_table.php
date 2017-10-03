@@ -43,7 +43,7 @@ $pricesRooms = [];
     </div>
     <div class="col-lg-12 form-group">
         <form id="summaryTableForm">
-            <div class="col-lg-5">
+            <div class="col-lg-4">
                 <label for="firstDate">Начальная дата</label>
                 <div class='input-group date'>
                     <input id="firstDate" name="first_date" type="text" value="<?=$firstDate->format('d.m.Y');?>" class="form-control"/>
@@ -52,7 +52,7 @@ $pricesRooms = [];
                     </span>
                 </div>
             </div>
-            <div class="col-lg-5">
+            <div class="col-lg-4">
                 <label for="lastDate">Конечная дата</label>
                 <div class='input-group date'>
                     <input id="lastDate" name="last_date" type="text" value="<?=$lastDate->format('d.m.Y');?>" class="form-control"/>
@@ -60,6 +60,10 @@ $pricesRooms = [];
                         <i class="fa fa-calendar"></i>
                     </span>
                 </div>
+            </div>
+            <div class="col-lg-2">
+                <label for="inputDaysCount">Количество дней</label>
+                <?=Form::select('days_count', [null => 'не выбрано', 30 => 30, 60 => 60, 90 => 90], Arr::get($get, 'days_count'), ['id' => 'inputDaysCount', 'class' => 'form-control']);?>
             </div>
             <div class="col-lg-2">
                 <button class="btn btn-primary">Фильтровать</button>

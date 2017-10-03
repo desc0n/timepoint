@@ -63,7 +63,7 @@ $pricesRooms = [];
             </div>
             <div class="col-lg-2">
                 <label for="inputDaysCount">Количество дней</label>
-                <?=Form::select('days_count', [null => 'не выбрано', 30 => 30, 60 => 60, 90 => 90], Arr::get($get, 'days_count'), ['id' => 'inputDaysCount', 'class' => 'form-control']);?>
+                <?=Form::select('days_count', [null => 'фильтровать по периоду', 30 => 30, 60 => 60, 90 => 90], Arr::get($get, 'days_count'), ['id' => 'inputDaysCount', 'class' => 'form-control']);?>
             </div>
             <div class="col-lg-2">
                 <button class="btn btn-primary">Фильтровать</button>

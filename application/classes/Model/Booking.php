@@ -212,6 +212,7 @@ class Model_Booking extends Kohana_Model
                     ->join(['reservations__statuses', 'rs'])
                     ->on('rs.id', '=', 'rr.status_id')
                     ->where('r.id', '=', $room['id'])
+                    ->and_where('rr.status_id', '!=', 3)
                     ->and_where_open()
                         ->where('rr.arrival_at', '=', $sqlDate)
                         ->or_where_open()

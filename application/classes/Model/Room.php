@@ -323,7 +323,7 @@ class Model_Room extends Kohana_Model
             $check = DB::select()
                 ->from('reservations__reservations')
                 ->where('room_id', '=', $roomId)
-                ->and_where('status_id', '=', 1)
+                ->and_where('status_id', 'NOT IN', [2,3])
                 ->and_where_open()
                     ->where('arrival_at', '<=', $firstTime->format('Y-m-d H:i:s'))
                     ->and_where('departure_at', '>', $firstTime->format('Y-m-d H:i:s'))

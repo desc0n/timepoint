@@ -170,7 +170,7 @@ $pricesRooms = [];
                                 $popoverContent .= '</div>';
                                 ?>
                                 <td class="text-right manager-prices booking-hidden booking-hidden-<?=$room['id'];?>">
-                                    <div id="bookingManagerPriceChange<?=$year;?>-<?=$month;?>-<?=$day;?>" class="booking-price-change" data-trigger="click" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="<?=$popoverTitle;?>"><?=$managerPrice;?></div>
+                                    <div id="bookingManagerPriceChange_<?=$room['id'];?>_<?=$year;?>-<?=$month;?>-<?=$day;?>" class="booking-price-change" data-trigger="click" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="<?=$popoverTitle;?>"><?=$managerPrice;?></div>
                                 </td>
                                 <?$managerPricesDays[$year . '-' . $month . '-' . $day] = isset($managerPricesDays[$year . '-' . $month . '-' . $day]) ? $managerPricesDays[$year . '-' . $month . '-' . $day] + $managerPrice : $managerPrice;?>
                                 <?$managerPricesRooms[$room['id']] = isset($managerPricesRooms[$room['id']]) ? $managerPricesRooms[$room['id']] + $managerPrice : $managerPrice;?>
@@ -198,7 +198,7 @@ $pricesRooms = [];
                                 $popoverContent .= '</div>';
                                 ?>
                                 <td class="text-right alert-danger booking-hidden booking-hidden-<?=$room['id'];?>">
-                                    <div id="bookingPriceChange<?=$year;?>-<?=$month;?>-<?=$day;?>" class="booking-price-change" data-trigger="click" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="<?=$popoverTitle;?>"><?=$price;?></div>
+                                    <div id="bookingPriceChange_<?=$room['id'];?>_<?=$year;?>-<?=$month;?>-<?=$day;?>" class="booking-price-change" data-trigger="click" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="<?=$popoverTitle;?>"><?=$price;?></div>
                                 </td>
                                 <?} else {?>
                                     <td class="text-right alert-danger booking-hidden booking-hidden-<?=$room['id'];?>">

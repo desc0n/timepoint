@@ -170,6 +170,7 @@ class Model_Booking extends Kohana_Model
         $roomModel = Model::factory('Room');
 
         $this->checkSuccess();
+        $this->autoCanceledNotPayedBooking();
 
         $data = [];
         $firstTime = $firstTime ?: new DateTime();
@@ -616,7 +617,7 @@ class Model_Booking extends Kohana_Model
                 ->execute()
             ;
 
-            $message = '<div><strong>Номер #' . $bookingData['room_id'] . '</strong></div>';
+            $message = '<div><strong>Номер №' . $bookingData['room_id'] . '</strong></div>';
             $message .= '<div><strong>Период бронирования: </strong>' . $arrivalAt->format('d.m.Y') . ' - ' . $departureAt->format('d.m.Y') . '</div>';
             $message .= '<div><strong>Клиент: </strong>' . $bookingData['customer_name'] . '</div>';
             $message .= '<div><strong>Номер телефона: </strong>' . $bookingData['customer_phone'] . '</div>';
@@ -627,5 +628,40 @@ class Model_Booking extends Kohana_Model
         }
 
         return 'fail';
+    }
+
+    public function autoCanceledNotPayedBooking()
+    {
+        /** @var Model_Mail $mailModel */
+        $mailModel = Model::factory('Mail');
+
+        $notPayedBookings = DB::select()
+            ->from('reservations__reservations')
+            ->where('payed', '=', 0)
+            ->and_where('status_id', '!=', 3)
+            ->and_where('type', '=', 'site')
+            ->and_where('created_at', '<', DB::expr('(NOW() - INTERVAL 1 DAY)'))
+            ->execute()
+            ->as_array()
+        ;
+
+        foreach ($notPayedBookings as $booking){
+            $this->canceledBooking((int)$booking['id']);
+
+            $arrivalAt = new DateTime($booking['arrival_at']);
+            $departureAt = new DateTime($booking['departure_at']);
+            $message = '<div><strong>Номер №' . $booking['room_id'] . '</strong></div>';
+            $message .= '<div><strong>Период бронирования: </strong>' . $arrivalAt->format('d.m.Y') . ' - ' . $departureAt->format('d.m.Y') . '</div>';
+            $message .= '<div><strong>Клиент: </strong>' . $booking['customer_name'] . '</div>';
+            $message .= '<div><strong>Номер телефона: </strong>' . $booking['customer_phone'] . '</div>';
+            $mailModel->send('site@vladpointhotel.ru', 'descon@bk.ru', 'Отмена неоплаченного бронирования', $message);
+            $mailModel->send('site@vladpointhotel.ru', 'vladpointhotel@mail.ru', 'Отмена неоплаченного бронирования', $message);
+            $mailModel->send('site@vladpointhotel.ru', 'pvr2569@mail.ru', 'Отмена неоплаченного бронирования', $message);
+
+            $message = '<div><strong>Здравствуйтею Ваша бронь была отменена по истечению 24 часов с момента бронирования, так как не была оплачена.</strong></div>';
+            $message .= '<div><strong>Номер №' . $booking['room_id'] . '</strong></div>';
+            $message .= '<div><strong>Период бронирования: </strong>' . $arrivalAt->format('d.m.Y') . ' - ' . $departureAt->format('d.m.Y') . '</div>';
+            $mailModel->send('site@vladpointhotel.ru', $booking['customer_email'], 'Отмена неоплаченного бронирования', $message);
+        }
     }
 }

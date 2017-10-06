@@ -10,7 +10,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/public/css/daterangepicker.css" >
-    <link rel="stylesheet" href="/public/css/styles.css?v=11" >
+    <link rel="stylesheet" href="/public/css/styles.css?v=061020172220" >
     <link rel="stylesheet" href="/assets/bootstrap/css/font-awesome.css" >
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>

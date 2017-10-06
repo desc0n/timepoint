@@ -1,10 +1,16 @@
+<?
+$now = new DateTime();
+$arrivalDateTime = new DateTime($arrivalDate);
+$checkDate = clone $arrivalDateTime;
+$checkDate->modify('-7 day');
+?>
 <div class="alert alert-danger text-center">
     <strong>При бронировании без оплаты, Ваша бронь будет действительна в течении 24 часов.</strong>
     <strong>Бронирование без оплаты прекращается за 7 суток до предполагаемой даты заезда.</strong>
 </div>
 <div class="row">
     <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <button class="btn" onclick="notPayedReserveRoom();">Забронировать без оплаты</button>
+        <button class="btn" onclick="<?=($now->getTimestamp() < $checkDate->getTimestamp() ? 'notPayedReserveRoom()' : "showNotificationModal('Бронирование номера без оплаты меньше 7 дней до даты заезда не доступно.', 'danger');");?>">Забронировать без оплаты</button>
     </div>
     <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <?if(Auth::instance()->logged_in('admin')){?>

@@ -94,7 +94,7 @@ function notPayedReserveRoom() {
     var roomId = $('#reserveRoomData > #reserveRoomId').val();
     $.ajax({url: '/ajax/reserve_room', type: 'POST', data: {roomId: roomId, phone: $('#reserveRoomData > #customerPhone').val(), name: $('#reserveRoomData > #customerName').val(), email: $('#reserveRoomData > #customerEmail').val(), comment: $('#reserveRoomData > #customerComment').val(),arrivalDate: $('#reserveRoomData > #arrivalDate').val(), departureDate: $('#reserveRoomData > #departureDate').val(), adult: $('#reserveRoomData > #adult').val(), childrenTo2: $('#reserveRoomData > #childrenTo2').val(), childrenTo6: $('#reserveRoomData > #childrenTo6').val(), childrenTo12: $('#reserveRoomData > #childrenTo12').val(), type: 'site'}, async: true}).done(function () {$('#reservationModal').modal('toggle');showNotificationModal('Номер успешно забронирован!', 'success');$('#notChecked' + roomId).val(0);});
 }
-function getDates(roomId){var dateRange = $('#daterange' + roomId).val();return dates = dateRange.split(' - ');}
+function getDates(roomId){return [$('#arrival' + roomId).val(), $('#departure' + roomId).val()];}
 function filterRooms() {var dates = getDates('');$('input[name="arrival_date"]').val(dates[0]);$('input[name="departure_date"]').val(dates[1]);$('#filter_form').submit();}
 function declOfNum(number, titles) {cases = [2, 0, 1, 1, 1, 2];return titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ];}
 function writeNightCount(count, roomId) {var titles = ['ночь', 'ночи', 'ночей'];$('#nightCount' + roomId).html(count + ' ' + declOfNum(count, titles));}

@@ -10,7 +10,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/public/css/daterangepicker.css" >
-    <link rel="stylesheet" href="/public/css/styles.css?v=061020172220" >
+    <link rel="stylesheet" href="/public/css/styles.css?v=111020172349" >
     <link rel="stylesheet" href="/assets/bootstrap/css/font-awesome.css" >
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -19,6 +19,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="/public/js/datepicker-ru.js"></script>
     <script src="/public/js/moment.js"></script>
     <script src="/public/js/moment-with-locales.js"></script>
     <script src="/public/js/daterangepicker.js?v=1"></script>
@@ -128,7 +129,7 @@ $calendarDepartureDate->modify('- 1 month');
             <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12 booking__caption"><span><?=$templateWords['filter']['booking'];?></span></div>
             <div class="col-lg-8 col-md-12  col-sm-12  col-xs-12 booking__selects">
                 <div class="row">
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 booking__selects-form">
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 booking__selects-form">
                         <div class="row">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12"><label for="guests"><?=$templateWords['filter']['quests'];?> </label></div>
                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
@@ -136,14 +137,29 @@ $calendarDepartureDate->modify('- 1 month');
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 booking__selects-form">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 booking__selects-form booking__selects-date">
                         <div class="row">
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"><label for="arrival"><?=$templateWords['filter']['period'];?> </label></div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"><label for="arrival">Заезд </label></div>
                             <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 booking-calendar">
                                 <div class="form-group">
                                     <div class='input-group date'>
-                                        <input value="<?=$arrivalDate->format('d.m.Y');?> - <?=$departureDate->format('d.m.Y');?>" type="text" id="daterange" class="form-control"/>
-                                        <span class="input-group-addon datepicker-toggler" data-target="daterange">
+                                        <input id="arrival" value="<?=$arrivalDate->format('d.m.Y');?>" type="text" name="arrival_date" class="form-control" autocomplete="off"/>
+                                        <span class="input-group-addon datepicker-toggler" data-target="arrival">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 booking__selects-form booking__selects-date">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"><label for="departure">Выезд </label></div>
+                            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 booking-calendar">
+                                <div class="form-group">
+                                    <div class='input-group date'>
+                                        <input id="departure" value="<?=Arr::get($get, 'departure_date', $tomorrow->format('d.m.Y'));?>" type="text" name="departure_date" class="form-control" autocomplete="off"/>
+                                        <span class="input-group-addon datepicker-toggler" data-target="departure">
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                     </div>
@@ -157,11 +173,9 @@ $calendarDepartureDate->modify('- 1 month');
                 </div>
             </div>
             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 booking__action">
-                <button type="button" class="btn btn-primary rooms__kind-caption-action" onclick="filterRooms();"><?=$templateWords['filter']['show_free_rooms'];?></button>
+                <button type="submit" class="btn btn-primary rooms__kind-caption-action"><?=$templateWords['filter']['show_free_rooms'];?></button>
             </div>
         </div>
-        <input value="<?=$arrivalDate->format('d.m.Y');?>" type="hidden" name="arrival_date">
-        <input value="<?=$departureDate->format('d.m.Y');?>" type="hidden" name="departure_date">
         <input value="<?=Arr::get($get, 'currency', 'rub');?>" type="hidden" name="currency">
     </form>
 </div>
@@ -351,9 +365,34 @@ $calendarDepartureDate->modify('- 1 month');
         </div>
     </div>
 </div>
-<script src="/public/js/scripts.js?v=011020172055"></script>
+<script src="/public/js/scripts.js?v=121020170006"></script>
 <script>
+    moment.locale('ru');
     $(document).ready(function () {
+        $.datepicker.setDefaults($.datepicker.regional['ru']);
+        $( "#arrival" ).datepicker({
+            dateFormat: 'dd.mm.yy',
+            minDate: getMinArrivalDate(),
+            onClose:function() {
+                var newDate = $(this).datepicker('getDate');
+                var newDepartureDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate()+1);
+                $( "#departure" ).datepicker( "option", "minDate", newDepartureDate);
+                var dateDiff = $('#departure').datepicker('getDate') - newDate;
+                writeNightCount(Math.round(dateDiff / 86400000), '');
+            }
+        });
+        $( "#departure" ).datepicker({
+            dateFormat: 'dd.mm.yy',
+            minDate: getMinDepartureDate(),
+            onClose:function() {
+                var newDate = $(this).datepicker('getDate');
+                var dateDiff = newDate - $('#arrival').datepicker('getDate');
+                writeNightCount(Math.round(dateDiff / 86400000), '');
+            }
+        });
+        $('.datepicker-toggler').click(function() {
+            $("#" + $(this).data('target')).focus();
+        });
         writeNightCount(<?=$nightCount;?>, '');
         <?if(isset($payment)){?>
         <?if($payment === 'success') {?>
@@ -370,6 +409,13 @@ $calendarDepartureDate->modify('- 1 month');
         <?}?>
         <?}?>
     });
+    function getMinArrivalDate() {
+        return new Date(<?=$calendarToday->format('Y');?>, <?=$calendarToday->format('m');?>, <?=$calendarToday->format('d');?>);
+    }
+    function getMinDepartureDate() {
+        var minDepartureDate = $('#arrival').datepicker('getDate');
+        return new Date(minDepartureDate.getFullYear(), minDepartureDate.getMonth(), minDepartureDate.getDate()+1);
+    }
 </script>
 </body>
 </html>

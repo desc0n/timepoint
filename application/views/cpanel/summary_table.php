@@ -178,7 +178,7 @@ $pricesRooms = [];
                         <?}?>
                     <?}?>
                     <?if($adminRole){?>
-                    <td class="booking-hidden booking-hidden-<?=$room['id'];?>"><?=$managerPricesRooms[$room['id']];?></td>
+                    <td class="booking-hidden manager-prices booking-hidden-<?=$room['id'];?>"><?=$managerPricesRooms[$room['id']];?></td>
                     <?}?>
                 </tr>
                 <tr>
@@ -211,7 +211,7 @@ $pricesRooms = [];
                         <?}?>
                     <?}?>
                     <?if($adminRole){?>
-                    <td class="booking-hidden booking-hidden-<?=$room['id'];?>"><?=$pricesRooms[$room['id']];?></td>
+                    <td class="booking-hidden alert-danger booking-hidden-<?=$room['id'];?>"><?=$pricesRooms[$room['id']];?></td>
                     <?}?>
                 </tr>
             <?}?>
@@ -229,14 +229,14 @@ $pricesRooms = [];
                         <?}?>
                     <?}?>
                 <?}?>
-                <td class="booking-hidden"><?=$managerAmount;?></td>
+                <td class="booking-hidden manager-prices"><?=$managerAmount;?></td>
                 <?if($adminRole){?>
             </tr>
             <tr>
                 <?foreach ($summaryTableData as $year => $yearItems) {?>
                     <?foreach ($yearItems as $month => $monthItems) {?>
                         <?foreach ($monthItems as $day => $dayItems) {?>
-                            <td class="booking-hidden">
+                            <td class="booking-hidden alert-danger">
                                 <?=$pricesDays[$year . '-' . $month . '-' . $day];?>
                                 <?$amount += $pricesDays[$year . '-' . $month . '-' . $day];?>
                             </td>

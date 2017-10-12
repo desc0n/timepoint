@@ -127,7 +127,7 @@ $calendarDepartureDate->modify('- 1 month');
                                     <label for="arrival<?=$room['room']['id'];?>">Заезд </label>
                                     <div class="form-group">
                                         <div class='input-group date'>
-                                            <input id="arrival<?=$room['room']['id'];?>" type="text" value="<?=($queryArrivalDate === null ? $today->format('d.m.Y') : $queryArrivalDate);?>" class="form-control"/>
+                                            <input id="arrival<?=$room['room']['id'];?>" type="text" value="<?=($queryArrivalDate === null ? $today->format('d.m.Y') : $queryArrivalDate);?>" class="form-control" autocomplete="off"/>
                                             <span class="input-group-addon datepicker-toggler" data-target="arrival<?=$room['room']['id'];?>">
                                             <i class="fa fa-calendar"></i>
                                         </span>
@@ -138,7 +138,7 @@ $calendarDepartureDate->modify('- 1 month');
                                     <label for="departure<?=$room['room']['id'];?>">Выезд </label>
                                     <div class="form-group">
                                         <div class='input-group date'>
-                                            <input id="departure<?=$room['room']['id'];?>" type="text" value="<?=($queryDepartureDate === null ? $tomorrow->format('d.m.Y') : $queryDepartureDate);?>" class="form-control"/>
+                                            <input id="departure<?=$room['room']['id'];?>" type="text" value="<?=($queryDepartureDate === null ? $tomorrow->format('d.m.Y') : $queryDepartureDate);?>" class="form-control" autocomplete="off"/>
                                             <span class="input-group-addon datepicker-toggler" data-target="departure<?=$room['room']['id'];?>">
                                             <i class="fa fa-calendar"></i>
                                         </span>

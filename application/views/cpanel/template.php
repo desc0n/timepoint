@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/public/css/daterangepicker.css" >
-    <link rel="stylesheet" href="/assets/admin/css/styles.css?v=011020171349" />
+    <link rel="stylesheet" href="/assets/admin/css/styles.css?v=121020172258" />
     <link rel="stylesheet" href="/assets/bootstrap/css/font-awesome.css" />
     <!-- jQuery -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

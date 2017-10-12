@@ -21,7 +21,7 @@ foreach ($rooms as $room) {
     $selectionRooms[$room['id']] = $room['title'];
 }
 
-$statusStyles = [1 => 'active', 2 => 'success', 3 => 'canceled', 4 => 'active', 5 => 'active', 6 => 'active', 7 => 'active'];
+$statusStyles = [1 => 'active', 2 => 'success', 3 => 'canceled', 4 => 'active', 5 => 'active', 6 => 'active', 7 => 'occupancy'];
 $resources = ['site' => 'С', 'office' => 'Т', 'booking' => 'Б'];
 $weekDays = [0 => 'вс', 1 => 'пн', 2 => 'вт', 3 => 'ср', 4 => 'чт', 5 => 'пт', 6 => 'сб'];
 $managerPricesDays = [];

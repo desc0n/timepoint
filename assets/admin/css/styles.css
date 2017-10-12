@@ -454,6 +454,10 @@ body {
 .active-color-legend{
     background-color: #ecd20a;
 }
+.summary-table tr td.occupancy-booking-ceil,
+.occupancy-color-legend{
+    background-color: #3c763d;
+}
 .booking-price i{
     font-size: 0.8em;
     cursor: pointer;

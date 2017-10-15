@@ -50,10 +50,17 @@ class Model_Booking extends Kohana_Model
 
         if ($issetBooking) {
             $this->changeBooking((int)$issetBooking['id'], $roomId, $arrivalAt, $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12, $price, $type,$payedStatus ? 6 : 4);
+
+            if($type === 'site' && $price > 0) {
+                $paymentAmount = $price * 100;
+                $paymentStatus = $payedStatus ? 2 : 3;
+                $this->addPayment((int)$issetBooking['id'], $paymentAmount, $type, $paymentStatus);
+            }
+
             return json_encode(['result' => 'success']);
         }
 
-        DB::insert('reservations__reservations', [
+        $result = DB::insert('reservations__reservations', [
                 'order_id',
                 'type',
                 'room_id',
@@ -125,6 +132,13 @@ class Model_Booking extends Kohana_Model
             $message .= '<div><strong>Для отмены бронирования, перейдите по ссылке: </strong><a href="http://' . $_SERVER['HTTP_HOST'] . '/canceled_booking/' . $orderId . '">http://' . $_SERVER['HTTP_HOST'] . '/canceled_booking/' . $orderId . '</a></div><br /><br />';
             $mailModel->send('site@vladpointhotel.ru', 'descon@bk.ru', 'Запрос на бронирование', $message);
             $mailModel->send('site@vladpointhotel.ru', $email, 'Информация о бронировании', $message);
+
+            if($price > 0) {
+                $bookingId = $result[0];
+                $paymentAmount = $price * 100;
+                $paymentStatus = $payedStatus ? 2 : 3;
+                $this->addPayment($bookingId, $paymentAmount, $type, $paymentStatus);
+            }
         }
 
         return json_encode(['result' => 'success']);
@@ -663,5 +677,23 @@ class Model_Booking extends Kohana_Model
             $message .= '<div><strong>Период бронирования: </strong>' . $arrivalAt->format('d.m.Y') . ' - ' . $departureAt->format('d.m.Y') . '</div>';
             $mailModel->send('site@vladpointhotel.ru', $booking['customer_email'], 'Отмена неоплаченного бронирования', $message);
         }
+    }
+
+    /**
+     * @param int $bookingId
+     * @param int $amount
+     * @param string $type
+     * @param int $status
+     *
+     * @return int
+     */
+    public function addPayment($bookingId, $amount, $type, $status)
+    {
+        $result = DB::insert('reservations__payment_list', ['booking_id', 'amount', 'type', 'status', 'created_at'])
+            ->values([$bookingId, $amount, $type, $status, DB::expr('NOW()')])
+            ->execute()
+        ;
+
+        return $result[0];
     }
 }

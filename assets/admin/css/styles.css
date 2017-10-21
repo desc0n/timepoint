@@ -482,3 +482,7 @@ body {
 .manager-prices div{
     color: #000;
 }
+.add-payment-append{
+    margin-top: 3px;
+    margin-left: -15px;
+}

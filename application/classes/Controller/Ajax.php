@@ -216,7 +216,9 @@ class Controller_Ajax extends Controller
             (int)$this->request->post('childrenTo12'),
             (int)$this->request->post('price'),
             $this->request->post('type'),
-            $this->request->post('status')
+            (int)$this->request->post('status'),
+            (int)$this->request->post('paymentStatus'),
+            $this->request->post('paymentValue') * 100
         );
 
         $this->response->body(json_encode(['result' => 'success']));

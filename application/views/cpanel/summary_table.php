@@ -5,6 +5,9 @@ $bookingModel = Model::factory('Booking');
 /** @var Model_Room $roomModel */
 $roomModel = Model::factory('Room');
 
+$types = $bookingModel->types;
+unset($types['site']);
+
 $adminRole = Auth::instance()->logged_in('admin');
 $today = new \DateTime();
 $calendarToday = clone $today;
@@ -133,7 +136,7 @@ $pricesRooms = [];
                                     $canceledButton = !$dayItems[$room['id']]['payed'] ? "<button class='btn btn-danger btn-sm' onclick='canceledBooking(" . $dayItems[$room['id']]['id'] . ");'>Отменить <i class='fa fa-remove'></i></button>" : '';
                                     $popoverTitle = 'Информация о бронировании c ' . date('d.m', strtotime($dayItems[$room['id']]['arrival_at'])) . ' по ' . date('d.m', strtotime($dayItems[$room['id']]['departure_at']));
                                     $popoverContent = "<div class='booking-data-popover'>";
-                                    $popoverContent .= '<div><strong>Статус брони: </strong><i>' . $dayItems[$room['id']]['status_name'] . '</i></div>';
+                                    $popoverContent .= '<div><strong>Статус брони: </strong><i>' . $dayItems[$room['id']]['payment_status_name'] . '</i></div>';
                                     $popoverContent .= '<div><strong>Стоимость бронирования: </strong>' . $dayItems[$room['id']]['booking_price'] . ' руб.</div>';
                                     $popoverContent .= '<div><strong>Клиент: </strong>имя: ' . $dayItems[$room['id']]['customer_name'] . ', тел.: ' . $dayItems[$room['id']]['customer_phone'] . '</div>';
                                     $popoverContent .= '<div><strong>Количество взрослых: </strong>' . $dayItems[$room['id']]['adult'] . '</div>';
@@ -254,7 +257,7 @@ $pricesRooms = [];
         <legend>Добавление бронирования</legend>
         <div class="form-group">
             <label for="inputType">Источник обращения</label>
-            <?=Form::select('', $bookingModel->types, null, ['id' => 'inputType', 'class' => 'form-control']);?>
+            <?=Form::select('', $types, null, ['id' => 'inputType', 'class' => 'form-control']);?>
         </div>
         <legend>Выбор номера</legend>
         <div class="form-group">

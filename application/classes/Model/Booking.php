@@ -197,6 +197,7 @@ class Model_Booking extends Kohana_Model
                         'rr.*',
                         'r.title',
                         ['rs.name', 'status_name'],
+                        ['rps.name', 'payment_status_name'],
                         ['rr.price', 'booking_price'],
                         [
                             DB::expr(
@@ -226,6 +227,8 @@ class Model_Booking extends Kohana_Model
                     ->on('r.id', '=', 'rr.room_id')
                     ->join(['reservations__statuses', 'rs'])
                     ->on('rs.id', '=', 'rr.status_id')
+                    ->join(['reservations__payment_statuses', 'rps'])
+                    ->on('rps.id', '=', 'rr.payment_status_id')
                     ->where('r.id', '=', $room['id'])
                     ->and_where('rr.status_id', '!=', 3)
                     ->and_where_open()
@@ -270,6 +273,27 @@ class Model_Booking extends Kohana_Model
     {
         $query = DB::select()
             ->from('reservations__statuses')
+        ;
+
+        if ($showed !== 'all') {
+            $query = $query->where('showed', '=', $showed);
+        }
+
+        return $query
+            ->execute()
+            ->as_array('id', 'name')
+        ;
+    }
+
+    /**
+     * @param bool|string $showed
+     *
+     * @return array
+     */
+    public function getPaymentStatuses($showed = 'all')
+    {
+        $query = DB::select()
+            ->from('reservations__payment_statuses')
         ;
 
         if ($showed !== 'all') {
@@ -498,10 +522,12 @@ class Model_Booking extends Kohana_Model
      * @param int $price
      * @param string $type
      * @param int $statusId
+     * @param int $paymentStatusId
+     * @param int $amount
      *
      * @return void
      */
-    public function changeBooking($bookingId, $roomId, \DateTime $arrivalAt, \DateTime $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12, $price, $type, $statusId = 1)
+    public function changeBooking($bookingId, $roomId, \DateTime $arrivalAt, \DateTime $departureAt, $phone, $name, $comment, $adult, $childrenTo2, $childrenTo6, $childrenTo12, $price, $type, $statusId = 1, $paymentStatusId = 4, $amount = 0)
     {
         DB::update('reservations__reservations')
             ->set([
@@ -522,6 +548,8 @@ class Model_Booking extends Kohana_Model
             ->where('id', '=', $bookingId)
             ->execute()
         ;
+
+        $this->addPayment($bookingId, $amount, $type, $paymentStatusId);
     }
 
     public function getBookingAmount($bookingId)
@@ -689,8 +717,14 @@ class Model_Booking extends Kohana_Model
      */
     public function addPayment($bookingId, $amount, $type, $status)
     {
-        $result = DB::insert('reservations__payment_list', ['booking_id', 'amount', 'type', 'status', 'created_at'])
-            ->values([$bookingId, $amount, $type, $status, DB::expr('NOW()')])
+        DB::update('reservations__reservations')
+            ->set(['payment_status_id' => $status])
+            ->where('id', '=', $bookingId)
+            ->execute()
+        ;
+
+        $result = DB::insert('reservations__payment_list', ['booking_id', 'amount', 'type', 'status', 'user_id', 'created_at'])
+            ->values([$bookingId, $amount, $type, $status, Auth::instance()->logged_in() ? Auth::instance()->get_user()->id : null, DB::expr('NOW()')])
             ->execute()
         ;
 

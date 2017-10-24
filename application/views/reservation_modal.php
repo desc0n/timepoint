@@ -13,7 +13,7 @@ $checkDate->modify('-7 day');
         <button class="btn" onclick="<?=($now->getTimestamp() < $checkDate->getTimestamp() ? 'notPayedReserveRoom()' : "showNotificationModal('Бронирование номера без оплаты меньше 7 дней до даты заезда не доступно.', 'danger');");?>">Забронировать без оплаты</button>
     </div>
     <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <?if(Auth::instance()->logged_in('admin')){?>
+<!--        --><?//if(Auth::instance()->logged_in('admin')){?>
         <form method="post" action="/payment_form">
             <input type="hidden" name="roomId" value="<?=$roomId;?>">
             <input type="hidden" name="arrivalDate" value="<?=$arrivalDate;?>">
@@ -28,9 +28,9 @@ $checkDate->modify('-7 day');
             <input type="hidden" name="childrenTo12" value="<?=$childrenTo12;?>">
             <button class="btn btn-primary">Забронировать с оплатой</button>
         </form>
-        <?} else {?>
-        <button class="btn btn-primary">Забронировать с оплатой</button>
-        <?}?>
+<!--        --><?//} else {?>
+<!--        <button class="btn btn-primary">Забронировать с оплатой</button>-->
+<!--        --><?//}?>
     </div>
 </div>
 <div id="reserveRoomData">

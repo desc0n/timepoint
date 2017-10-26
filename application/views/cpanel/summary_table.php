@@ -363,6 +363,7 @@ $pricesRooms = [];
 </div>
 <div id="summary-table"></div>
 <script>
+    moment.locale('ru');
     function getMinDate() {
         return new Date(<?=$calendarToday->format('Y');?>, <?=$calendarToday->format('m');?>, <?=$calendarToday->format('d');?>);
     }

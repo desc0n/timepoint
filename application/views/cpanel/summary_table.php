@@ -162,6 +162,7 @@ $pricesRooms = [];
                         <?foreach ($yearItems as $month => $monthItems) {?>
                             <?foreach ($monthItems as $day => $dayItems) {?>
                                 <?$managerPrice = !empty($dayItems[$room['id']]) ? ((int)$dayItems[$room['id']]['manager_price'] ?: $dayItems[$room['id']]['price']) : $bookingModel->findRoomManagerPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?>
+                                <?if(!$adminRole) {?>
                                 <?
                                 $popoverTitle = 'Изменение стоимости номера';
                                 $popoverContent = "<div class='booking-data-popover'>";
@@ -175,6 +176,11 @@ $pricesRooms = [];
                                 <td class="text-right manager-prices booking-hidden booking-hidden-<?=$room['id'];?>">
                                     <div id="bookingManagerPriceChange_<?=$room['id'];?>_<?=$year;?>-<?=$month;?>-<?=$day;?>" class="booking-price-change" data-trigger="click" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="<?=$popoverTitle;?>"><?=$managerPrice;?></div>
                                 </td>
+                                <?} else {?>
+                                <td class="text-right manager-prices booking-hidden booking-hidden-<?=$room['id'];?>">
+                                    <?=$managerPrice;?>
+                                </td>
+                                <?}?>
                                 <?$managerPricesDays[$year . '-' . $month . '-' . $day] = isset($managerPricesDays[$year . '-' . $month . '-' . $day]) ? $managerPricesDays[$year . '-' . $month . '-' . $day] + $managerPrice : $managerPrice;?>
                                 <?$managerPricesRooms[$room['id']] = isset($managerPricesRooms[$room['id']]) ? $managerPricesRooms[$room['id']] + $managerPrice : $managerPrice;?>
                             <?}?>

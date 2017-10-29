@@ -700,7 +700,7 @@ class Model_Booking extends Kohana_Model
             $mailModel->send('site@vladpointhotel.ru', 'vladpointhotel@mail.ru', 'Отмена неоплаченного бронирования', $message);
             $mailModel->send('site@vladpointhotel.ru', 'pvr2569@mail.ru', 'Отмена неоплаченного бронирования', $message);
 
-            $message = '<div><strong>Здравствуйтею Ваша бронь была отменена по истечению 24 часов с момента бронирования, так как не была оплачена.</strong></div>';
+            $message = '<div><strong>Здравствуйте. Ваша бронь была отменена по истечению 24 часов с момента бронирования, так как не была оплачена.</strong></div>';
             $message .= '<div><strong>Номер №' . $booking['room_id'] . '</strong></div>';
             $message .= '<div><strong>Период бронирования: </strong>' . $arrivalAt->format('d.m.Y') . ' - ' . $departureAt->format('d.m.Y') . '</div>';
             $mailModel->send('site@vladpointhotel.ru', $booking['customer_email'], 'Отмена неоплаченного бронирования', $message);

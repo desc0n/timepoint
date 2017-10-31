@@ -479,18 +479,29 @@ class Model_Booking extends Kohana_Model
         $lastTime = clone $lastDate;
 
         while ($firstTime <= $lastTime) {
-            DB::query(Database::INSERT,
-                'INSERT INTO reservations__reservation_prices (`room_id`, `price`, `date_at`) 
-                VALUES (:roomId, :price, :date)
-                ON DUPLICATE KEY UPDATE `price` = :price
-            ')
-                ->parameters([
-                    ':roomId' => $roomId,
-                    ':price' => $price,
-                    ':date' => $firstTime->format('Y-m-d')
-                ])
+            $priceData = DB::select()
+                ->from('reservations__reservation_prices')
+                ->where('room_id', '=', $roomId)
+                ->and_where('date_at', '=', $firstTime->format('Y-m-d'))
+                ->limit(1)
                 ->execute()
+                ->current()
             ;
+
+            if ($priceData) {
+                $updatedValues = (int)$priceData['manager_price'] ? ['price' => $price] : ['price' => $price, 'manager_price' => $price];
+                DB::update('reservations__reservation_prices')
+                    ->set($updatedValues)
+                    ->where('room_id', '=', $roomId)
+                    ->and_where('date_at', '=', $firstTime->format('Y-m-d'))
+                    ->execute()
+                ;
+            } else {
+                DB::insert('reservations__reservation_prices', ['room_id', 'price', 'manager_price', 'date_at'])
+                    ->values([$roomId, $price, $price, $firstTime->format('Y-m-d')])
+                    ->execute()
+                ;
+            }
 
             $firstTime->modify('+ 1 day');
         }

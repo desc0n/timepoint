@@ -162,7 +162,7 @@ $pricesRooms = [];
                     <?foreach ($summaryTableData as $year => $yearItems) {?>
                         <?foreach ($yearItems as $month => $monthItems) {?>
                             <?foreach ($monthItems as $day => $dayItems) {?>
-                                <?$managerPrice = !empty($dayItems[$room['id']]) ? ((int)$dayItems[$room['id']]['manager_price'] ?: 0) : 0;?>
+                                <?$managerPrice = !empty($dayItems[$room['id']]) ? ((int)$dayItems[$room['id']]['manager_price'] ?: 0) : $bookingModel->findRoomManagerPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?>
                                 <?if(!$adminRole) {?>
                                 <?
                                 $popoverTitle = 'Изменение стоимости номера';
@@ -178,8 +178,9 @@ $pricesRooms = [];
                                     <div id="bookingManagerPriceChange_<?=$room['id'];?>_<?=$year;?>-<?=$month;?>-<?=$day;?>" class="booking-price-change" data-trigger="click" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="<?=$popoverTitle;?>"><?=$managerPrice;?></div>
                                 </td>
                                 <?} else {?>
-                                <td class="text-right manager-prices booking-hidden booking-hidden-<?=$room['id'];?>">
-                                    <?=$managerPrice;?>
+                                <td class="text-right manager-prices booking-hidden booking-hidden-<?=$room['id'];?> manager-price-<?=$room['id'];?>-<?=$year;?>-<?=$month;?>-<?=$day;?>">
+                                    <span><?=$managerPrice;?></span>
+                                    <input type="hidden" id="bookingManagerPrice<?=$room['id'];?>_<?=$year;?>-<?=$month;?>-<?=$day;?>" value="<?=$managerPrice;?>">
                                 </td>
                                 <?}?>
                                 <?$managerPricesDays[$year . '-' . $month . '-' . $day] = isset($managerPricesDays[$year . '-' . $month . '-' . $day]) ? $managerPricesDays[$year . '-' . $month . '-' . $day] + $managerPrice : $managerPrice;?>

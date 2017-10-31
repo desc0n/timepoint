@@ -138,7 +138,7 @@ $pricesRooms = [];
                                     $popoverTitle = 'Информация о бронировании c ' . date('d.m', strtotime($dayItems[$room['id']]['arrival_at'])) . ' по ' . date('d.m', strtotime($dayItems[$room['id']]['departure_at']));
                                     $popoverContent = "<div class='booking-data-popover'>";
                                     $popoverContent .= '<div><strong>Статус брони: </strong><i>' . $dayItems[$room['id']]['payment_status_name'] . '</i></div>';
-                                    $popoverContent .= '<div><strong>Стоимость бронирования: </strong>' . $dayItems[$room['id']]['booking_price'] . ' руб.</div>';
+                                    $popoverContent .= '<div><strong>Общая стоимость бронирования: </strong>' . $dayItems[$room['id']]['booking_price'] . ' руб.</div>';
                                     $popoverContent .= '<div><strong>Клиент: </strong>имя: ' . $dayItems[$room['id']]['customer_name'] . ', тел.: ' . $dayItems[$room['id']]['customer_phone'] . '</div>';
                                     $popoverContent .= '<div><strong>Количество взрослых: </strong>' . $dayItems[$room['id']]['adult'] . '</div>';
                                     $popoverContent .= '<div><strong>Детей: </strong>' . $dayItems[$room['id']]['children_to_2'] . ' (до 2), ' . $dayItems[$room['id']]['children_to_6'] . ' (до 6), ' . $dayItems[$room['id']]['children_to_12'] . ' (до 12)</div>';

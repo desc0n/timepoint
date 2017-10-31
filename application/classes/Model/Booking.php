@@ -183,7 +183,7 @@ class Model_Booking extends Kohana_Model
         /** @var Model_Room $roomModel */
         $roomModel = Model::factory('Room');
 
-        $this->checkSuccess();
+//        $this->checkSuccess();
         $this->autoCanceledNotPayedBooking();
 
         $data = [];

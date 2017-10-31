@@ -133,6 +133,7 @@ $pricesRooms = [];
                             <?foreach ($monthItems as $day => $dayItems) {?>
                                 <?if(!empty($dayItems[$room['id']])) {?>
                                     <?
+                                    $dayCanceledButton = !$dayItems[$room['id']]['payed'] ? "<button class='btn btn-warning btn-sm' onclick='dayCanceledBooking(" . $dayItems[$room['id']]['id'] . ", " . $year . ", " . $month . ", " . $day . ");'>Отменить c " . $day ."." . $month . "." . $year ." <i class='fa fa-remove'></i></button>" : '';
                                     $canceledButton = !$dayItems[$room['id']]['payed'] ? "<button class='btn btn-danger btn-sm' onclick='canceledBooking(" . $dayItems[$room['id']]['id'] . ");'>Отменить <i class='fa fa-remove'></i></button>" : '';
                                     $popoverTitle = 'Информация о бронировании c ' . date('d.m', strtotime($dayItems[$room['id']]['arrival_at'])) . ' по ' . date('d.m', strtotime($dayItems[$room['id']]['departure_at']));
                                     $popoverContent = "<div class='booking-data-popover'>";
@@ -142,7 +143,7 @@ $pricesRooms = [];
                                     $popoverContent .= '<div><strong>Количество взрослых: </strong>' . $dayItems[$room['id']]['adult'] . '</div>';
                                     $popoverContent .= '<div><strong>Детей: </strong>' . $dayItems[$room['id']]['children_to_2'] . ' (до 2), ' . $dayItems[$room['id']]['children_to_6'] . ' (до 6), ' . $dayItems[$room['id']]['children_to_12'] . ' (до 12)</div>';
                                     $popoverContent .= '<div><strong>Комментарий: </strong>' . str_replace('"', '', $dayItems[$room['id']]['customer_comment']) . '</div>';
-                                    $popoverContent .= !in_array((int)$dayItems[$room['id']]['status_id'], [2,3], true) && $dayItems[$room['id']]['type'] !== 'site' ? "<br /><div class='text-right'>" . $canceledButton . " <button class='btn btn-success btn-sm' onclick='showRedactBookingForm(" . $dayItems[$room['id']]['id'] . ");'>Редактировать <i class='fa fa-pencil'></i></button></div>" : '';
+                                    $popoverContent .= !in_array((int)$dayItems[$room['id']]['status_id'], [2,3], true) && $dayItems[$room['id']]['type'] !== 'site' ? "<br /><div class='text-right'>" . $dayCanceledButton . " " . $canceledButton . " <button class='btn btn-success btn-sm' onclick='showRedactBookingForm(" . $dayItems[$room['id']]['id'] . ");'>Редактировать <i class='fa fa-pencil'></i></button></div>" : '';
                                     $popoverContent .= '</div>';
                                     ?>
                                     <td class="text-center booking-ceil <?=$statusStyles[$dayItems[$room['id']]['status_id']];?>-booking-ceil booking-ceil-period-<?=$dayItems[$room['id']]['id'];?>" data-toggle="popover" data-html="true" data-content="<?=$popoverContent;?>" data-placement="bottom" data-original-title="<?=$popoverTitle;?>" data-container="body" onclick="showBookingPeriod(<?=$dayItems[$room['id']]['id'];?>, '<?=$statusStyles[$dayItems[$room['id']]['status_id']];?>')">
@@ -161,7 +162,7 @@ $pricesRooms = [];
                     <?foreach ($summaryTableData as $year => $yearItems) {?>
                         <?foreach ($yearItems as $month => $monthItems) {?>
                             <?foreach ($monthItems as $day => $dayItems) {?>
-                                <?$managerPrice = !empty($dayItems[$room['id']]) ? ((int)$dayItems[$room['id']]['manager_price'] ?: $dayItems[$room['id']]['price']) : $bookingModel->findRoomManagerPriceByIdAndDate($room['id'], new DateTime($year . '-' . $month . '-' . $day), new DateTime($year . '-' . $month . '-' . $day));?>
+                                <?$managerPrice = !empty($dayItems[$room['id']]) ? ((int)$dayItems[$room['id']]['manager_price'] ?: 0) : 0;?>
                                 <?if(!$adminRole) {?>
                                 <?
                                 $popoverTitle = 'Изменение стоимости номера';

@@ -172,6 +172,14 @@ class Controller_Ajax extends Controller
         $this->response->body(json_encode(['result' => 'success']));
     }
 
+    public function action_day_canceled_booking()
+    {
+        $date = new DateTime($this->request->post('date'));
+        $this->bookingModel->dayCanceledBooking((int)$this->request->post('bookingId'), $date);
+
+        $this->response->body(json_encode(['result' => 'success']));
+    }
+
     public function action_change_password()
     {
         $this->adminModel->changePassword((int)$this->request->post('userId'), $this->request->post('password'));

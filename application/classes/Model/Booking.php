@@ -265,6 +265,39 @@ class Model_Booking extends Kohana_Model
     }
 
     /**
+     * @param int $id
+     * @param DateTime $date
+     *
+     * @return bool
+     */
+    public function dayCanceledBooking($id, DateTime $date)
+    {
+        $bookingData = $this->findById($id);
+
+        if (!$bookingData){
+            return false;
+        }
+
+        $arrivalAt = new DateTime($bookingData['arrival_at']);
+
+        if ($arrivalAt->getTimestamp() === $date->getTimestamp()) {
+            DB::update('reservations__reservations')
+                ->set(['status_id' => 3])
+                ->where('id', '=', $id)
+                ->execute();
+
+            return true;
+        }
+
+        DB::update('reservations__reservations')
+            ->set(['departure_at' => $date->format('Y-m-d H:i:s')])
+            ->where('id', '=', $id)
+            ->execute();
+
+        return true;
+    }
+
+    /**
      * @param bool|string $showed
      *
      * @return array

@@ -1,4 +1,7 @@
 <?
+/** @var Model_Booking $bookingModel */
+$bookingModel = Model::factory('Booking');
+
 $now = new DateTime();
 $arrivalDateTime = new DateTime($arrivalDate);
 $checkDate = clone $arrivalDateTime;
@@ -45,4 +48,5 @@ $checkDate->modify('-7 day');
     <input type="hidden" id="childrenTo2" value="<?=$childrenTo2;?>">
     <input type="hidden" id="childrenTo6" value="<?=$childrenTo6;?>">
     <input type="hidden" id="childrenTo12" value="<?=$childrenTo12;?>">
+    <input type="hidden" id="price" value="<?=(int)($bookingModel->findAllPeriodPrice($roomId, new DateTime($arrivalDate), new DateTime($departureDate)));?>">
 </div>

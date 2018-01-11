@@ -10,7 +10,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/public/css/daterangepicker.css" >
-    <link rel="stylesheet" href="/public/css/styles.css?v=111020172349" >
+    <link rel="stylesheet" href="/public/css/styles.css?v=<?=time();?>" >
     <link rel="stylesheet" href="/assets/bootstrap/css/font-awesome.css" >
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -365,7 +365,7 @@ $calendarDepartureDate->modify('- 1 month');
         </div>
     </div>
 </div>
-<script src="/public/js/scripts.js?v=121020170006"></script>
+<script src="/public/js/scripts.js?v=<?=time();?>"></script>
 <script>
     moment.locale('ru');
     $(document).ready(function () {

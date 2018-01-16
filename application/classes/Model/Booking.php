@@ -87,7 +87,7 @@ class Model_Booking extends Kohana_Model
                 $name,
                 $email,
                 $comment,
-                $price ?: $roomData['price'],
+                $price ?: (int)($this->findAllPeriodPrice($roomId, $arrivalAt, $departureAt)),
                 $arrivalAt->format('Y-m-d H:i:s'),
                 $departureAt->format('Y-m-d H:i:s'),
                 $payedStatus ? 6 : 4,

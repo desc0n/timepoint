@@ -605,7 +605,7 @@ class Model_Content extends Kohana_Model
             'returnUrl' => 'http://' . $_SERVER['HTTP_HOST'] . '/?booking=success',
             'userName' => $this->acquiringSettings['userName'],
             'password' => $this->acquiringSettings['password'],
-            'token' => $this->acquiringSettings['token']
+//            'token' => $this->acquiringSettings['token']
         ];
 
         $params = $arguments + $variables;

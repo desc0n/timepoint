@@ -481,7 +481,7 @@ class Model_Content extends Kohana_Model
     public function getCurrencyCourse()
     {
         $course = 0;
-        $content = file_get_contents('http://www.cbr.ru/scripts/XML_daily.asp');
+        $content = @file_get_contents('http://www.cbr.ru/scripts/XML_daily.asp');
 
         if ($content) {
             $xml = new SimpleXMLElement($content);

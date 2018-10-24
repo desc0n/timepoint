@@ -10,7 +10,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/public/css/daterangepicker.css" >
-    <link rel="stylesheet" href="/public/css/styles.css?v=<?=time();?>" >
+    <link rel="stylesheet" href="/public/css/styles.css?v=<?=filemtime(__DIR__ . '/../../public/css/styles.css');?>" >
     <link rel="stylesheet" href="/assets/bootstrap/css/font-awesome.css" >
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -105,6 +105,9 @@ $calendarDepartureDate->modify('- 1 month');
                             <?}?>
                             <?foreach ($contentModel->getContacts(['phone']) as $contact){?>
                                 <div class="nav-link__phone"><?=$contact['value'];?></div>
+                            <?}?>
+                            <?foreach ($contentModel->getContacts(['email']) as $contact){?>
+                                <div class="nav-link__email"><?=$contact['value'];?></div>
                             <?}?>
                         </div>
                     </li>

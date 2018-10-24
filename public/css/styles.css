@@ -6462,7 +6462,15 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 
 .nav-link__phone {
   color: #000;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: 900;
+  text-align: center;
+  text-shadow: 1px 1px 1px white;
+  filter: progid:DXImageTransform.Microsoft.Glow(Color=#ffffff,Strength=2); }
+
+.nav-link__email {
+  color: #000;
+  font-size: 1rem;
   font-weight: 900;
   text-align: center;
   text-shadow: 1px 1px 1px white;

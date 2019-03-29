@@ -10,8 +10,11 @@ unset($types['site']);
 
 $adminRole = Auth::instance()->logged_in('admin');
 $today = new \DateTime();
+$month = (int)$today->format('m');
+$day = (int)$today->format('d');
 $calendarToday = clone $today;
 $calendarToday = $calendarToday->modify('- 1 month');
+if($month === 3 && $day > 28) $calendarToday->modify(sprintf('- %d day', $day - 28));
 $tomorrow = clone $today;
 $tomorrow->modify('+ 1 day');
 $firstDate = new DateTime(date('Y-m-d', strtotime(Arr::get($get, 'first_date', $today->format('d.m.Y')))));

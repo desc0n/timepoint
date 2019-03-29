@@ -31,8 +31,11 @@ $contentModel = Model::factory('Content');
 /** @var $roomModel Model_Room */
 $roomModel = Model::factory('Room');
 $today = new \DateTime();
+$month = (int)$today->format('m');
+$day = (int)$today->format('d');
 $calendarToday = clone $today;
 $calendarToday = $calendarToday->modify('- 1 month');
+if($month === 3 && $day > 28) $calendarToday->modify(sprintf('- %d day', $day - 28));
 $tomorrow = clone $today;
 $tomorrow->modify('+ 1 day');
 $arrivalDate = new DateTime(date('Y-m-d', strtotime(Arr::get($get, 'arrival_date', $today->format('d.m.Y')))));

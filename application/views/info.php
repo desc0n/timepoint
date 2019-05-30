@@ -17,15 +17,15 @@
                 <span>Реквизиты</span>
             </h4>
             <div class="form-group">
-                <div>ООО "ДВ-Статус"</div>
-                <div>ИНН: 2540073871</div>
-                <div>КПП: 254001001</div>
-                <div>ОГРН: 1022502277005</div>
-                <div>ОКПО: 53660200</div>
-                <div>Расчетный счет: 40702810200060000190</div>
-                <div>Банк: ПАО "ДАЛЬНЕВОСТОЧНЫЙ БАНК"</div>
-                <div>БИК: 040507705</div>
-                <div>Корр. счет: 30101810900000000705</div>
+                <div><?=$pageInfo['requisites']['name'];?></div>
+                <div>ИНН: <?=$pageInfo['requisites']['inn'];?></div>
+                <div>КПП: <?=$pageInfo['requisites']['kpp'];?></div>
+                <div>ОГРН: <?=$pageInfo['requisites']['ogrn'];?></div>
+                <div>ОКПО: <?=$pageInfo['requisites']['okpo'];?></div>
+                <div>Расчетный счет: <?=$pageInfo['requisites']['checking_account'];?></div>
+                <div>Банк: <?=$pageInfo['requisites']['bank_name'];?></div>
+                <div>БИК: <?=$pageInfo['requisites']['bik'];?></div>
+                <div>Корр. счет: <?=$pageInfo['requisites']['corr_account'];?></div>
             </div>
         </div>
         <div class="form-group">

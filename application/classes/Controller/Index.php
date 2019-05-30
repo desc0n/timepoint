@@ -111,7 +111,7 @@ class Controller_Index extends Controller
         View::set_global('rootPage', 'info');
 
 		$template = $this->contentModel->getBaseTemplate('info', 'ru');
-
+        $template->content->set('pageInfo', $contentModel->getPageInfo());
 		$this->response->body($template);
 	}
 

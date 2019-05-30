@@ -298,6 +298,24 @@ class Controller_Cpanel extends Controller
         $this->response->body($template);
     }
 
+    public function action_redact_info()
+    {
+        /** @var $contentModel Model_Content */
+        $contentModel = Model::factory('Content');
+
+        $template = $this->getBaseTemplate();
+
+        if (!empty($this->request->post('updateRequisites'))) {
+            $contentModel->setPageInfoRequisites($this->request->post('name'), $this->request->post('inn'), $this->request->post('kpp'), $this->request->post('ogrn'), $this->request->post('okpo'), $this->request->post('checking_account'), $this->request->post('bank_name'), $this->request->post('bik'), $this->request->post('corr_account'));
+            HTTP::redirect($this->request->referrer());
+        }
+
+        $template->content = View::factory('cpanel/redact_info')
+            ->set('pageInfo', $contentModel->getPageInfo())
+        ;
+        $this->response->body($template);
+    }
+
     public function action_social_networks()
     {
         /** @var $contentModel Model_Content */

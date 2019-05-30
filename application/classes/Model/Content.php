@@ -633,4 +633,47 @@ class Model_Content extends Kohana_Model
 
         return file_get_contents($url);
     }
+
+    /**
+     * @return array
+     */
+    public function getPageInfo()
+    {
+        $pageInfo = ['requisites' => []];
+        $requisites = DB::select()
+            ->from('page_info__requisites')
+            ->execute()
+            ->as_array()
+        ;
+
+        foreach ($requisites as $requisite){
+            $pageInfo['requisites'][$requisite['slug']] = $requisite['value'];
+        }
+
+        return $pageInfo;
+    }
+
+    /**
+     * @param string $name
+     * @param string $inn
+     * @param string $kpp
+     * @param string $ogrn
+     * @param string $okpo
+     * @param string $checkingAccount
+     * @param string $bankName
+     * @param string $bik
+     * @param string $corrAccount
+     */
+    public function setPageInfoRequisites($name, $inn, $kpp, $ogrn, $okpo, $checkingAccount, $bankName, $bik, $corrAccount)
+    {
+        DB::update('page_info__requisites')->set(['value' => $name])->where('slug', '=', 'name')->execute();
+        DB::update('page_info__requisites')->set(['value' => $inn])->where('slug', '=', 'inn')->execute();
+        DB::update('page_info__requisites')->set(['value' => $kpp])->where('slug', '=', 'kpp')->execute();
+        DB::update('page_info__requisites')->set(['value' => $ogrn])->where('slug', '=', 'ogrn')->execute();
+        DB::update('page_info__requisites')->set(['value' => $okpo])->where('slug', '=', 'okpo')->execute();
+        DB::update('page_info__requisites')->set(['value' => $checkingAccount])->where('slug', '=', 'checking_account')->execute();
+        DB::update('page_info__requisites')->set(['value' => $bankName])->where('slug', '=', 'bank_name')->execute();
+        DB::update('page_info__requisites')->set(['value' => $bik])->where('slug', '=', 'bik')->execute();
+        DB::update('page_info__requisites')->set(['value' => $corrAccount])->where('slug', '=', 'corr_account')->execute();
+    }
 }
